@@ -1,0 +1,51 @@
+/******************************************************************************/
+/** StackController ***********************************************************/
+/******************************************************************************/
+
+.pwlLayoutIconTabContainer .dijitStackController
+{
+	min-width: 8.6em;
+
+	overflow: auto;
+}
+
+/******************************************************************************/
+/** DialogButton **************************************************************/
+/******************************************************************************/
+
+.pwlLayoutIconTabContainerButton
+{
+	margin: 0.5em;
+
+	min-width: 6.5em;
+	min-height: 6.5em;
+
+	text-align: center;
+
+	outline: 1px solid #ebe9e6;
+}
+
+.pwlLayoutIconTabContainerButton[aria-selected=true]
+{
+	background-color: #c82c30;
+}
+
+.pwlLayoutIconTabContainerButton[aria-selected=false]:hover
+{
+	background-color: #ebe9e6;
+}
+
+.pwlLayoutIconTabContainerButton div:first-child
+{
+	margin: auto;
+
+	width: 62px;
+	height: 62px;
+}
+
+.pwlLayoutIconTabContainerButton strong
+{
+	display: block;
+
+	margin-top: 0.5em;
+}

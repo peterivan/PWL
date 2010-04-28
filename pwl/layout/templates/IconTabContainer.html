@@ -1,0 +1,18 @@
+<div class="${baseClass}" dojoAttachPoint="containerNode">
+	<div id="${id}_BorderContainer"
+		 dojoType="dijit.layout.BorderContainer"
+		 gutters="${gutters}"
+		 liveSplitter="false">
+
+		<div id="${id}_StackController"
+			 dojoType="dijit.layout.StackController"
+			 containerId="${id}_StackContainer"
+			 buttonWidget="pwl.layout._IconTabContainerButton"
+			 region="${icon_controller_position}">
+		</div>
+
+		<div id="${id}_StackContainer"
+		 dojoType="dijit.layout.StackContainer"
+		 region="center"></div>
+	</div>
+</div>

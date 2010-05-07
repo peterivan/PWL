@@ -39,16 +39,6 @@ dojo.declare(
 	/**************************************************************************/
 	/** startup ***************************************************************/
 
-	postMixInProperties : function ()
-	{
-		var former_node = dojo.byId(this.id);
-
-		this._bc_width = dojo.style(former_node, 'width');
-		this._bc_height = dojo.style(former_node, 'height');
-
-		this.inherited(arguments);
-	},
-
 	postCreate : function ()
 	{
 		this.inherited(arguments);
@@ -117,7 +107,7 @@ dojo.declare(
 
 
 	},
-	
+
 	enableTab : function ( tab )
 	{
 		var tab_id = tab.attr('id');

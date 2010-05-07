@@ -42,9 +42,21 @@ dojo.declare(
 
 	resize : function ()
 	{
-		this._positionStackController();
-
 		this.inherited(arguments);
+
+		var sc = dijit.byId(this.id + '_StackController');
+
+		var its_pos = dojo.position(this.domNode);
+		var sc_pos = dojo.position(sc.domNode);
+
+		var container_w = (its_pos.w - sc_pos.w - 8) + 'px';
+
+		dojo.style(this.containerNode, 'width', container_w);
+
+		dojo.forEach (this.getChildren(), function ( c )
+		{
+			dojo.style(c.domNode, 'width', container_w);
+		});
 	},
 
 	/**************************************************************************/
@@ -61,9 +73,8 @@ dojo.declare(
 		/**********************************************************************/
 
 		var tab_id = child.attr('id');
-		var children = this.getChildren();
 
-		dojo.forEach (children, function ( c )
+		dojo.forEach (this.getChildren(), function ( c )
 		{
 			if ( c.attr('id') === tab_id )
 			{
@@ -89,9 +100,8 @@ dojo.declare(
 		/**********************************************************************/
 
 		var tab_id = child.attr('id');
-		var children = this.getChildren();
 
-		dojo.forEach (children, function ( c )
+		dojo.forEach (this.getChildren(), function ( c )
 		{
 			if ( c.attr('id') === tab_id )
 			{
@@ -106,18 +116,6 @@ dojo.declare(
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
-
-	_positionStackController : function ()
-	{
-		var sc = dijit.byId(this.id + '_StackController');
-
-		var its_pos = dojo.position(this.domNode);
-		var sc_pos = dojo.position(sc.domNode);
-
-		dojo.style(sc.domNode, 'height', its_pos.h + 'px');
-
-		dojo.style(this.containerNode, 'left', sc_pos.w + 'px');
-	}
 
 });
 

@@ -5,6 +5,12 @@
 .pwlLayoutIconTabContainer div[dojoattachpoint=containerNode]
 {
 	position: absolute;
+
+	top: 0;
+	bottom: 0;
+	right: 0;
+
+	border: 1px solid #ebe9e6;
 }
 
 /******************************************************************************/
@@ -15,9 +21,15 @@
 {
 	position: absolute;
 
+	top: 0;
+	bottom: 0;
+	left: 0;
+
 	min-width: 8.6em;
 
 	overflow: auto;
+
+	border: 1px solid #ebe9e6;
 }
 
 /******************************************************************************/

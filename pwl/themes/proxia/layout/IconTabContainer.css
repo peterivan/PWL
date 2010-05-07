@@ -1,9 +1,20 @@
 /******************************************************************************/
+/** StackContainer ************************************************************/
+/******************************************************************************/
+
+.pwlLayoutIconTabContainer div[dojoattachpoint=containerNode]
+{
+	position: absolute;
+}
+
+/******************************************************************************/
 /** StackController ***********************************************************/
 /******************************************************************************/
 
 .pwlLayoutIconTabContainer .dijitStackController
 {
+	position: absolute;
+
 	min-width: 8.6em;
 
 	overflow: auto;
@@ -22,6 +33,7 @@
 
 	text-align: center;
 
+	cursor: pointer;
 	outline: 1px solid #ebe9e6;
 }
 

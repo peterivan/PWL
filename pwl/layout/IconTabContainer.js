@@ -2,11 +2,10 @@ dojo.provide('pwl.layout.IconTabContainer');
 
 /******************************************************************************/
 
-dojo.require('dijit.layout._LayoutWidget');
 dojo.require('dijit._Templated');
 
-dojo.require('dijit.layout.BorderContainer');
 dojo.require('dijit.layout.StackContainer');
+dojo.require('dijit.layout.StackController');
 
 /******************************************************************************/
 /******************************************************************************/
@@ -14,23 +13,17 @@ dojo.require('dijit.layout.StackContainer');
 
 dojo.declare(
 	'pwl.layout.IconTabContainer',
-	[dijit.layout._LayoutWidget, dijit._Templated],
+	[dijit.layout.StackContainer, dijit._Templated],
 {
 	baseClass: 'pwlLayoutIconTabContainer',
 
 	templateString: dojo.cache('pwl.layout', 'templates/IconTabContainer.html'),
 	widgetsInTemplate: true,
 
-	border_container: null,
 	stack_controller: null,
-	stack_container: null,
 
-	icon_controller_position: 'leading',
+	controller_position: 'leading',
 	gutters: true,
-
-	_bc_initial_size_set: false,
-	_bc_width: null,
-	_bc_height: null,
 
 /******************************************************************************/
 /** public **/
@@ -42,93 +35,89 @@ dojo.declare(
 	postCreate : function ()
 	{
 		this.inherited(arguments);
-
-		this.border_container = dijit.byId(this.id + '_BorderContainer');
-		this.stack_container = dijit.byId(this.id + '_StackContainer');
-		this.stack_controller = dijit.byId(this.id + '_StackController');
 	},
 
-	addChild : function ( child )
-	{
-		this.inherited(arguments);
-
-		this.stack_container.addChild(child);
-	},
-
-	startup : function ()
-	{
-		if ( this._started )
-			return;
-
-		this.border_container.startup();
-		this.stack_container.startup();
-
-		this.inherited(arguments);
-	},
-
-	layout : function ()
-	{
-		this.inherited(arguments);
-	},
+	/**************************************************************************/
+	/** layout ****************************************************************/
 
 	resize : function ()
 	{
-		if ( !this._bc_initial_size_set )
-		{
-			this._bc_initial_size_set = true;
-			this.border_container.resize({w: this._bc_width, h: this._bc_height});
-		}
-		else
-			this.border_container.resize();
-
-		this.stack_container.resize();
+		this._positionStackController();
 
 		this.inherited(arguments);
 	},
 
 	/**************************************************************************/
 
-	disableTab : function ( tab )
+	disableChild : function ( i_child )
 	{
-		var tab_id = tab.attr('id');
-		var children = this.stack_container.getChildren();
+		var child = null;
 
-		dojo.forEach (children, function ( child )
+		if ( dojo.isObject(i_child) )
+			child = i_child;
+		else if ( dojo.isString(i_child) )
+			child = dijit.byId(i_child);
+
+		/**********************************************************************/
+
+		var tab_id = child.attr('id');
+		var children = this.getChildren();
+
+		dojo.forEach (children, function ( c )
 		{
-			if ( child.attr('id') === tab_id )
+			if ( c.attr('id') === tab_id )
 			{
-				if ( dojo.isFunction(child.disable) )
-					child.disable();
+				if ( dojo.isFunction(c.disable) )
+					c.disable();
 
-				dojo.addClass(child.controlButton.domNode, this.baseClass + 'Disabled dijitDisabled');
-				child.controlButton.attr('disabled', true);
+				c.controlButton.attr('disabled', true);
 			}
 		}, this);
 
 
 	},
 
-	enableTab : function ( tab )
+	enableChild : function ( i_child )
 	{
-		var tab_id = tab.attr('id');
-		var children = this.stack_container.getChildren();
+		var child = null;
 
-		dojo.forEach (children, function ( child )
+		if ( dojo.isObject(i_child) )
+			child = i_child;
+		else if ( dojo.isString(i_child) )
+			child = dijit.byId(i_child);
+
+		/**********************************************************************/
+
+		var tab_id = child.attr('id');
+		var children = this.getChildren();
+
+		dojo.forEach (children, function ( c )
 		{
-			if ( child.attr('id') === tab_id )
+			if ( c.attr('id') === tab_id )
 			{
-				if ( dojo.isFunction(child.disable) )
-					child.enable();
+				if ( dojo.isFunction(c.disable) )
+					c.enable();
 
-				dojo.removeClass(child.controlButton.domNode, this.baseClass + 'Disabled dijitDisabled');
-				child.controlButton.attr('disabled', false);
+				c.controlButton.attr('disabled', false);
 			}
 		}, this);
-	}
+	},
 
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
+
+	_positionStackController : function ()
+	{
+		var sc = dijit.byId(this.id + '_StackController');
+
+		var its_pos = dojo.position(this.domNode);
+		var sc_pos = dojo.position(sc.domNode);
+
+		dojo.style(sc.domNode, 'height', its_pos.h + 'px');
+
+		dojo.style(this.containerNode, 'left', sc_pos.w + 'px');
+	}
 
 });
 

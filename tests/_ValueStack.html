@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<title></title>
+
+		<script type="text/javascript">
+		//<![CDATA[
+
+		var djConfig =
+		{
+			parseOnLoad: true,
+			isDebug: true,
+			usePlainJson: true,
+			debugAtAllCosts: true,
+			preventBackButtonFix: false,
+			modulePaths: { 'pwl': '/PWL/pwl' }
+		};
+		//]]>
+		</script>
+
+		<style type="text/css">
+
+		</style>
+
+		<script type="text/javascript" src="/lib/dojo/1.4.2-sdk/dojo/dojo.js"></script>
+
+		<script type="text/javascript">
+		//<![CDATA[
+
+		dojo.require('dijit.layout.ContentPane');
+		dojo.require('dijit.layout.TabContainer');
+		dojo.require('dijit.form.TextBox');
+		dojo.require('dijit.form.Button');
+		dojo.require('dijit.form.CheckBox');
+		dojo.require('dijit.form.ComboBox');
+
+		dojo.require('pwl._ValueStack');
+
+		dojo.addOnLoad(function ()
+		{
+			var id_store =
+			[
+				{
+					TitleBox : 'Title: Item 1',
+					T1_TextBox_1 : 'T1-TextBox-1: Item 1',
+					T1_TextBox_2 : 'T1-TextBox-2: Item 1',
+					T2_TextBox_1 : 'T2-TextBox-1: Item 1',
+					T2_TextBox_2 : 'T2-TextBox-2: Item 1'
+				},
+
+				{
+					TitleBox : 'Title: Item 2',
+					T1_TextBox_1 : 'T1-TextBox-1: Item 2',
+					T1_TextBox_2 : 'T1-TextBox-2: Item 2',
+					T2_TextBox_1 : 'T2-TextBox-1: Item 2',
+					T2_TextBox_2 : 'T2-TextBox-2: Item 2'
+				},
+
+				{
+					TitleBox : 'Title: Item 3',
+					T1_TextBox_1 : 'T1-TextBox-1: Item 3',
+					T1_TextBox_2 : 'T1-TextBox-2: Item 3',
+					T2_TextBox_1 : 'T2-TextBox-1: Item 3',
+					T2_TextBox_2 : 'T2-TextBox-2: Item 3'
+				}
+			];
+
+			main = dijit.byId('Main');
+
+			dojo.mixin(main, new pwl._ValueStack());
+
+			main.setIdStore(id_store);
+		});
+
+//]]>
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="/lib/dojo/1.4.2-sdk/dijit/themes/tundra/tundra.css" />
+		<link rel="stylesheet" type="text/css" href="academy/themes/proxia/proxia.css" />
+
+	</head>
+
+	<body class="proxia tundra">
+		<div>
+			<span dojoType="dijit.form.Button">
+				<script type="dojo/method" event="onClick" args="evt">
+					dijit.byId('Main').back();
+				</script>
+				Prev
+			</span>
+
+			<span dojoType="dijit.form.Button">
+				<script type="dojo/method" event="onClick" args="evt">
+					dijit.byId('Main').forward();
+				</script>
+				Next
+			</span>
+		</div>
+
+		<div id="Main" dojoType="dijit.layout.ContentPane">
+			<div>
+				<label for="TitleBox">Title</label>
+				<div id="TitleBox" dojoType="dijit.form.TextBox"></div>
+			</div>
+
+			<div dojoType="dijit.layout.TabContainer" style="height: 15em;">
+				<div id="T1" dojoType="dijit.layout.ContentPane" title="Tab1">
+					<div>
+						<label for="T1_TextBox_1">Text Box 1</label>
+						<div id="T1_TextBox_1" dojoType="dijit.form.TextBox"></div>
+					</div>
+
+					<div>
+						<label for="T1_TextBox_2">Text Box 2</label>
+						<div id="T1_TextBox_2" dojoType="dijit.form.TextBox"></div>
+					</div>
+				</div>
+
+				<div id="T2" dojoType="dijit.layout.ContentPane" title="Tab2">
+					<div>
+						<label for="T2_TextBox_1">Text Box 1</label>
+						<div id="T2_TextBox_1" dojoType="dijit.form.TextBox"></div>
+					</div>
+
+					<div>
+						<label for="T2_TextBox_2">Text Box 2</label>
+						<div id="T2_TextBox_2" dojoType="dijit.form.TextBox"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

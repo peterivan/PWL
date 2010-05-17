@@ -45,6 +45,7 @@
 			[
 				{
 					TitleBox : 'Title: Item 1',
+					CheckBox : {attr: 'checked', value: 0},
 					T1_TextBox_1 : 'T1-TextBox-1: Item 1',
 					T1_TextBox_2 : 'T1-TextBox-2: Item 1',
 					T2_TextBox_1 : 'T2-TextBox-1: Item 1',
@@ -53,6 +54,7 @@
 
 				{
 					TitleBox : 'Title: Item 2',
+					CheckBox : {attr: 'checked', value: 1},
 					T1_TextBox_1 : 'T1-TextBox-1: Item 2',
 					T1_TextBox_2 : 'T1-TextBox-2: Item 2',
 					T2_TextBox_1 : 'T2-TextBox-1: Item 2',
@@ -61,6 +63,7 @@
 
 				{
 					TitleBox : 'Title: Item 3',
+					CheckBox : {attr: 'checked', value: 0},
 					T1_TextBox_1 : 'T1-TextBox-1: Item 3',
 					T1_TextBox_2 : 'T1-TextBox-2: Item 3',
 					T2_TextBox_1 : 'T2-TextBox-1: Item 3',
@@ -72,7 +75,7 @@
 
 			dojo.mixin(main, new pwl._ValueStack());
 
-			main.setIdStore(id_store);
+			main.attr('id_store', id_store);
 		});
 
 //]]>
@@ -104,6 +107,9 @@
 			<div>
 				<label for="TitleBox">Title</label>
 				<div id="TitleBox" dojoType="dijit.form.TextBox"></div>
+
+				<label for="CheckBox">Check Box</label>
+				<div id="CheckBox" dojoType="dijit.form.CheckBox"></div>
 			</div>
 
 			<div dojoType="dijit.layout.TabContainer" style="height: 15em;">

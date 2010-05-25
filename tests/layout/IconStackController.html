@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<title></title>
+
+		<script type="text/javascript">
+		//<![CDATA[
+
+		var djConfig =
+		{
+			parseOnLoad: true,
+			isDebug: true,
+			usePlainJson: true,
+			debugAtAllCosts: true,
+			preventBackButtonFix: false,
+			modulePaths: { 'pwl': '/PWL/pwl' },
+		};
+		//]]>
+		</script>
+
+		<style type="text/css">
+
+		@import url('/library/DojoToolkit/dijit/themes/tundra/tundra.css');
+		@import url('/PWL/pwl/themes/proxia/proxia.css');
+
+		#SCtrl-1-h
+		{
+			width: 10em;
+
+			float: left;
+		}
+
+		</style>
+
+		<script type="text/javascript" src="/lib/dojo/1.4.2-sdk/dojo/dojo.js"></script>
+
+		<script type="text/javascript">
+		//<![CDATA[
+
+		dojo.require('dijit.layout.StackContainer');
+		dojo.require('dijit.layout.TabContainer');
+		dojo.require('dijit.layout.ContentPane');
+
+		dojo.require('pwl.layout.IconStackController');
+
+		dojo.addOnLoad(function ()
+		{
+			/*c = new pwl.layout.IconTabContainer(null, 'W');
+			c.addChild(new dijit.layout.ContentPane({content: 'p', title:'i1'}));
+			c.addChild(new dijit.layout.ContentPane({content: 'p2', title:'i2'}));
+			c.addChild(new dijit.layout.ContentPane({content: 'p3', title:'i3'}));
+			c.addChild(new dijit.layout.ContentPane({content: 'p4', title:'i4'}));
+			c.addChild(new dijit.layout.ContentPane({content: 'p5', title:'i5'}));
+			c.startup();*/
+		});
+
+		//]]>
+		</script>
+	</head>
+
+	<body class="proxia tundra">
+
+		<div id="SCtrl-1-h" dojoType="pwl.layout.IconStackController" containerId="SC1" orientation="vertical"></div>
+		<div id="SCtrl-1-v" dojoType="pwl.layout.IconStackController" containerId="SC1" orientation="horizontal"></div>
+
+		<div id="SC1" dojoType="dijit.layout.StackContainer" style="width: 20em; height: 20em;">
+			<div dojoType="dijit.layout.ContentPane" title="Foo1">Bar content 1</div>
+			<div dojoType="dijit.layout.ContentPane" title="Foo2">Bar content 2</div>
+			<div dojoType="dijit.layout.ContentPane" title="Foo3">Bar content 3</div>
+			<div dojoType="dijit.layout.ContentPane" title="Foo4">Bar content 4</div>
+		</div>
+
+	</body>
+</html>

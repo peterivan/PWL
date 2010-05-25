@@ -1,0 +1,52 @@
+/******************************************************************************/
+/** StackController ***********************************************************/
+/******************************************************************************/
+
+.pwlLayoutIconStackController
+{
+	overflow: auto;
+
+	border: 1px solid #ebe9e6;
+}
+
+/******************************************************************************/
+/** DialogButton **************************************************************/
+/******************************************************************************/
+
+.pwlLayoutIconStackControllerButton
+{
+	margin: 7px;
+
+	min-width: 6.5em;
+	min-height: 6.5em;
+
+	text-align: center;
+
+	cursor: pointer;
+	border: 1px solid #ebe9e6;
+}
+
+.pwlLayoutIconStackControllerButtonChecked
+{
+	background-color: #c82c30;
+}
+
+.pwlLayoutIconStackControllerButton[aria-selected=false]:hover
+{
+	background-color: #ebe9e6;
+}
+
+.pwlLayoutIconStackControllerButton div:first-child
+{
+	margin: auto;
+
+	width: 62px;
+	height: 62px;
+}
+
+.pwlLayoutIconStackControllerButton strong
+{
+	display: block;
+
+	margin-top: 5px;
+}

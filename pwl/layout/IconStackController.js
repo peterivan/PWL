@@ -32,6 +32,33 @@ dojo.declare(
 		this.inherited(arguments);
 	},
 
+	/**************************************************************************/
+
+	setDisabled : function ( i_child, i_disabled )
+	{
+		var child = null;
+
+		if ( dojo.isObject(i_child) )
+			child = i_child;
+		else if ( dojo.isString(i_child) )
+			child = dijit.byId(i_child);
+		else
+			throw 'Child must be object or string.';
+
+		/**********************************************************************/
+
+		var tab_id = child.attr('id');
+
+		dojo.forEach (this.getChildren(), function ( c )
+		{
+			if ( c.attr('id') === tab_id )
+			{
+				c.attr('disabled', i_disabled);
+				c.controlButton.attr('disabled', i_disabled);
+			}
+		}, this);
+	}
+
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/

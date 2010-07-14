@@ -26,7 +26,7 @@
 	border: 1px solid #ebe9e6;
 }
 
-.pwlLayoutIconStackControllerButtonChecked
+.pwlLayoutIconStackControllerButton[aria-selected=true]
 {
 	background-color: #c82c30;
 }

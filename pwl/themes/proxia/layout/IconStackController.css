@@ -29,6 +29,7 @@
 .pwlLayoutIconStackControllerButton[aria-selected=true]
 {
 	background-color: #c82c30;
+	color: white;
 }
 
 .pwlLayoutIconStackControllerButton[aria-selected=false]:hover
@@ -47,6 +48,8 @@
 .pwlLayoutIconStackControllerButton strong
 {
 	display: block;
+
+	font-size: 0.9em;
 
 	margin-top: 5px;
 }

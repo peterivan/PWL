@@ -28,12 +28,13 @@
 	display:block;
 }
 
-
 .pwlLayoutIconStackControllerButton span[aria-selected=true]
 {
 	background-color: #c82c30;
 	color:White;
 	margin:2px;
+
+	color: white;
 }
 
 .pwlLayoutIconStackControllerButton span[aria-selected=false]:hover
@@ -56,4 +57,11 @@
 .pwlLayoutIconStackControllerButton strong
 {
 	display: block;
+<<<<<<< HEAD
+=======
+
+	font-size: 0.9em;
+
+	margin-top: 5px;
+>>>>>>> 20202c78b959c457100c78c2e928129fb28059c6
 }

@@ -1,9 +1,12 @@
-<div dojoAttachPoint="focusNode"
-	 dojoAttachEvent="onclick:_onButtonClick,onmouseenter:_onMouse,onmouseleave:_onMouse"
-	 waiRole="button"
-	 waiState="labelledby-${id}_label"
-	 class="${baseClass}"
->
-	<div dojoAttachPoint="iconNode"></div>
-	<strong dojoAttachPoint="titleNode, containerNode"></strong>
-</div>
+
+<span class="dijit dijitReset dijitInline ${baseClass}">
+	<span class="dijitReset dijitInline dijitButtonNode"
+		dojoAttachEvent="ondijitclick:_onButtonClick">
+		<span class="dijitReset dijitStretch dijitButtonContents " dojoAttachPoint="titleNode,focusNode"
+			waiRole="button" waiState="labelledby-${id}_label">
+			<span class="dijitReset dijitInline dijitIcon" dojoAttachPoint="iconNode"></span>
+			<span class="dijitReset dijitInline dijitButtonText" id="${id}_label" dojoAttachPoint="containerNode">
+			</span>
+		</span>
+	</span>
+</span>

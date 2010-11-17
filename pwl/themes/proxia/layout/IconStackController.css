@@ -5,8 +5,6 @@
 .pwlLayoutIconStackController
 {
 	overflow: auto;
-
-	border: 1px solid #ebe9e6;
 }
 
 /******************************************************************************/
@@ -15,31 +13,42 @@
 
 .pwlLayoutIconStackControllerButton
 {
-	margin: 7px;
-
-	min-width: 6.5em;
-	min-height: 6.5em;
+	margin: 4px 2px;
 
 	text-align: center;
 
 	cursor: pointer;
 	border: 1px solid #ebe9e6;
+	font-size:0.95em;
+	display:block;
 }
 
-.pwlLayoutIconStackControllerButtonChecked
+.pwlLayoutIconStackControllerButton span
+{
+	display:block;
+}
+
+
+.pwlLayoutIconStackControllerButton span[aria-selected=true]
 {
 	background-color: #c82c30;
+	color:White;
+	margin:2px;
 }
 
-.pwlLayoutIconStackControllerButton[aria-selected=false]:hover
+.pwlLayoutIconStackControllerButton span[aria-selected=false]:hover
 {
 	background-color: #ebe9e6;
 }
 
-.pwlLayoutIconStackControllerButton div:first-child
+.pwlLayoutIconStackControllerButton span[aria-selected=false]
+{
+	margin:2px;
+}
+
+.pwlLayoutIconStackControllerButton span[dojoAttachPoint=iconNode]
 {
 	margin: auto;
-
 	width: 62px;
 	height: 62px;
 }
@@ -47,6 +56,4 @@
 .pwlLayoutIconStackControllerButton strong
 {
 	display: block;
-
-	margin-top: 5px;
 }

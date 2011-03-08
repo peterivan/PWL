@@ -1,16 +1,16 @@
 
-.proxia .pwlWidgetAccept
+.proxia .pwlWidgetItemListEditor
 {
 }
 
-.proxia .pwlWidgetAccept span[dojoattachpoint=n_cancel]
+.proxia .pwlWidgetItemListEditor span[dojoAttachPoint=n_new_item]
 {
-	cursor: pointer;
-
 	color: navy;
+
+	cursor: pointer;
 }
 
-.proxia .pwlWidgetAccept span[dojoattachpoint=n_cancel]:hover
+.proxia .pwlWidgetItemListEditor span[dojoAttachPoint=n_new_item]:hover
 {
 	text-decoration: underline;
 }

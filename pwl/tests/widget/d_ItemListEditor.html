@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
 	<title>PWL.widget.ItemListEditor Design</title>
 
 	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
@@ -30,8 +32,7 @@
 
 		dojo.require('dijit.form.TextBox');
 
-
-
+		dojo.require('pwl.tests.widget.ItemListEditor');
 		dojo.require('pwl.widget.ItemListEditor');
 
 		dojo.addOnLoad( function ()
@@ -42,15 +43,22 @@
 				{
 					items:
 					[
-						{id: 1, value: 'Value 1'},
-						{id: 2, value: 'Value 2'},
-						{id: 3, value: 'Value 3'},
-						{id: 4, value: 'Value 4'}
+ 						{id: 1, value: 'Value 1', title: 'Title 1'},
+ 						{id: 2, value: 'Value 2', title: 'Title 2'},
+						{id: 3, value: 'Value 3', title: 'Title 3'},
+						{id: 4, value: 'Value 4', title: 'Title 4'}
 					]
 				}
 			});
 
-			var w = new pwl.widget.ItemListEditor({store: store, value_attr: 'value', item_widget: 'dijit.form.TextBox'}, 'W1');
+			var w = new pwl.widget.ItemListEditor(
+			{
+				store: store,
+				value_attr: 'value',
+				item_view_widget: 'pwl.tests.widget.ItemListEditor._View',
+				item_edit_widget: 'pwl.tests.widget.ItemListEditor._Edit',
+				item_new_widget: 'pwl.tests.widget.ItemListEditor._New',
+			}, 'W1');
 
 
 		});

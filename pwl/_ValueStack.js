@@ -17,6 +17,10 @@ dojo.declare(
 
 	_connections : [],
 
+	_eventsToListen : {
+		'dijit.form.CheckBox' : 'onChange'
+	},
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -32,41 +36,11 @@ dojo.declare(
 	postCreate : function ()
 	{
 		this.inherited(arguments);
+
+		this.attr(this.id_store);
 	},
 
 	/**************************************************************************/
-
-	setIdStore : function ( id_store )
-	{
-		if ( dojo.isArray(id_store) && id_store.length > 0 )
-		{
-			this._disconnectObjects();
-
-			this.id_store = id_store;
-
-			dojo.forEach(id_store, function (item)
-			{
-				for ( var w_id in item )
-				{
-					var widget = dijit.byId(w_id);
-
-					if ( widget )
-					{
-						widget.attr('value_stack', this);
-
-						var conn = dojo.connect(widget, 'onBlur', function ()
-						{
-							this.value_stack._storeValue(this.id, this.attr('value'));
-						});
-
-						this._connections.push(conn);
-					}
-				}
-			}, this);
-
-			this._setValues(0);
-		}
-	},
 
 	forward : function ()
 	{
@@ -102,6 +76,33 @@ dojo.declare(
 /** protected **/
 /******************************************************************************/
 
+	/**************************************************************************/
+	/** attrs *****************************************************************/
+
+	_setId_storeAttr : function ( id_store )
+	{
+		if ( dojo.isArray(id_store) && id_store.length > 0 )
+		{
+			this._disconnectObjects();
+
+			this.id_store = id_store;
+
+			var item = this.id_store[0];
+
+			for ( var w_id in item )
+			{
+				var widget = dijit.byId(w_id);
+
+				if ( widget )
+					this._connectObject(widget, item[w_id]);
+			}
+
+			this._setValues(0);
+		}
+	},
+
+	/**************************************************************************/
+
 	_setValues : function ( i_item )
 	{
 		var item = null;
@@ -116,8 +117,28 @@ dojo.declare(
 			var widget = dijit.byId(w_id);
 
 			if ( widget )
-				widget.attr('value', item[w_id]);
+			{
+				if ( typeof(item[w_id]) == 'object' && item[w_id].attr )
+					widget.attr(item[w_id].attr, item[w_id].value);
+				else
+					widget.attr('value', item[w_id]);
+			}
 		}
+	},
+
+	_connectObject : function ( target, store_declaration )
+	{
+		target.attr('value_stack', this);
+
+		var t_id = target.attr('id');
+		var declared_class = target.attr('declaredClass');
+
+		var event = store_declaration.event || this._eventsToListen[declared_class] || 'onBlur';
+
+		this._connections.push( dojo.connect(target, event, function ()
+		{
+			this.value_stack._storeValue(this);
+		}) );
 	},
 
 	_disconnectObjects : function ()
@@ -130,8 +151,16 @@ dojo.declare(
 		this._connections = [];
 	},
 
-	_storeValue : function ( w_id, value )
+	_storeValue : function ( target )
 	{
-		this.id_store[this.current_item_idx][w_id] = value;
+		var w_id = target.attr('id');
+		var item = this.id_store[this.current_item_idx][w_id];
+
+		if ( typeof(item) == 'object' && item.attr )
+		{
+			this.id_store[this.current_item_idx][w_id] = target.attr(item.attr);
+		}
+		else
+			this.id_store[this.current_item_idx][w_id] = target.attr('value');
 	}
 });

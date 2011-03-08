@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PWL.widget.Accept Design</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.Accept');
+
+		dojo.addOnLoad( function ()
+		{
+			var w = new pwl.widget.Accept({}, 'W1');
+
+			dojo.connect(w, 'onAccept', function () { alert('Accept'); });
+			dojo.connect(w, 'onCancel', function () { alert('Cancel'); });
+		});
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.Accept Design</h1>
+
+	<div id="W1"></div>
+</body>
+</html>

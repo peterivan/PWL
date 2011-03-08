@@ -1,0 +1,16 @@
+
+.proxia .pwlWidgetAccept
+{
+}
+
+.proxia .pwlWidgetAccept span[dojoattachpoint=n_cancel]
+{
+	cursor: pointer;
+
+	color: navy;
+}
+
+.proxia .pwlWidgetAccept span[dojoattachpoint=n_cancel]:hover
+{
+	text-decoration: underline;
+}

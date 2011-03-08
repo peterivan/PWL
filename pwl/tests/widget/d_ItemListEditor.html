@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PWL.widget.ItemListEditor Design</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('dojo.data.ItemFileWriteStore');
+
+		dojo.require('dijit.form.TextBox');
+
+
+
+		dojo.require('pwl.widget.ItemListEditor');
+
+		dojo.addOnLoad( function ()
+		{
+			var store = new dojo.data.ItemFileWriteStore(
+			{
+				data:
+				{
+					items:
+					[
+						{id: 1, value: 'Value 1'},
+						{id: 2, value: 'Value 2'},
+						{id: 3, value: 'Value 3'},
+						{id: 4, value: 'Value 4'}
+					]
+				}
+			});
+
+			var w = new pwl.widget.ItemListEditor({store: store, value_attr: 'value', item_widget: 'dijit.form.TextBox'}, 'W1');
+
+
+		});
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.ItemListEditor Design</h1>
+
+	<div id="W1"></div>
+</body>
+</html>

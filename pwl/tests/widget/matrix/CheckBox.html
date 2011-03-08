@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pwl.widget.matrix.CheckBox Automatic Tests</title>
+
+	<style type="text/css">
+		@import "../../dojo/resources/dojo.css";
+		@import "../../dojo/resources/dnd.css";
+		@import "../../dojo/tests/dnd/dndDefault.css";
+		@import "css/dijitTests.css";
+	</style>
+
+	<!-- required: a default dijit theme: -->
+	<link id="themeStyles" rel="stylesheet" href="../../../../dijit/themes/claro/claro.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+
+
+	</script>
+
+	<script language="JavaScript" type="text/javascript">
+		dojo.require('doh.runner');
+		dojo.require('dijit.dijit'); // optimize: load dijit layer
+		dojo.require('dojo.data.ItemFileWriteStore');
+
+		dojo.require('pwl.widget.WidgetMatrix');
+
+		dojo.addOnLoad(function()
+		{
+			doh.register
+			(
+				"pwl.tests.widget.matrix.CheckBox",
+				[
+					{
+						name: 'Rendering',
+
+						setUp: function ()
+						{
+							this.x_store = new dojo.data.ItemFileWriteStore(
+							{
+								data:
+								{
+									identifier: 'id',
+									label: 'name',
+
+									items:
+									[
+										{id: 1, name: 'Teacher 1', role: 'teacher'},
+										{id: 2, name: 'Teacher 2', role: 'teacher'},
+										{id: 3, name: 'Teacher 3', role: 'teacher'},
+										{id: 4, name: 'Teacher 4', role: 'teacher'},
+										{id: 5, name: 'Teacher 5', role: 'teacher'},
+
+										{id: 6, name: 'Student 1', role: 'student'},
+										{id: 7, name: 'Student 2', role: 'student'},
+										{id: 8, name: 'Student 3', role: 'student'},
+										{id: 9, name: 'Student 4', role: 'student'},
+										{id: 10, name: 'Student 5', role: 'student'}
+									]
+								}
+							});
+
+							this.y_store = new dojo.data.ItemFileWriteStore(
+							{
+								data:
+								{
+									identifier: 'class',
+									label: 'title',
+
+									items:
+									[
+										{class: 1, title: '1.A', g: 1},
+										{class: 2, title: '1.B', g: 1},
+										{class: 3, title: '2.A', g: 2},
+										{class: 4, title: '2.B', g: 2},
+										{class: 5, title: '3.A', g: 3},
+										{class: 6, title: '4.A', g: 4},
+										{class: 7, title: '4.B', g: 4},
+										{class: 8, title: '4.C', g: 4}
+									]
+								}
+							});
+
+						},
+
+						runTest: function ( t )
+						{
+							var matrix = new pwl.widget.WidgetMatrix(
+							{
+								x_store: this.x_store,
+								y_store: this.y_store
+							}, 'Matrix');
+
+							t.assertTrue(dijit.byId('Matrix'));
+
+							var th_head_count = dojo.query('thead th', matrix.domNode).length;
+
+							t.assertTrue(th_head_count == 10 + 1);
+
+							var th_body_count = dojo.query('tbody th', matrix.domNode).length;
+
+							t.assertTrue(th_body_count == 8);
+
+
+						}
+					}
+				]
+			);
+
+			doh.run();
+		});
+	</script>
+
+</head>
+<body class="proxia">
+
+	<h1 class="testTitle">PWL.matrix.CheckBox automated tests</h1>
+
+	<div id="Matrix"><!--  matrix will go here --></div>
+</body>
+</html>

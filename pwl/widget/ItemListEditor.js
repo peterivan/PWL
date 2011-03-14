@@ -23,9 +23,12 @@ dojo.declare(
 
 	accept_widget: '',
 
+	item_multimodal_widget: '',
 	item_view_widget: '',
 	item_edit_widget: '',
 	item_new_widget: '',
+
+	mode_map: null,
 
 	mode: 'view',
 	edit_mode: 'all',
@@ -47,6 +50,13 @@ dojo.declare(
 	postCreate: function ()
 	{
 		this.inherited(arguments);
+
+		this.mode_map =
+		{
+			'new': 'new',
+			'edit': 'edit',
+			'view': 'view'
+		};
 
 		if ( this.accept_widget )
 		{
@@ -134,17 +144,16 @@ dojo.declare(
 	{
 		i_items.forEach( function ( i_item )
 		{
-			var widget = widget_prop = null;
+			var widget = null;
 			var attrs =
 			{
 				store: this.store,
-				identity: i_item
+				identity: i_item,
+
+				default_mode: this.mode
 			};
 
-			if ( this.mode == 'edit' )
-				widget_prop = this.item_edit_widget;
-			else
-				widget_prop = this.item_view_widget;
+			var widget_prop = this.item_multimodal_widget;
 
 			if ( dojo.isFunction(widget_prop) )
 				widget = new widget_prop(attrs);
@@ -177,10 +186,10 @@ dojo.declare(
 			store: this.store
 		};
 
-		if ( dojo.isFunction(this.item_new_widget) )
-			widget = new this.item_new_widget(attrs);
-		else if ( typeof(this.item_new_widget) == 'string' )
-			widget = new dojo.getObject(this.item_new_widget)(attrs);
+		if ( dojo.isFunction(this.item_multimodal_widget) )
+			widget = new this.item_multimodal_widget(attrs);
+		else if ( typeof(this.item_multimodal_widget) == 'string' )
+			widget = new dojo.getObject(this.item_multimodal_widget)(attrs);
 
 		if ( widget )
 		{

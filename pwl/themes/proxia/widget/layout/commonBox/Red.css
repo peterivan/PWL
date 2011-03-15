@@ -1,0 +1,9 @@
+section[class~="pwlWidgetLayoutCommonBox"][class~="Red"] > header
+{
+	border-bottom: 1px solid #C82C30;
+}
+
+section[class~="pwlWidgetLayoutCommonBox"][class~="Red"] > header > h1
+{
+	color: #C82C30;
+}

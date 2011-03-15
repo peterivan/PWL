@@ -1,7 +1,15 @@
-<div baseClass="${baseClass}">
+<section baseClass="${baseClass}">
 
-	<div dojoAttachPoint="containerNode"></div>
+	<header dojoAttachPoint="n_header">
+		<h1 dojoAttachPoint="n_title">${title}</h1>
+	</header>
 
-	<div><span dojoAttachPoint="n_new_item">Nový</span></div>
+	<div dojoAttachPoint="n_main_container">
+		<div dojoAttachPoint="containerNode"></div>
+		<div class="n_new_item_box" dojoAttachPoint="n_new_item_box">
+			<span dojoAttachPoint="n_new_item">Nový</span>
+		</div>
+	</div>
+
 	<div dojoAttachPoint="n_accept"></div>
-</div>
+</section>

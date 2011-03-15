@@ -1,0 +1,42 @@
+section[class~="pwlWidgetLayoutCommonBox"][class~="SimpleGray"]
+{
+	border-color: silver;
+
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	-webkit-border-radius: 0.4em;
+}
+
+section[class~="pwlWidgetLayoutCommonBox"][class~="SimpleGray"] > header
+{
+	color: #565353;
+
+	margin: 0;
+
+	background-color: #C8C8C8;
+
+	border-bottom: none;
+
+	border-top-right-radius: 0.4em;
+	border-top-left-radius: 0.4em;
+
+	-moz-border-radius-topright: 0.4em;
+	-moz-border-radius-topleft: 0.4em;
+
+	-webkit-border-top-left-radius: 0.4em;
+	-webkit-border-top-right-radius: 0.4em;
+}
+
+section[class~="pwlWidgetLayoutCommonBox"][class~="SimpleGray"] > div
+{
+	margin: 0 5px 5px 5px;
+
+	border-bottom-right-radius: 0.4em;
+	border-bottom-left-radius: 0.4em;
+
+	-moz-border-radius-bottomright: 0.4em;
+	-moz-border-radius-bottomleft: 0.4em;
+
+	-webkit-border-bottom-left-radius: 0.4em;
+	-webkit-border-bottom-right-radius: 0.4em;
+}

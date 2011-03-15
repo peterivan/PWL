@@ -38,6 +38,8 @@ dojo.declare(
 
 	value_attr: '',
 
+	title: '',
+
 	_store_connects: [],
 
 /******************************************************************************/
@@ -74,8 +76,43 @@ dojo.declare(
 		dojo.connect(this.accept_widget, 'onCancel', this, 'cancel');
 		dojo.connect(this.n_new_item, 'onclick', this, 'addNewItem');
 
+		if ( !this.title )
+			dojo.style(this.n_header, 'display', 'none');
+
 		this.refresh();
 	},
+
+/******************************************************************************/
+/** Layout ********************************************************************/
+
+	resize: function ()
+	{
+		this.inherited(arguments);
+
+		var p_box = dojo.contentBox(this.domNode.parentNode);
+
+		dojo.marginBox(this.domNode, { w: p_box.w, h: p_box.h });
+
+		var t_box = dojo.marginBox(this.domNode);
+		var h_box = dojo.marginBox(this.n_header);
+		var a_box = dojo.marginBox(this.n_accept);
+
+		var mc_box =
+		{
+			h: t_box.h - h_box.h - a_box.h
+		};
+
+		dojo.marginBox(this.n_main_container, mc_box);
+	},
+
+/******************************************************************************/
+/** Events ********************************************************************/
+
+	onLoad: function ()
+	{},
+
+	onNew: function ( i_item )
+	{},
 
 /******************************************************************************/
 
@@ -100,7 +137,13 @@ dojo.declare(
 					i_child.saveValues();
 			});
 
-			this.store.save();
+			this.store.save(
+			{
+				scope: this,
+
+				onComplete: this.saveComplete,
+				onError: this.saveError
+			});
 
 			this.set('mode', 'view');
 		}
@@ -109,6 +152,8 @@ dojo.declare(
 	cancel: function ()
 	{
 		this.set('mode', 'view');
+
+		this.refresh();
 	},
 
 	addNewItem: function ()
@@ -118,8 +163,15 @@ dojo.declare(
 	},
 
 /******************************************************************************/
-/** Events ********************************************************************/
+/** Store event handlers ******************************************************/
 
+	saveComplete: function ()
+	{
+	},
+
+	saveError: function ()
+	{
+	},
 
 /******************************************************************************/
 /** protected **/
@@ -127,6 +179,11 @@ dojo.declare(
 
 	_loadData: function ()
 	{
+		this.getChildren().forEach( function ( i_child )
+		{
+			i_child.destroyRecursive();
+		});
+
 		this.store.fetch(
 		{
 			scope: this,
@@ -136,6 +193,8 @@ dojo.declare(
 			{
 				if ( i_data.length > 0 )
 					this._renderItems(i_data);
+
+				this.onLoad();
 			}
 		});
 	},
@@ -183,7 +242,8 @@ dojo.declare(
 		var widget = null;
 		var attrs =
 		{
-			store: this.store
+			store: this.store,
+			mode: 'new'
 		};
 
 		if ( dojo.isFunction(this.item_multimodal_widget) )
@@ -194,6 +254,13 @@ dojo.declare(
 		if ( widget )
 		{
 			this.addChild(widget);
+
+			dojo.connect(widget, 'onClick', this, function ()
+			{
+				this.set('mode', 'edit');
+			});
+
+			this.onNew(widget);
 		}
 	},
 
@@ -204,16 +271,23 @@ dojo.declare(
 	{
 		if ( this.mode != i_value )
 		{
+			var anim_props =
+			{
+				node: this.n_accept,
+				onEnd: dojo.hitch(this, function () { this.resize(); })
+			};
+
 			if ( this.mode == 'edit' )
-				dojo.fx.wipeOut({node: this.n_accept}).play();
+				dojo.fx.wipeOut(anim_props).play();
 			else
-				dojo.fx.wipeIn({node: this.n_accept}).play();
+				dojo.fx.wipeIn(anim_props).play();
 
 			this.mode = i_value;
 
-			this.getChildren().forEach( function ( i_child ) { i_child.destroyRecursive(); });
-
-			this._loadData();
+			this.getChildren().forEach( function ( i_child )
+			{
+				i_child.set('mode', this.mode_map[i_value]);
+			}, this);
 		}
 	},
 

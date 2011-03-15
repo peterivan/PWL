@@ -22,8 +22,29 @@ dojo.declare(
 
 	postCreate: function ()
 	{
-		this.set('mode', this.default_mode);
+		this.set('mode', this.mode || this.default_mode);
 	},
+
+/******************************************************************************/
+
+	refreshAllModes: function ()
+	{
+		this.available_modes.forEach( this.refreshMode, this );
+	},
+
+	refreshMode: function ( i_mode )
+	{
+		var mode = i_mode.charAt(0).toUpperCase() + i_mode.substr(1);
+
+		var method_name = 'refresh' + mode + 'Mode';
+
+		if ( dojo.isFunction(this[method_name]) )
+			this[method_name]();
+	},
+
+/******************************************************************************/
+/** Events ********************************************************************/
+
 
 /******************************************************************************/
 /** protected **/
@@ -54,8 +75,6 @@ dojo.declare(
 					dojo.style(i_node, 'display', this.display_as);
 				else
 					dojo.style(i_node, 'display', 'none');
-
-				console.log(this.mode);
 			}, this);
 		}
 	}

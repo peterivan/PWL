@@ -1,0 +1,35 @@
+section[class~="pwlWidgetLayoutCommonBox"][class~="Compact"]
+{
+	border: none;
+}
+
+section[class~="pwlWidgetLayoutCommonBox"][class~="Compact"] > header
+{
+	line-height: 1em;
+
+	border-bottom: 1px solid silver;
+}
+
+section[class~="pwlWidgetLayoutCommonBox"][class~="Compact"] > header > h1
+{
+	padding: 0;
+	margin: 0;
+
+	color: #565353;
+
+	font-size: 0.9em;
+}
+
+section[class~="pwlWidgetLayoutCommonBox"][class~="Compact"] > div
+{
+	margin: 0 5px 5px 5px;
+
+	border-bottom-right-radius: 0.4em;
+	border-bottom-left-radius: 0.4em;
+
+	-moz-border-radius-bottomright: 0.4em;
+	-moz-border-radius-bottomleft: 0.4em;
+
+	-webkit-border-bottom-left-radius: 0.4em;
+	-webkit-border-bottom-right-radius: 0.4em;
+}

@@ -1,0 +1,63 @@
+@import url('commonBox/Compact.css');
+@import url('commonBox/Gray.css');
+@import url('commonBox/Red.css');
+@import url('commonBox/SimpleGray.css');
+
+.pwlWidgetLayoutCommonBox
+{
+	border: 1px solid #707070;
+}
+
+.pwlWidgetLayoutCommonBox > header
+{
+	position: relative;
+
+	margin-left: 5px;
+	margin-right: 5px;
+
+	line-height: 30px;
+	color: #C82C30;
+
+	border-bottom: 1px solid #C82C30;
+}
+
+.pwlWidgetLayoutCommonBox > header > h1
+{
+	margin: 0;
+	padding: 0;
+
+	font-size: 1.2em;
+	font-weight: bold;
+
+	text-indent: 0.5em;
+}
+
+.pwlWidgetLayoutCommonBox > header > div
+{
+	display: none;
+	position: absolute;
+
+	top: 0;
+	right: 0;
+
+	width: 35px;
+	height: 35px;
+
+	cursor: pointer;
+
+	background-image: url('../images/icons/32x32/help.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.pwlWidgetLayoutCommonBox > header > div:hover
+{
+	background-image: url('../images/icons/32x32/help-hover.png');
+}
+
+.pwlWidgetLayoutCommonBox > div
+{
+	margin: 5px;
+
+	overflow: auto;
+}

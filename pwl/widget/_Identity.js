@@ -12,6 +12,10 @@ dojo.declare(
 	store: '',
 	identity: '',
 
+	event_manager: '',
+
+	delete_message: 'Naozaj vymazať?',
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -23,6 +27,33 @@ dojo.declare(
 	save: function ()
 	{
 	},
+
+	delete: function ( i_immediately )
+	{
+		var immediately = i_immediately || false;
+
+		if ( this.store && this.identity )
+		{
+			var e = new academy.widget.eventBar.event.YesNo(
+			{
+				message: this.delete_message
+			});
+
+			this.event_manager.registerEvent(e);
+
+			e.fire().then( function ()
+			{
+				this.store.deleteItem(this.identity);
+
+				if ( immediately )
+					this.store.save();
+			});
+		}
+	},
+
+	reset: function ()
+	{
+	}
 
 /******************************************************************************/
 /** protected **/

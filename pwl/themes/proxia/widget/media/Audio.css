@@ -1,0 +1,44 @@
+
+.proxia .pwlWidgetMediaAudio
+{
+	width: 150px;
+	height: 45px;
+
+	background-color: black;
+
+	text-align: center;
+}
+
+.proxia .pwlWidgetMediaAudio button
+{
+	width: 42px;
+	height: 45px;
+
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center center;
+
+	border: none;
+
+	cursor: pointer;
+}
+
+.proxia .pwlWidgetMediaAudio button.play
+{
+	background-image: url('../../images/media/play.png');
+}
+
+.proxia .pwlWidgetMediaAudio button.pause
+{
+	background-image: url('../../images/media/pause.png');
+}
+
+.proxia .pwlWidgetMediaAudio button.rewind
+{
+	background-image: url('../../images/media/rewind.png');
+}
+
+.proxia .pwlWidgetMediaAudio button.stop
+{
+	background-image: url('../../images/media/stop.png');
+}

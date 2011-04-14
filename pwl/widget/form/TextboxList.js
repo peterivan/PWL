@@ -75,13 +75,41 @@ dojo.declare(
 
 	},
 
+	/*
+		create textboxes according data
+		data = ['value1','value2','value3','value4']
+	*/
+	_setDataAttr: function(data)
+	{
+		var children = this.getChildren();
+
+		/* remove all textboxes: reset widget */
+		dojo.forEach(children,function(child,index)
+		{
+			this.removeChild(child);
+
+		},this);
+
+		/* add textboxes from data array */
+		dojo.forEach(data,function(item)
+		{
+			this._createTextBox(item);
+
+		},this);
+
+		this._createTextBox();//create last empty box
+
+	},
+
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
 
-	_createTextBox: function()
+	_createTextBox: function(value)
 	{
-		var box = new pwl.widget.form.TextBox();
+		value = value ? value : '';
+
+		var box = new pwl.widget.form.TextBox({value:value});
 
 		this.addChild(box);
 
@@ -109,6 +137,7 @@ dojo.declare(
 		});
 
 		box.focus();
-	},
+	}
+
 
 });

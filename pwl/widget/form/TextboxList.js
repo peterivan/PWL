@@ -18,7 +18,7 @@ dojo.declare(
 
 	templateString: dojo.cache('pwl.widget.form', 'templates/TextboxList.html'),
 
-	c_textBoxes: [],
+	min_empty_textboxes:1,
 
 /******************************************************************************/
 /** public **/
@@ -39,17 +39,7 @@ dojo.declare(
 
 	},
 
-
 	addTextBox: function()
-	{
-		var box = new pwl.widget.form.TextBox();
-		this.addChild(box);
-		this.c_textBoxes.push(dojo.connect(box,"onChange",this,"addNewChild"));
-		box.focus();
-	},
-
-
-	addNewChild: function()
 	{
 		var children = this.getChildren();
 
@@ -59,35 +49,66 @@ dojo.declare(
 
 		var add_new_child = false;
 
-		var index = 0;
-
-		dojo.forEach(children,function(child)
+		dojo.forEach(children,function(child,index)
 		{
-			index++;
+			index += 1;
 
 			var child_value = child.get("value");
 
-			if(child_value.length == 0 && count_children > 1 && index != count_children)
-				remove_child = child;
+			if(child_value.length == 0 && count_children > this.min_empty_textboxes && index != count_children)
+			{
+				this.removeChild(child);
+			}
 
 			if(child_value.length != 0 && index == count_children)
-				add_new_child = true;
+			{
+				this._createTextBox()
+			}
+
+		},this);
+
+
+		if(count_children == 0)
+		{
+			this._createTextBox()
+		}
+
+	},
+
+/******************************************************************************/
+/** protected **/
+/******************************************************************************/
+
+	_createTextBox: function()
+	{
+		var box = new pwl.widget.form.TextBox();
+
+		this.addChild(box);
+
+		dojo.connect(box,"onChange",this,"addTextBox");
+
+		dojo.connect(box,"onKeyPress",this,function(i_evt)
+		{
+
+			if(i_evt.keyCode == 13) //ENTER = 13
+			{
+				this.addTextBox();
+
+			}
+			else if(i_evt.keyCode == 8) //Backspace = 8
+			{
+				var box_value = box.get("value");
+
+				if(box_value.length == 0 )
+				{
+					this.addTextBox();
+				}
+
+			}
 
 		});
 
-		if(remove_child)
-		{
-			this.removeChild(remove_child);
-		}
-
-		if(add_new_child && !remove_child)
-		{
-			var new_child = new pwl.widget.form.TextBox();
-			this.addChild(new_child);
-			this.c_textBoxes.push(dojo.connect(new_child,"onChange",this,"addNewChild"));
-			new_child.focus();
-
-		}
-	}
+		box.focus();
+	},
 
 });

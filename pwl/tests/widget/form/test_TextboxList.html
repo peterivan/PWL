@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>pwl.widget.form.TextboxList</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+//		dojo.require('dijit.form.TextBox');
+
+		dojo.require('pwl.widget.form.TextboxList');
+
+		dojo.addOnLoad( function ()
+		{
+
+			var w = new pwl.widget.form.TextboxList(
+			{
+			}, 'W1');
+
+
+		});
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">pwl.widget.form.TextboxList </h1>
+
+	<div id="W1"></div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.pwlWidgetFormTextboxList
+{
+	margin:4px;
+}
+
+.pwlWidgetFormTextboxList > div[class~=dijitTextBox]
+{
+	display:block;
+	margin: 4px 2px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>pwl.widget.form.TextBox</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../../dijit/themes/claro/claro.css">
+	<link id="themeStyles" rel="stylesheet" href="../../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.form.TextBox');
+
+		dojo.addOnLoad( function ()
+		{
+
+			var w = new pwl.widget.form.TextBox(
+			{
+			}, 'W1');
+
+
+		});
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">pwl.widget.form.TextBox </h1>
+
+	<div id="W1"></div>
+</body>
+</html>

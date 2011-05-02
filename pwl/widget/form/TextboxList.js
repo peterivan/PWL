@@ -75,6 +75,11 @@ dojo.declare(
 
 	},
 
+	onChange : function ()
+	{
+
+	},
+
 	/*
 		create textboxes according data
 		data = ['value1','value2','value3','value4']
@@ -101,6 +106,23 @@ dojo.declare(
 
 	},
 
+	_getDataAttr: function()
+	{
+		var children = this.getChildren();
+
+		var data = [];
+
+		dojo.forEach(children,function(child)
+		{
+			if(child.get('value'))
+				data.push(child.get('value'))
+				
+		},this);
+
+		return data;
+
+	},
+
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
@@ -114,6 +136,10 @@ dojo.declare(
 		this.addChild(box);
 
 		dojo.connect(box,"onChange",this,"addTextBox");
+
+
+		dojo.connect(box,"onChange",this,"onChange");
+		dojo.connect(box,"onErase",this,"onChange");
 
 		dojo.connect(box,"onKeyPress",this,function(i_evt)
 		{

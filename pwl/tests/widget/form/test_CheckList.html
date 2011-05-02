@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>pwl.widget.form.TextboxList</title>
+
+	<style type="text/css">
+		@import url('../../../../dijit/themes/claro/claro.css');
+		@import url('../../resources/test.css');
+		@import url('../../../themes/proxia/proxia.css');
+	</style>
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('dojo.data.ItemFileWriteStore');
+
+		dojo.require('pwl.widget.form.CheckList');
+
+		dojo.addOnLoad( function ()
+		{
+			var s1_label = new dojo.data.ItemFileWriteStore(
+			{
+				data:
+				{
+					identifier: 'id',
+					items: [
+						{id: 1, given_name: 'Peter', family_name: 'Ivan'},
+						{id: 2, given_name: 'Roman', family_name: 'Vrto'},
+						{id: 3, given_name: 'Ondrej', family_name: 'Remeselnik'},
+						{id: 4, given_name: 'Jozef', family_name: 'Drak'},
+						{id: 5, given_name: 'Jan', family_name: 'Melich'},
+						{id: 6, given_name: 'Valeria', family_name: 'Ciamporova'},
+						{id: 7, given_name: 'Alena', family_name: 'Ostrihonova'},
+						{id: 8, given_name: 'Alena', family_name: 'Matuskova'},
+						{id: 9, given_name: 'Dobroslav', family_name: 'Chrobak'},
+						{id: 10, given_name: 'Margita', family_name: 'Figuli'}
+					]
+				}
+			});
+
+			var s1_value = new dojo.data.ItemFileWriteStore(
+			{
+				data:
+				{
+					identifier: 'id',
+					items: [
+						{id: 1, given_name: 'Peter', family_name: 'Ivan'},
+						{id: 3, given_name: 'Ondrej', family_name: 'Remeselnik'},
+						{id: 4, given_name: 'Jozef', family_name: 'Drak'},
+						{id: 6, given_name: 'Valeria', family_name: 'Ciamporova'},
+						{id: 10, given_name: 'Margita', family_name: 'Figuli'}
+					]
+				}
+			});
+
+			var w = new pwl.widget.form.CheckList(
+			{
+				label_store: s1_label,
+				value_store: s1_value,
+
+				formatter: function (i_item )
+				{
+					var given_name = this.label_store.getValue(i_item, 'given_name');
+					var family_name = this.label_store.getValue(i_item, 'family_name');
+
+					return given_name + ' ' + family_name;
+				}
+			}, 'W1');
+
+
+			var w = new pwl.widget.form.CheckList(
+			{
+				label_store: s1_label,
+				value_store: s1_value,
+				enable_search: true,
+				search_attr: 'family_name',
+
+				formatter: function (i_item )
+				{
+					var given_name = this.label_store.getValue(i_item, 'given_name');
+					var family_name = this.label_store.getValue(i_item, 'family_name');
+
+					return given_name + ' ' + family_name;
+				}
+			}, 'W2');
+
+			var w = new pwl.widget.form.CheckList(
+			{
+				label_store: s1_label,
+				value_store: s1_value,
+				show_accept_widget: true,
+
+				formatter: function (i_item )
+				{
+					var given_name = this.label_store.getValue(i_item, 'given_name');
+					var family_name = this.label_store.getValue(i_item, 'family_name');
+
+					return given_name + ' ' + family_name;
+				}
+			}, 'W3');
+		});
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">pwl.widget.form.CheckList</h1>
+
+	<section style="width: 200px; height: 250px;">
+		<header>Plain CheckList</header>
+		<div id="W1"></div>
+	</section>
+
+	<section style="width: 200px; height: 250px;">
+		<header>CheckList width search enabled</header>
+		<div id="W2"></div>
+	</section>
+
+	<section style="width: 200px; height: 250px;">
+		<header>CheckList width accept widget enabled</header>
+		<div id="W3"></div>
+	</section>
+</body>
+</html>

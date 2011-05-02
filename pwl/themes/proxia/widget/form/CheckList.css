@@ -1,0 +1,16 @@
+.pwlWidgetFormCheckList
+{
+
+}
+
+.pwlWidgetFormCheckList li
+{
+	cursor: pointer;
+}
+
+.pwlWidgetFormCheckList li.selected
+{
+	background-color: red;
+}
+
+

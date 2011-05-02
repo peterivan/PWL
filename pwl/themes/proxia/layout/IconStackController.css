@@ -14,18 +14,26 @@
 .pwlLayoutIconStackControllerButton
 {
 	margin: 4px 2px;
-
+	width:95%;
 	text-align: center;
-
 	cursor: pointer;
 	border: 1px solid #ebe9e6;
 	font-size:0.95em;
 	display:block;
+	border-radius: 4px;
+	-moz-border-radius:4px;
+}
+
+.tundra .pwlLayoutIconStackControllerButton
+{
+	margin-bottom:5px;
 }
 
 .pwlLayoutIconStackControllerButton span
 {
 	display:block;
+	border-radius: 4px;
+	-moz-border-radius:4px;
 }
 
 .pwlLayoutIconStackControllerButton span[aria-selected=true]
@@ -33,7 +41,6 @@
 	background-color: #c82c30;
 	color:White;
 	margin:2px;
-
 	color: white;
 }
 
@@ -57,11 +64,6 @@
 .pwlLayoutIconStackControllerButton strong
 {
 	display: block;
-<<<<<<< HEAD
-=======
-
 	font-size: 0.9em;
-
 	margin-top: 5px;
->>>>>>> 20202c78b959c457100c78c2e928129fb28059c6
 }

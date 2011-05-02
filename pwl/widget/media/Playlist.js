@@ -15,7 +15,7 @@ dojo.declare(
 {
 	baseClass: 'pwlWidgetMediaPlaylist',
 
-	templateString: dojo.cache('pwl.widget.media', 'templates/Playlist.html'),
+
 	widgetsInTemplate: true,
 
 	player_id: '',

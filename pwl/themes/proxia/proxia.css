@@ -7,6 +7,6 @@
 
 @import url('widget/media/Audio.css');
 
-@import url('widget/form/TextboxList.css');
-
+@import url('widget/form/CheckList.css');
 @import url('widget/form/TextBox.css');
+@import url('widget/form/TextboxList.css');

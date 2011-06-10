@@ -13,4 +13,25 @@
 	background-color: red;
 }
 
+.pwlWidgetFormCheckList div[dojoattachpoint=n_accept_container]
+{
+	position: relative;
+
+	text-align: right;
+}
+
+.pwlWidgetFormCheckList div[dojoattachpoint=n_accept]
+{
+	position: absolute;
+
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	height: 0;
+	overflow: hidden;
+
+	text-align: right;
+}
+
 

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.Matrix</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('dojo.data.ItemFileReadStore');
+		dojo.require('dojo.data.ItemFileWriteStore');
+
+		dojo.require('dijit.form.TextBox');
+		dojo.require('dijit.form.CheckBox');
+
+		dojo.require('pwl.widget.Matrix');
+
+		dojo.addOnLoad( function ()
+		{
+			var x_store = new dojo.data.ItemFileReadStore(
+			{
+				data:
+				{
+					items:
+					[
+ 						{id: 1, name: 'Peter Ivan'},
+ 						{id: 2, name: 'Roman Vrto'},
+						{id: 3, name: 'Ondrej Remeselnik'},
+						{id: 4, name: 'Foo Bar'}
+					]
+				}
+			});
+
+			var y_store = new dojo.data.ItemFileReadStore(
+			{
+				data:
+				{
+					items:
+					[
+ 						{id: 1, title: 'Slovensky jazyk'},
+ 						{id: 2, title: 'Matematika'},
+						{id: 3, title: 'Hudobna vychova'},
+						{id: 4, title: 'Madarsky jazyk'}
+					]
+				}
+			});
+
+			var value_store = new dojo.data.ItemFileReadStore(
+			{
+				data:
+				{
+					items:
+					[
+ 						{id: 1, title: 'Slovensky jazyk'},
+ 						{id: 2, title: 'Matematika'},
+						{id: 3, title: 'Hudobna vychova'},
+						{id: 4, title: 'Madarsky jazyk'}
+					]
+				}
+			});
+
+			var w = new pwl.widget.Matrix(
+			{
+				x_store: x_store,
+				x_label_attribute: 'name',
+
+				y_store: y_store,
+				y_label_attribute: 'title',
+
+				value_widget: 'dijit.form.CheckBox'
+			}, 'W1');
+
+
+		});
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.Matrix</h1>
+
+	<div id="W1"></div>
+</body>
+</html>

@@ -18,16 +18,19 @@ dojo.declare(
 
 	buttonWidget: 'pwl.layout._IconStackControllerButton',
 
+	current_page: null,
+	previous_page: null,
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
 
-	orientation : 'vertical',
+	orientation: 'vertical',
 
-	/**************************************************************************/
-	/** startup ***************************************************************/
+/******************************************************************************/
+/** Startup, Teardown *********************************************************/
 
-	postCreate : function ()
+	postCreate: function ()
 	{
 		this.inherited(arguments);
 	},
@@ -47,17 +50,21 @@ dojo.declare(
 
 		/**********************************************************************/
 
-		var tab_id = child.attr('id');
+		var tab_id = child.get('id');
 
 		dojo.forEach (this.getChildren(), function ( c )
 		{
-			if ( c.attr('id') === tab_id )
+			if ( c.get('id') === tab_id )
 			{
-				c.attr('disabled', i_disabled);
-				c.controlButton.attr('disabled', i_disabled);
+				c.set('disabled', i_disabled);
+				c.controlButton.set('disabled', i_disabled);
 			}
 		}, this);
-	}
+	},
+
+/******************************************************************************/
+/** Events ********************************************************************/
+
 
 /******************************************************************************/
 /** protected **/
@@ -84,9 +91,9 @@ dojo.declare(
 	/**************************************************************************/
 	/** events ****************************************************************/
 
-	onClick : function ()
+	onClick : function ( i_evt )
 	{
-		if ( this.attr('disabled') )
+		if ( this.get('disabled') )
 			return;
 
 		this.inherited(arguments);

@@ -1,13 +1,15 @@
 dojo.provide('pwl.widget.form.CheckList');
 
-dojo.require('pwl.widget.Accept');
-dojo.require('pwl.widget.form.TextBox');
-
 /******************************************************************************/
 /******************************************************************************/
 
 dojo.require('dijit._Widget');
 dojo.require('dijit._Templated');
+
+dojo.require('dojo.fx');
+
+dojo.require('pwl.widget.Accept');
+dojo.require('pwl.widget.form.TextBox');
 
 /******************************************************************************/
 
@@ -178,6 +180,8 @@ dojo.declare(
 		if ( this.w_search_box )
 			this.w_search_box.set('value', '');
 
+		this._hideAcceptWidget();
+
 		this._render();
 	},
 
@@ -185,6 +189,8 @@ dojo.declare(
 	{
 		if ( this.w_search_box )
 			this.w_search_box.set('value', '');
+
+		this._hideAcceptWidget();
 
 		dojo.query('li', this.n_list).forEach( function ( i_node )
 		{
@@ -212,7 +218,7 @@ dojo.declare(
 	{
 		var search_term = null;
 
-		if ( i_search_term.length > 0 )
+		if ( i_search_term && i_search_term.length > 0 )
 			search_term = i_search_term;
 		else if ( this.w_search_box )
 			search_term = this.w_search_box.get('value');
@@ -265,6 +271,8 @@ dojo.declare(
 
 	onChange: function ( i_items )
 	{
+		this._showAcceptWidget();
+
 		if ( this.change_topic )
 		{
 			console.debug('published topic: ', this.change_topic, i_items);
@@ -275,6 +283,8 @@ dojo.declare(
 
 	onSave: function ( i_items )
 	{
+		this._hideAcceptWidget();
+
 		if ( this.save_topic )
 		{
 			console.debug('published topic: ', this.save_topic, i_items);
@@ -462,10 +472,51 @@ dojo.declare(
 
 	_createAcceptWidget: function ()
 	{
+		dojo.style(this.n_accept_container, 'height', '2.6em');
+
 		this.w_accept_widget = new pwl.widget.Accept(dojo.mixin({}, this.accept_widget_mixin || {}), dojo.create('span', null, this.n_accept));
 
 		dojo.connect(this.w_accept_widget, 'onAccept', this, 'save');
 		dojo.connect(this.w_accept_widget, 'onCancel', this, 'reset');
-	}
+	},
 
+	_acceptWidgetIsVisible: function ()
+	{
+		if ( this.w_accept_widget )
+		{
+			var b_accept = dojo.marginBox(this.n_accept);
+
+			return b_accept.h > 0;
+		}
+
+		return false;
+	},
+
+	_showAcceptWidget: function ()
+	{
+		if ( this.w_accept_widget )
+		{
+			if ( !this._acceptWidgetIsVisible() )
+			{
+				dojo.fx.wipeIn(
+				{
+					node: this.n_accept
+				}).play();
+			}
+		}
+	},
+
+	_hideAcceptWidget: function ()
+	{
+		if ( this.w_accept_widget )
+		{
+			if ( this._acceptWidgetIsVisible() )
+			{
+				dojo.fx.wipeOut(
+				{
+					node: this.n_accept
+				}).play();
+			}
+		}
+	}
 });

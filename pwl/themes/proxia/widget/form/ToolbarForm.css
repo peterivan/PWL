@@ -1,0 +1,20 @@
+.proxia .pwlWidgetFormToolbarForm .toolbar
+{
+	position: relative;
+}
+
+.proxia .pwlWidgetFormToolbarForm .toolbar .dijitToolbar
+{
+	position: absolute;
+
+	bottom: 0;
+	left: 0;
+}
+
+.proxia .pwlWidgetFormToolbarForm .toolbar span['dojoAttachPoint=n_accept']
+{
+	position: absolute;
+
+	bottom: 0;
+	right: 0;
+}

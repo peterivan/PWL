@@ -31,12 +31,18 @@ dojo.declare(
 		dojo.addClass(this.domNode, 'pwlAcceptable');
 	},
 
+	startup: function()
+	{
+		this.inherited(arguments);
+		
+		dojo.style(this.n_accept,"display","none");
+	},
 /******************************************************************************/
 
 	isAcceptVisible: function ()
 	{
 		if ( this.n_accept )
-			return dojo.style(this.n_accept, 'height') > 0;
+			return dojo.contentBox(this.n_accept).h > 0;
 
 		return false;
 	},
@@ -45,6 +51,7 @@ dojo.declare(
 	{
 		if ( this.n_accept && !this.isAcceptVisible() )
 		{
+			
 			dojo.fx.wipeIn(
 			{
 				node: this.n_accept
@@ -56,6 +63,7 @@ dojo.declare(
 	{
 		if ( this.n_accept && this.isAcceptVisible() )
 		{
+			
 			dojo.fx.wipeOut(
 			{
 				node: this.n_accept

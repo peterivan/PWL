@@ -1,20 +1,87 @@
 .proxia .pwlWidgetFormToolbarForm .toolbar
 {
 	position: relative;
+	height:40px
 }
 
-.proxia .pwlWidgetFormToolbarForm .toolbar .dijitToolbar
+.proxia .pwlWidgetFormToolbarForm .toolbar span[dojoattachpoint="n_accept"]
 {
 	position: absolute;
-
 	bottom: 0;
-	left: 0;
+	width:180px;
+	height:0;
+	right:20px;
+	overflow:hidden;
+	border-left: 1px solid silver;
+	border-right: 1px solid silver;
+	background-color:White;
 }
 
-.proxia .pwlWidgetFormToolbarForm .toolbar span['dojoAttachPoint=n_accept']
+.proxia .pwlWidgetFormToolbarForm .toolbar span[dojoattachpoint="n_accept"] .pwlWidgetAccept
 {
-	position: absolute;
+	margin:5px;
+	display:block;
+}
+
+.proxia .pwlWidgetFormToolbarForm .toolbar div[dojoattachpoint="n_toolbar"]
+{
+	position:absolute;
+	
+}
+
+
+.proxia .pwlWidgetFormToolbarForm > div[dojoattachpoint="containerNode"]
+{
+	border: 1px solid silver;
+	padding:10px;
+}
+
+/* BOTTOM */
+
+.proxia .pwlWidgetFormToolbarForm .bottom div[dojoattachpoint="n_toolbar"]
+{
+	top:1px;
+}
+
+.proxia .pwlWidgetFormToolbarForm .bottom span[dojoattachpoint="n_accept"]
+{
+	top: 0;
+	border-bottom: 1px solid silver;	
+	border-top:none;
+	border-bottom-right-radius:1em;
+	-moz-border-radius-bottomright:1em;
+	border-bottom-left-radius	:1em;
+	-moz-border-radius-bottomleft:1em;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#e0e0e0));
+}
+
+.proxia .pwlWidgetFormToolbarForm div[dojoattachpoint="containerNode"] + .bottom
+{
+	margin-top:-1px;
+}
+
+
+/* TOP */
+
+.proxia .pwlWidgetFormToolbarForm .top div[dojoattachpoint="n_toolbar"]
+{
+	bottom:1px;
+}
+
+.proxia .pwlWidgetFormToolbarForm .top span[dojoattachpoint="n_accept"]
+{
 
 	bottom: 0;
-	right: 0;
+	border-top: 1px solid silver;
+	border-bottom:none;
+	border-top-left-radius:1em;
+	-moz-border-radius-topleft:1em;
+	border-top-right-radius:1em;
+	-moz-border-radius-topright:1em;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e0e0e0), to(#ffffff));
+}
+
+.proxia .pwlWidgetFormToolbarForm .top + div[dojoattachpoint="containerNode"]
+{
+	margin-top:-1px;
 }

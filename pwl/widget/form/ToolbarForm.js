@@ -18,6 +18,7 @@ dojo.declare(
 	baseClass: 'pwlWidgetFormToolbarForm',
 
 	templateString: dojo.cache('pwl.widget.form', 'templates/ToolbarForm.html'),
+	widgetsInTemplate:true,
 
 	toolbar_position: 'top',
 
@@ -40,6 +41,7 @@ dojo.declare(
 			}
 		}, this);
 
+
 		this.set('toolbar_position', this.toolbar_position);
 	},
 
@@ -52,19 +54,19 @@ dojo.declare(
 
 	_setToolbar_positionAttr: function ( i_position )
 	{
-		dojo.removeClass(this.n_toolbar, 'top');
-		dojo.removeClass(this.n_toolbar, 'bottom');
+		dojo.removeClass(this.n_toolbar_box, 'top');
+		dojo.removeClass(this.n_toolbar_box, 'bottom');
 
 		switch ( i_position )
 		{
 			case 'bottom':
-				dojo.place(this.n_toolbar, this.containerNode, 'after');
-				dojo.addClass(this.n_toolbar, 'bottom');
+				dojo.place(this.n_toolbar_box, this.containerNode, 'after');
+				dojo.addClass(this.n_toolbar_box, 'bottom');
 				break;
 
 			default: // top
-				dojo.place(this.n_toolbar, this.containerNode, 'before');
-				dojo.addClass(this.n_toolbar, 'top');
+				dojo.place(this.n_toolbar_box, this.containerNode, 'before');
+				dojo.addClass(this.n_toolbar_box, 'top');
 		}
 	}
 });

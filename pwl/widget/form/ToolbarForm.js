@@ -41,8 +41,9 @@ dojo.declare(
 			}
 		}, this);
 
-
 		this.set('toolbar_position', this.toolbar_position);
+
+		this._connect();
 	},
 
 /******************************************************************************/
@@ -68,5 +69,35 @@ dojo.declare(
 				dojo.place(this.n_toolbar_box, this.containerNode, 'before');
 				dojo.addClass(this.n_toolbar_box, 'top');
 		}
+	},
+
+/******************************************************************************/
+
+	_connect: function ()
+	{
+		this.getChildren().forEach( function ( i_child )
+		{
+			if ( i_child.declaredClass.match(/form/i) )
+			{
+				if ( i_child.declaredClass.match(/textbox/i) )
+					dojo.connect(i_child, 'onKeyUp', this, 'showAccept');
+				else
+					dojo.connect(i_child, 'onChange', this, 'showAccept');
+			}
+		}, this);
+
+		dojo.connect(this, 'onValidStateChange', this, function ( i_valid )
+		{
+			if ( i_valid )
+				this.showAccept();
+			else
+				this.hideAccept();
+		});
+
+		dojo.connect(this, 'onSubmit', this, 'hideAccept');
+		dojo.connect(this, 'onReset', this, 'hideAccept');
+
+		dojo.connect(this.w_accept, 'onAccept', this, 'submit');
+		dojo.connect(this.w_accept, 'onCancel', this, 'reset');
 	}
 });

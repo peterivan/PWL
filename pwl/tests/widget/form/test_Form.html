@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>pwl.widget.form.Form</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+	<link rel="stylesheet" href="../../../../academy/themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('dijit.form.TextBox');
+		dojo.require('dijit.form.ComboBox');
+		dojo.require('dijit.form.Button');
+
+		dojo.require('pwl.widget.form.Form');
+
+		dojo.addOnLoad( function ()
+		{
+			dijit.byId('Sub1').onSubmit = function () { return false }
+
+			dojo.connect(dijit.byId('Sub1'), 'onSubmit', function () { console.log('foo') });
+		});
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">pwl.widget.form.Form</h1>
+
+	<div id="W1" dojoType="pwl.widget.form.Form" style="width: 800px; height: 600px;">
+
+		<div id="Sub1" dojoType="dijit.form.Form"><span dojoType="dijit.form.TextBox"></span></div>
+
+		<div>
+			<label>Textbox: </label>
+			<span dojoType="dijit.form.TextBox"></span>
+		</div>
+		<div>
+			<label>ComboBox: </label>
+			<span dojoType="dijit.form.ComboBox"></span>
+		</div>
+		<div>
+			<label>Button: </label>
+			<span dojoType="dijit.form.Button">Button</span>
+		</div>
+	</div>
+</body>
+</html>

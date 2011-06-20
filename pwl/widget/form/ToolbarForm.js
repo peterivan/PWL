@@ -3,7 +3,7 @@ dojo.provide('pwl.widget.form.ToolbarForm');
 /******************************************************************************/
 /******************************************************************************/
 
-dojo.require('dijit.form.Form');
+dojo.require('pwl.widget.form.Form');
 
 dojo.require('dijit.Toolbar');
 
@@ -13,12 +13,12 @@ dojo.require('pwl.widget._Acceptable');
 
 dojo.declare(
 	'pwl.widget.form.ToolbarForm',
-	[dijit.form.Form, pwl.widget._Acceptable],
+	[pwl.widget.form.Form, pwl.widget._Acceptable],
 {
 	baseClass: 'pwlWidgetFormToolbarForm',
 
 	templateString: dojo.cache('pwl.widget.form', 'templates/ToolbarForm.html'),
-	widgetsInTemplate:true,
+	widgetsInTemplate: true,
 
 	toolbar_position: 'top',
 
@@ -45,6 +45,26 @@ dojo.declare(
 
 		this._connect();
 	},
+
+/******************************************************************************/
+/** Events ********************************************************************/
+
+	onAccept: function ()
+	{
+	},
+
+	onCancel: function ()
+	{
+	},
+
+	onChange: function ()
+	{
+		this.inherited(arguments);
+
+		this.showAccept();
+	},
+
+/******************************************************************************/
 
 /******************************************************************************/
 /** protected **/
@@ -77,6 +97,12 @@ dojo.declare(
 	{
 		this.getChildren().forEach( function ( i_child )
 		{
+			if ( i_child.isInstanceOf(dijit.form.Form) )
+			{
+				dojo.connect(i_child, 'onChange', this, 'onChange');
+				dojo.connect(i_child, 'onSave', this, 'hideAccept');
+			}
+
 			if ( i_child.declaredClass.match(/form/i) )
 			{
 				if ( i_child.declaredClass.match(/textbox/i) )
@@ -86,18 +112,12 @@ dojo.declare(
 			}
 		}, this);
 
-		dojo.connect(this, 'onValidStateChange', this, function ( i_valid )
-		{
-			if ( i_valid )
-				this.showAccept();
-			else
-				this.hideAccept();
-		});
+		dojo.connect(this, 'onCancel', this, 'hideAccept');
 
-		dojo.connect(this, 'onSubmit', this, 'hideAccept');
-		dojo.connect(this, 'onReset', this, 'hideAccept');
+		dojo.connect(this.w_accept, 'onAccept', this, 'save');
+		dojo.connect(this.w_accept, 'onAccept', this, 'onAccept');
 
-		dojo.connect(this.w_accept, 'onAccept', this, 'submit');
 		dojo.connect(this.w_accept, 'onCancel', this, 'reset');
+		dojo.connect(this.w_accept, 'onCancel', this, 'onCancel');
 	}
 });

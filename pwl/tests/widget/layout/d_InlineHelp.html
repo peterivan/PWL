@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.layout.CommonBox Design</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.layout.InlineHelp');
+		dojo.require("dijit.Tooltip");
+		
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.layout.InlineHelp Design</h1>
+
+	<div id="W0" dojoType="pwl.widget.layout.InlineHelp" style="width: 300px;float: left; margin: 5px;" >boo hoo</div>
+	
+	<div id="W1" dojoType="pwl.widget.layout.InlineHelp" style="width: 300px;float: left; margin: 5px;" class="Compact">boo hoo</div>
+	
+	<div id="W2" dojoType="pwl.widget.layout.InlineHelp" style="width: 300px;float: left; margin: 5px;" class="Compact Top">boo hoo</div>
+
+</body>
+</html>

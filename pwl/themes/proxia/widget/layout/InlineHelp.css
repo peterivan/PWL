@@ -1,0 +1,20 @@
+@import url('inlineHelp/Compact.css');
+
+.pwlWidgetLayoutInlineHelp > div
+{
+	margin: 5px;
+	padding:5px;
+	background-color:#ECECEC;
+	font-size:0.9em;
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em; 
+	border:1px solid #7DA8CA;
+}
+
+.pwlWidgetLayoutInlineHelp > connector
+{
+	border:0px;
+	z-index: 2;
+}	
+
+	

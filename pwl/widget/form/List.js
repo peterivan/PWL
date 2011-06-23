@@ -97,11 +97,14 @@ dojo.declare(
 
 			var label_item = dojo.getNodeProp(i_node, 'data-item');
 
-			this._data.forEach( function ( i_value_item )
+			if ( dojo.isFunction(this._compare) ) // TODO: provide default _compare function
 			{
-				if ( this._compare(label_item, i_value_item) )
-					dojo.addClass(i_node, 'selected');
-			}, this);
+				this._data.forEach( function ( i_value_item )
+				{
+					if ( this._compare(label_item, i_value_item) )
+						dojo.addClass(i_node, 'selected');
+				}, this);
+			}
 		}, this);
 	},
 

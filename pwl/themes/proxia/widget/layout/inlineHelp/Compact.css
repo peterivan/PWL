@@ -1,0 +1,48 @@
+section[class~="pwlWidgetLayoutInlineHelp"][class~="Compact"]
+{
+	border: none;
+}
+
+section[class~="pwlWidgetLayoutInlineHelp"][class~="Compact"] > div
+{
+	margin:  0 5px 0 5px;
+	padding:5px;
+	background-color:#ECECEC;
+	
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em; 
+	border:1px solid #7DA8CA;
+	
+}
+
+/*--------- Default Bottom --------*/
+
+section[class~="pwlWidgetLayoutInlineHelp"][class~="Compact"] > connector
+{
+	position:relative;
+	bottom: 1px;
+	left: 20px;
+	background:url("../../../images/icons/16x16/tooltipConnectorDown.png") no-repeat top left;
+	width:16px;
+	height:14px;
+	display:block;
+}
+
+section[class~="pwlWidgetLayoutInlineHelp"][class~="Compact"] > connector[type="top"]
+{
+	display:none;
+}
+
+/*-------- TOP ---------*/
+
+section[class~="pwlWidgetLayoutInlineHelp"][class~="Compact"][class~="Top"] > connector[type="bottom"]
+{
+	display:none;
+}
+
+section[class~="pwlWidgetLayoutInlineHelp"][class~="Compact"][class~="Top"] > connector[type="top"]
+{
+	display:block;
+	background:url("../../../images/icons/16x16/tooltipConnectorUp.png") no-repeat top left;
+	top:1px;
+}

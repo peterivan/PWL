@@ -22,6 +22,9 @@ dojo.declare(
 
 	toolbar_position: 'top',
 
+	accept_label: '',
+	cancel_label: '',
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -35,7 +38,7 @@ dojo.declare(
 
 		this.getChildren().forEach( function ( i_child )
 		{
-			if ( i_child.declaredClass && i_child.declaredClass == 'dijit.Toolbar' )
+			if ( i_child.isInstanceOf(dijit.Toolbar) )
 			{
 				i_child.placeAt(this.n_toolbar);
 			}
@@ -51,6 +54,7 @@ dojo.declare(
 
 	onAccept: function ()
 	{
+
 	},
 
 	onCancel: function ()
@@ -114,7 +118,6 @@ dojo.declare(
 
 		dojo.connect(this, 'onCancel', this, 'hideAccept');
 
-		dojo.connect(this.w_accept, 'onAccept', this, 'save');
 		dojo.connect(this.w_accept, 'onAccept', this, 'onAccept');
 
 		dojo.connect(this.w_accept, 'onCancel', this, 'reset');

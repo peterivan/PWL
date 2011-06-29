@@ -19,15 +19,23 @@ dojo.declare(
 	templateString: dojo.cache('pwl.widget', 'templates/Accept.html'),
 	widgetsInTemplate: true,
 
-	accept_label: 'Použiť',
-	cancel_label: 'Zrušiť',
+	accept_label: '',
+	cancel_label: '',
 
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
 
 /******************************************************************************/
-/** Startup *******************************************************************/
+/** Startup, Teardown *********************************************************/
+
+	postMixInProperties: function ()
+	{
+		this.inherited(arguments);
+
+		this.accept_label = this.accept_label || 'Použiť';
+		this.cancel_label = this.cancel_label || 'Zrušiť';
+	},
 
 	postCreate: function ()
 	{

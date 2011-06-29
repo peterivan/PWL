@@ -1,12 +1,12 @@
 <form class="${baseClass}">
 	<div dojoAttachPoint="n_toolbar_box" class="toolbar">
-	
+
 		<div dojoAttachPoint="n_toolbar"></div>
-		
+
 		<span dojoAttachPoint="n_accept">
-			<span dojoType="pwl.widget.Accept" dojoAttachPoint="w_accept"></span>
+			<span dojoType="pwl.widget.Accept" dojoAttachPoint="w_accept" accept_label="${accept_label}" cancel_label="${cancel_label}"></span>
 		</span>
-		
+
 	</div>
 	<div dojoAttachPoint="containerNode"></div>
 </form>

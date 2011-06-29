@@ -77,6 +77,27 @@ dojo.declare(
 	},
 
 /******************************************************************************/
+/** Layout ********************************************************************/
+
+	resize: function ()
+	{
+		this.inherited(arguments);
+
+		var b_this = dojo.contentBox(this.domNode);
+
+		var b_header = dojo.marginBox(this.n_header);
+		var b_search = dojo.contentBox(this.n_search);
+
+		dojo.marginBox(this.n_list_container,
+		{
+			h: b_this.h - b_header.h - b_search.h - 5
+		});
+		console.debug(b_this.h - b_header.h - b_search.h - 5);
+		dojo.style(this.n_list_container,"overflow","auto");
+		/**********************************************************************/
+	},
+	
+/******************************************************************************/
 
 	reload: function ( i_clear_cache )
 	{

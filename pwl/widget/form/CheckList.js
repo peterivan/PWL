@@ -85,6 +85,8 @@ dojo.declare(
 		this._render();
 	},
 
+
+	
 /******************************************************************************/
 
 	setLabelStore: function ( i_store, i_query, i_id_attribute )

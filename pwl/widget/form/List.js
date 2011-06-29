@@ -106,6 +106,8 @@ dojo.declare(
 				}, this);
 			}
 		}, this);
+
+		this.item = null;
 	},
 
 	formatter: function ( i_item )
@@ -297,7 +299,8 @@ dojo.declare(
 
 		var search_attr = this.search_attribute || this.default_search_attribute;
 
-		this.query[search_attr] = '*';
+		if ( this.query && this.query[search_attr] )
+			this.query[search_attr] = '*';
 
 		this.store.fetch(
 		{

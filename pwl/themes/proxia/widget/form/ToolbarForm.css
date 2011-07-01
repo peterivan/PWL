@@ -8,7 +8,7 @@
 {
 	position: absolute;
 	bottom: 0;
-	width:180px;
+	max-width:250px;
 	height:0;
 	right:20px;
 	overflow:hidden;
@@ -33,7 +33,7 @@
 .proxia .pwlWidgetFormToolbarForm > div[dojoattachpoint="containerNode"]
 {
 	border: 1px solid silver;
-	padding:10px;
+	padding:0;
 }
 
 /* BOTTOM */

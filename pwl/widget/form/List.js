@@ -39,6 +39,8 @@ dojo.declare(
 	default_search_attribute: 'id',
 	search_attribute: 'id',
 
+	load_everything: true,
+
 	value: [], // dummy attr, not really used, intentional
 
 	_data: null,
@@ -53,6 +55,16 @@ dojo.declare(
 
 /******************************************************************************/
 /** Startup, Teardown *********************************************************/
+
+	postMixInProperties: function ()
+	{
+		this.inherited(arguments);
+
+		if ( this.load_everything == 0 )
+			this.load_everything = false;
+		else
+			this.load_everything = true;
+	},
 
 	postCreate: function ()
 	{
@@ -80,8 +92,7 @@ dojo.declare(
 
 	reload: function ( i_clear_cache )
 	{
-		if ( this.w_search_box )
-			this.w_search_box.set('value', '');
+		this.reset();
 
 		this._render();
 	},
@@ -131,7 +142,7 @@ dojo.declare(
 		var result = dojo.filter(this._data, function ( i_item )
 		{
 			var value = this.store.getValue(i_item, field);
-			console.log(regex)
+
 			if ( value.match(regex) || search_term.length == 0 )
 				return true;
 
@@ -211,6 +222,13 @@ dojo.declare(
 
 		this._connectStore();
 		this._render();
+	},
+
+	_setQueryAttr: function ( i_query )
+	{
+		this.query = i_query;
+
+		this.reload();
 	},
 
 /******************************************************************************/
@@ -302,21 +320,49 @@ dojo.declare(
 		if ( this.query && this.query[search_attr] )
 			this.query[search_attr] = '*';
 
-		this.store.fetch(
+		var query_string = dojo.objectToQuery(this.query);
+
+		if ( query_string )
+			query_string = '?' + query_string;
+
+		if ( this._shouldLoadAll() )
 		{
-			scope: this,
-			query: this.query,
-
-			onComplete: function ( i_data )
+			this.store.fetch(
 			{
-				this._data = i_data;
+				scope: this,
+				query: query_string,
 
-				p.callback(i_data);
-			}
-		});
+				onComplete: function ( i_data )
+				{
+					this._data = i_data;
 
+					p.callback(i_data);
+				}
+			});
+		}
+		else
+		{
+			this._data = [];
+			p.callback([]);
+		}
 
 		return p;
+	},
+
+	_shouldLoadAll: function ()
+	{
+		var qs = dojo.queryToObject(dojo.objectToQuery(this.query));
+
+		if ( qs.order )
+			delete qs.order;
+
+		qs = dojo.objectToQuery(qs);
+
+		var load_all = this.load_everything || qs;
+
+		console.debug(load_all, this.load_everything, qs);
+
+		return load_all;
 	},
 
 	_createSearchBox: function ()

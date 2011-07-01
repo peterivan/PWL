@@ -47,8 +47,21 @@ dojo.declare(
 		this.set('toolbar_position', this.toolbar_position);
 
 		this._connect();
+		this.resize();
 	},
 
+	
+	resize: function ()
+	{
+		this.inherited(arguments);
+
+		var b_toolbar_box = dojo.marginBox(this.n_toolbar_box);
+		var b_this = dojo.contentBox(this.domNode);
+		var work_height = b_this.h - b_toolbar_box.h - 10;
+		console.debug("work_height container node:",work_height)
+		dojo.style(this.containerNode,{"height":work_height + "px","overflow":"auto"});
+		
+	},
 /******************************************************************************/
 /** Events ********************************************************************/
 

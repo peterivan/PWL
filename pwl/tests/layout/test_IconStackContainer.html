@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.layout.IconStackContainer</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('dijit.layout.ContentPane');
+
+		dojo.require('pwl.layout.IconStackContainer');
+
+
+		dojo.addOnLoad( function ()
+		{
+
+		});
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.layout.IconStackContainer</h1>
+
+	<div id="W1" dojoType="pwl.layout.IconStackContainer" style="width: 600px; height: 400px;">
+		<div dojoType="dijit.layout.ContentPane" title="Pane 1">Pane 1 content</div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 3">Pane 2 content</div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 3">Pane 3 content</div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 4">Pane 4 content</div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 5">Pane 5 content</div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 6">Pane 6 content</div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 7">Pane 7 content</div>
+	</div>
+</body>
+</html>

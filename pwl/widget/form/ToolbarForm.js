@@ -50,7 +50,7 @@ dojo.declare(
 		this.resize();
 	},
 
-	
+
 	resize: function ()
 	{
 		this.inherited(arguments);
@@ -60,7 +60,7 @@ dojo.declare(
 		var work_height = b_this.h - b_toolbar_box.h - 10;
 		console.debug("work_height container node:",work_height)
 		dojo.style(this.containerNode,{"height":work_height + "px","overflow":"auto"});
-		
+
 	},
 /******************************************************************************/
 /** Events ********************************************************************/
@@ -120,7 +120,7 @@ dojo.declare(
 				dojo.connect(i_child, 'onSave', this, 'hideAccept');
 			}
 
-			if ( i_child.declaredClass.match(/form/i) )
+			if ( dojo.isFunction(i_child.onChange) )
 			{
 				if ( i_child.declaredClass.match(/textbox/i) )
 					dojo.connect(i_child, 'onKeyUp', this, 'showAccept');

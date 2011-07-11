@@ -1,0 +1,28 @@
+
+.pwlLayoutIconStackContainer
+{
+	position: relative;
+
+	overflow: auto;
+}
+
+.pwlLayoutIconStackContainer > .pwlLayoutIconStackController
+{
+	position: absolute;
+
+	top: 0;
+	bottom: 0;
+	left: 0;
+
+	width: 95px;
+}
+
+.pwlLayoutIconStackContainer > div[dojoAttachPoint=containerNode]
+{
+	position: absolute;
+
+	top: 0;
+	bottom: 0;
+	left: 100px;
+	right: 0;
+}

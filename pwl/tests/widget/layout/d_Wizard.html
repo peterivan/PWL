@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.layout.Wizard Design</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.layout.Wizard');
+		dojo.require('dijit.layout.ContentPane');
+		
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.layout.Wizard Design</h1>
+
+	<div dojoType="pwl.widget.layout.Wizard" style="width: 800px;height:500px" >
+		<div dojoType="dijit.layout.ContentPane" title="prvy tab">
+			Slide 1
+		</div>
+		<div dojoType="dijit.layout.ContentPane" >
+			Slide 2
+		</div>
+		<div dojoType="dijit.layout.ContentPane">
+			Slide 3
+		</div>
+		<div dojoType="dijit.layout.ContentPane" title="posledny tab">
+			Slide 4
+		</div>
+	</div>
+
+</body>
+</html>

@@ -5,7 +5,7 @@
 
 	<title>PWL.layout.IconStackContainer</title>
 
-	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
 	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
 
 	<script type="text/javascript">
@@ -29,29 +29,55 @@
 	<script language="JavaScript" type="text/javascript">
 
 		dojo.require('dijit.layout.ContentPane');
+		dojo.require('dijit.form.Button');
 
 		dojo.require('pwl.layout.IconStackContainer');
 
+		function toggle( i_evt )
+		{
+			var button = dijit.getEnclosingWidget(i_evt.target);
+			var pane = dijit.getEnclosingWidget(button.domNode.parentNode);
+
+			if ( !dojo.isFunction(pane.canLeavePage) )
+			{
+				pane.canLeavePage = dojo.hitch(pane, function () { return this.can_leave_page })
+
+				pane.can_leave_page = false;
+			}
+			else
+			{
+				if ( pane.can_leave_page )
+					pane.can_leave_page = false;
+				else
+					pane.can_leave_page = true;
+			}
+		}
 
 		dojo.addOnLoad( function ()
 		{
-
+			dojo.connect(dijit.byId('B1'), 'onClick', 'toggle');
+			dojo.connect(dijit.byId('B2'), 'onClick', 'toggle');
+			dojo.connect(dijit.byId('B3'), 'onClick', 'toggle');
+			dojo.connect(dijit.byId('B4'), 'onClick', 'toggle');
+			dojo.connect(dijit.byId('B5'), 'onClick', 'toggle');
+			dojo.connect(dijit.byId('B6'), 'onClick', 'toggle');
+			dojo.connect(dijit.byId('B7'), 'onClick', 'toggle');
 		});
 	</script>
 
 </head>
-<body class="proxia claro">
+<body class="proxia tundra">
 
 	<h1 class="testTitle">PWL.layout.IconStackContainer</h1>
 
 	<div id="W1" dojoType="pwl.layout.IconStackContainer" style="width: 600px; height: 400px;">
-		<div dojoType="dijit.layout.ContentPane" title="Pane 1">Pane 1 content</div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 3">Pane 2 content</div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 3">Pane 3 content</div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 4">Pane 4 content</div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 5">Pane 5 content</div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 6">Pane 6 content</div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 7">Pane 7 content</div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 1" style="background-color:red">Pane 1 content<div><span id="B1" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 3" style="background-color:blue">Pane 2 content<div><span id="B2" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 3" style="background-color:lime">Pane 3 content<div><span id="B3" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 4" style="background-color:magenta">Pane 4 content<div><span id="B4" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 5" style="background-color:yellow">Pane 5 content<div><span id="B5" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 6" style="background-color:brown">Pane 6 content<div><span id="B6" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 7" style="background-color:green">Pane 7 content<div><span id="B7" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
 	</div>
 </body>
 </html>

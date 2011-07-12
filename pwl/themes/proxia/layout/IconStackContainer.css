@@ -14,7 +14,7 @@
 	bottom: 0;
 	left: 0;
 
-	width: 95px;
+	width: 115px;
 }
 
 .pwlLayoutIconStackContainer > div[dojoAttachPoint=containerNode]
@@ -23,6 +23,6 @@
 
 	top: 0;
 	bottom: 0;
-	left: 100px;
+	left: 120px;
 	right: 0;
 }

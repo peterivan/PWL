@@ -18,8 +18,6 @@ dojo.declare(
 	templateString: dojo.cache('pwl.layout', 'templates/IconStackContainer.html'),
 	widgetsInTemplate: true,
 
-	doLayout: false,
-
 	w_controller: null,
 
 /******************************************************************************/
@@ -41,16 +39,42 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
-		var b_this = dojo.contentBox(this.domNode);
-		var b_container = dojo.marginBox(this.w_container.domNode);
+		var box = this._getContainerBox();
 
-		var width = b_this.w - b_container.w - 10; // 10 = buffer
+		dojo.style(this.containerNode, 'width', box.w + 'px');
 
-		dojo.style(this.containerNode, 'width', width + 'px');
+		var b_container = dojo.contentBox(this.containerNode);
+
+		this.selectedChildWidget.resize(b_container);
 	},
 
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
 
+	_transition: function ( i_new_widget, i_old_widget)
+	{
+		if ( i_old_widget )
+			this._hideChild(i_old_widget);
+
+		this._showChild(i_new_widget);
+
+		if ( i_new_widget.resize )
+		{
+			if ( this.doLayout )
+				i_new_widget.resize(this._getContainerBox());
+			else
+				i_new_widget.resize();
+		}
+	},
+
+	_getContainerBox: function ()
+	{
+		var b_this = dojo.contentBox(this.domNode);
+		var b_controller = dojo.marginBox(this.w_controller.domNode);
+
+		var width = b_this.w - b_controller.w - 10; // 10 = buffer
+
+		return {w: width, h: b_this.h};
+	}
 });

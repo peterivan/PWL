@@ -27,6 +27,7 @@ dojo.declare(
 
 	value_store: null,
 	value_store_id_attribute: 'id',
+	value_store_query: null,
 
 	change_topic: null,
 	save_topic: null,
@@ -46,6 +47,9 @@ dojo.declare(
 
 	_label_data: null,
 	_value_data: null,
+
+	_label_data_loaded: true,
+	_value_data_loaded: true,
 
 	_search_timer: null,
 
@@ -85,17 +89,7 @@ dojo.declare(
 		this._render();
 	},
 
-
-	
 /******************************************************************************/
-
-	setLabelStore: function ( i_store, i_query, i_id_attribute )
-	{
-	},
-
-	setValueStore: function ( i_store, i_query, i_id_attribute )
-	{
-	},
 
 	save: function ( i_save_mixin )
 	{
@@ -377,33 +371,60 @@ dojo.declare(
 	{
 		dojo.empty(this.n_list);
 
-		i_label_data.forEach( function ( i_label_item )
+		if ( dojo.isArray(i_label_data) )
 		{
-			var id = this.label_store.getValue(i_label_item, this.label_store_id_attribute || 'id');
-			var label = this.formatter(i_label_item);
-
-			var selected = false;
-
-			i_value_data.forEach( function ( i_value_item )
+			i_label_data.forEach( function ( i_label_item )
 			{
-				if ( selected )
-					return;
+				var id = this.label_store.getValue(i_label_item, this.label_store_id_attribute || 'id');
+				var label = this.formatter(i_label_item);
 
-				selected = this._compare(i_label_item, i_value_item);
+				var selected = false;
+
+				var node_params =
+				{
+					'data-identifier': id,
+					'class': selected ? 'selected' : '',
+					innerHTML: label
+				};
+
+				var node = dojo.create('li', node_params, this.n_list);
+
+				node['data-item'] = i_label_item;
 			}, this);
+		}
 
-			var node_params =
-			{
-				'data-identifier': id,
-				'class': selected ? 'selected' : '',
-				innerHTML: label
-			};
-
-			var node = dojo.create('li', node_params, this.n_list);
-
-			node['data-item'] = i_label_item;
-		}, this);
+		this._selectItems(i_value_data);
 	},
+
+	_unselectItems: function ()
+	{
+		dojo.query('li', this.n_list).forEach( function ( i_item )
+		{
+			dojo.removeClass(i_item, 'selected');
+		});
+	},
+
+	_selectItems: function ( i_value_data )
+	{
+		this._unselectItems();
+
+		if ( dojo.isArray(i_value_data) )
+		{
+			dojo.query('li', this.n_list).forEach( function ( i_node )
+			{
+				var label_item = dojo.getNodeProp(i_node, 'data-item');
+
+				i_value_data.forEach( function ( i_value_item )
+				{
+					if ( this._compare(label_item, i_value_item) )
+						dojo.addClass(i_node, 'selected');
+				}, this)
+			}, this);
+		}
+	},
+
+/******************************************************************************/
+/** Data loading **************************************************************/
 
 	_loadData: function ()
 	{
@@ -411,6 +432,11 @@ dojo.declare(
 
 		this._label_data = null;
 		this._value_data = null;
+
+		if ( this.label_store )
+			this._label_data_loaded = false;
+		if ( this.value_store )
+			this._value_data_loaded = false;
 
 		this._loadLabelData(p);
 		this._loadValueData(p);
@@ -429,8 +455,9 @@ dojo.declare(
 				onComplete: function ( i_data )
 				{
 					this._label_data = i_data;
+					this._label_data_loaded = true;
 
-					if ( i_promise && dojo.isArray(this._label_data) && dojo.isArray(this._value_data) )
+					if ( i_promise && this._label_data_loaded && this._value_data_loaded )
 						i_promise.callback([this._label_data, this._value_data]);
 				}
 			});
@@ -448,8 +475,9 @@ dojo.declare(
 				onComplete: function ( i_data )
 				{
 					this._value_data = i_data;
+					this._value_data_loaded = true;
 
-					if ( i_promise && dojo.isArray(this._label_data) && dojo.isArray(this._value_data) )
+					if ( i_promise && this._label_data_loaded && this._value_data_loaded )
 						i_promise.callback([this._label_data, this._value_data]);
 				}
 			});

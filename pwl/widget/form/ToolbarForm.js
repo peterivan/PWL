@@ -13,7 +13,7 @@ dojo.require('pwl.widget._Acceptable');
 
 dojo.declare(
 	'pwl.widget.form.ToolbarForm',
-	[pwl.widget.form.Form, pwl.widget._Acceptable],
+	[dijit._Widget, pwl.widget.form.Form, pwl.widget._Acceptable],
 {
 	baseClass: 'pwlWidgetFormToolbarForm',
 
@@ -55,8 +55,14 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
-		var b_toolbar_box = dojo.marginBox(this.n_toolbar_box);
+		var b_parent = dojo.contentBox(this.domNode.parentNode);
+
+		dojo.contentBox(this.domNode, b_parent);
+
 		var b_this = dojo.contentBox(this.domNode);
+
+		var b_toolbar_box = dojo.marginBox(this.n_toolbar_box);
+
 		var work_height = b_this.h - b_toolbar_box.h - 10;
 
  		dojo.style(this.containerNode,
@@ -84,7 +90,19 @@ dojo.declare(
 		this.showAccept();
 	},
 
+	onReset: function ()
+	{
+
+	},
+
 /******************************************************************************/
+
+	reset: function ()
+	{
+		this.inherited(arguments);
+
+		this.onReset();
+	},
 
 /******************************************************************************/
 /** protected **/
@@ -133,6 +151,7 @@ dojo.declare(
 		}, this);
 
 		dojo.connect(this, 'onCancel', this, 'hideAccept');
+		dojo.connect(this, 'onReset', this, 'hideAccept');
 
 		dojo.connect(this.w_accept, 'onAccept', this, 'onAccept');
 

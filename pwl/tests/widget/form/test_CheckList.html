@@ -6,7 +6,7 @@
 	<title>pwl.widget.form.TextboxList</title>
 
 	<style type="text/css">
-		@import url('../../../../dijit/themes/claro/claro.css');
+		@import url('../../../../dijit/themes/tundra/tundra.css');
 		@import url('../../resources/test.css');
 		@import url('../../../themes/proxia/proxia.css');
 	</style>
@@ -72,6 +72,15 @@
 				}
 			});
 
+			var s2_value = new dojo.data.ItemFileWriteStore(
+			{
+				data:
+				{
+					identifier: 'id',
+					items: []
+				}
+			});
+
 			var w = new pwl.widget.form.CheckList(
 			{
 				label_store: s1_label,
@@ -84,15 +93,15 @@
 
 					return given_name + ' ' + family_name;
 				}
-			}, 'W1');
+			}, 'W1').startup();
 
 
 			var w = new pwl.widget.form.CheckList(
 			{
 				label_store: s1_label,
-				value_store: s1_value,
+				value_store: s2_value,
 				enable_search: true,
-				search_attr: 'family_name',
+				search_attribute: 'family_name',
 
 				formatter: function (i_item )
 				{
@@ -101,43 +110,28 @@
 
 					return given_name + ' ' + family_name;
 				}
-			}, 'W2');
-
-			var w = new pwl.widget.form.CheckList(
-			{
-				label_store: s1_label,
-				value_store: s1_value,
-				show_accept_widget: true,
-
-				formatter: function (i_item )
-				{
-					var given_name = this.label_store.getValue(i_item, 'given_name');
-					var family_name = this.label_store.getValue(i_item, 'family_name');
-
-					return given_name + ' ' + family_name;
-				}
-			}, 'W3');
+			}, 'W2').startup();
 		});
 	</script>
 
 </head>
-<body class="proxia claro">
+<body class="proxia tundra">
 
 	<h1 class="testTitle">pwl.widget.form.CheckList</h1>
 
-	<section style="width: 200px; height: 250px;">
+	<section>
 		<header>Plain CheckList</header>
-		<div id="W1"></div>
+		<div style="width: 300px; height: 250px;">
+			<div id="W1"></div>
+		</div>
 	</section>
 
-	<section style="width: 200px; height: 250px;">
+	<section>
 		<header>CheckList width search enabled</header>
-		<div id="W2"></div>
+		<div style="width: 300px; height: 250px;">
+			<div id="W2"></div>
+		</div>
 	</section>
 
-	<section style="width: 200px; height: 250px;">
-		<header>CheckList width accept widget enabled</header>
-		<div id="W3"></div>
-	</section>
 </body>
 </html>

@@ -3,30 +3,32 @@ dojo.provide('pwl.widget.form.CheckList');
 /******************************************************************************/
 /******************************************************************************/
 
-dojo.require('dijit._Widget');
-dojo.require('dijit._Templated');
+dojo.require('dijit.layout._LayoutWidget');
 
-dojo.require('dojo.fx');
+dojo.require('dijit.form._FormWidget');
+dojo.require('dijit.form.CheckBox');
 
-dojo.require('pwl.widget.Accept');
+dojo.require('pwl.widget.form._FormWidget');
 dojo.require('pwl.widget.form.TextBox');
 
 /******************************************************************************/
 
 dojo.declare(
 	'pwl.widget.form.CheckList',
-	[dijit._Widget, dijit._Templated],
+	[pwl.widget.form._FormWidget, dijit.layout._LayoutWidget],
 {
 	baseClass: 'pwlWidgetFormCheckList',
 
 	templateString: dojo.cache('pwl.widget.form', 'templates/CheckList.html'),
-	widgetsInTemplate: true,
 
 	label_store: null,
 	label_store_id_attribute: 'id',
+	label_store_default_id_attribute: 'id',
+	label_store_label_attribute: null,
 
 	value_store: null,
 	value_store_id_attribute: 'id',
+	value_store_default_id_attribute: 'id',
 	value_store_query: null,
 
 	change_topic: null,
@@ -36,14 +38,18 @@ dojo.declare(
 	enable_search: false,
 	w_search_box: null,
 	search_label: 'Hľadaj',
-	search_attr: 'id',
+	search_attribute: 'id',
+	default_search_attribute: 'id',
 
-	show_accept_widget: false,
-	w_accept_widget: null,
-	accept_widget_mixin: null,
 	save_mixin: null,
 
-	value: [], // dummy attr, not really used, intentional
+	selection: null,
+
+	autolayout: true,
+
+	n_search: null,
+	n_list_container: null,
+	n_list: null,
 
 	_label_data: null,
 	_value_data: null,
@@ -53,12 +59,22 @@ dojo.declare(
 
 	_search_timer: null,
 
+	_checkboxes: null,
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
 
 /******************************************************************************/
 /** Startup, Teardown *********************************************************/
+
+	postMixInProperties: function ()
+	{
+		this.inherited(arguments);
+
+		this.selection = [];
+		this._checkboxes = [];
+	},
 
 	postCreate: function ()
 	{
@@ -70,23 +86,59 @@ dojo.declare(
 
 		dojo.connect(this.n_list, 'onclick', this, function ( i_evt )
 		{
-			var target = i_evt.target;
+			i_evt.preventDefault();
 
-			if ( target.nodeName == 'LI' )
+			var target = this._getTargetListItem(i_evt.target);
+
+			this._toggleSelectedNode(target, 'selected');
+			this._toggleSelectedItem(dojo.getNodeProp(target, 'data-item'));
+
+			dojo.query('label', target).forEach( function ( i_label_node )
 			{
-				dojo.toggleClass(target, 'selected');
+				i_label_node.focus();
+			})
 
-				this.onChange(this.get('value'));
-			}
+			this.onChange(this.get('value'));
 		});
 
 		if ( this.enable_search )
 			this._createSearchBox();
 
-		if ( this.show_accept_widget )
-			this._createAcceptWidget();
-
 		this._render();
+	},
+
+	destroy: function ()
+	{
+		this.inherited(arguments);
+
+		this._destroyCheckboxes();
+	},
+
+/******************************************************************************/
+/** Layout ********************************************************************/
+
+	resize: function ()
+	{
+		this.inherited(arguments);
+
+		if ( this.autolayout )
+		{
+			var b_parent = dojo.contentBox(this.domNode.parentNode);
+
+			dojo.marginBox(this.domNode, b_parent);
+
+			var b_this = dojo.contentBox(this.domNode);
+			var b_search_box = dojo.marginBox(this.n_search);
+
+			dojo.marginBox(this.n_list_container, {h: b_this.h - b_search_box.h});
+
+			if ( this.w_search_box )
+			{
+				var b_list_container = dojo.contentBox(this.n_list_container);
+
+				dojo.style(this.w_search_box.domNode, 'width', b_list_container.w + 'px');
+			}
+		}
 	},
 
 /******************************************************************************/
@@ -108,7 +160,7 @@ dojo.declare(
 
 			old_value.forEach( function ( i_old_item )
 			{
-				if ( this._compare(i_current_item, i_old_item) )
+				if ( this._compareStoreItems(i_current_item, i_old_item) )
 					found = true;
 			}, this);
 
@@ -122,7 +174,7 @@ dojo.declare(
 
 			current_value.forEach( function ( i_current_item )
 			{
-				if ( this._compare(i_current_item, i_old_item) )
+				if ( this._compareStoreItems(i_current_item, i_old_item) )
 					found = true;
 			}, this);
 
@@ -176,35 +228,19 @@ dojo.declare(
 		if ( this.w_search_box )
 			this.w_search_box.set('value', '');
 
-		this._hideAcceptWidget();
-
 		this._render();
 	},
 
 	reset: function ()
 	{
-		if ( this.w_search_box )
-			this.w_search_box.set('value', '');
+		this.selection = [];
 
-		this._hideAcceptWidget();
-
-		dojo.query('li', this.n_list).forEach( function ( i_node )
-		{
-			dojo.removeClass(i_node, 'selected');
-
-			var label_item = dojo.getNodeProp(i_node, 'data-item');
-
-			this._value_data.forEach( function ( i_value_item )
-			{
-				if ( this._compare(label_item, i_value_item) )
-					dojo.addClass(i_node, 'selected');
-			}, this);
-		}, this);
+		this.reload();
 	},
 
 	formatter: function ( i_item )
 	{
-		var field = this.label_store_id_attribute || 'id';
+		var field = this.label_store_label_attribute || this.label_store_id_attribute || this.label_store_default_id_attribute;
 		var label = this.label_store.getValue(i_item, field);
 
 		return label;
@@ -219,7 +255,7 @@ dojo.declare(
 		else if ( this.w_search_box )
 			search_term = this.w_search_box.get('value');
 
-		var search_attr = this.search_attr || 'id';
+		var search_attr = this.search_attribute || this.default_search_attribute;
 
 		var query = {};
 		query[search_attr] = search_term + '*';
@@ -239,8 +275,8 @@ dojo.declare(
 			queryOptions: query_options,
 
 			onComplete: function ( i_data )
-			{
-				this._renderItems(i_data, this._value_data);
+			{console.log(i_data);
+				this._renderItems(i_data, this.selection);
 			}
 		});
 
@@ -263,43 +299,6 @@ dojo.declare(
 	},
 
 /******************************************************************************/
-/** Events ********************************************************************/
-
-	onChange: function ( i_items )
-	{
-		this._showAcceptWidget();
-
-		if ( this.change_topic )
-		{
-			console.debug('published topic: ', this.change_topic, i_items);
-
-			dojo.publish(this.change_topic, [i_items]);
-		}
-	},
-
-	onSave: function ( i_items )
-	{
-		this._hideAcceptWidget();
-
-		if ( this.save_topic )
-		{
-			console.debug('published topic: ', this.save_topic, i_items);
-
-			dojo.publish(this.save_topic, [i_items]);
-		}
-	},
-
-	onLoad: function ()
-	{
-		if ( this.load_topic )
-		{
-			console.debug('published topic: ', this.load_topic);
-
-			dojo.publish(this.load_topic);
-		}
-	},
-
-/******************************************************************************/
 /** protected **/
 /******************************************************************************/
 
@@ -308,22 +307,17 @@ dojo.declare(
 
 	_getValueAttr: function ()
 	{
-		var items = [];
+		var value = [];
 
-		dojo.query('li[class~=selected]', this.n_list).forEach( function ( i_node )
+		this.selection.forEach( function ( i_item )
 		{
-			var id = dojo.attr(i_node, 'data-identifier');
+			if ( i_item )
+				value.push(i_item);
+		});
 
-			this._label_data.forEach( function ( i_item )
-			{
-				var item_id = this.label_store.getValue(i_item, this.label_store_id_attribute || 'id');
+		this.selection = value;
 
-				if ( item_id == id )
-					items.push(i_item);
-			}, this);
-		}, this);
-
-		return items;
+		return this.selection;
 	},
 
 	_setEnable_searchAttr: function ( i_value )
@@ -346,10 +340,17 @@ dojo.declare(
 
 /******************************************************************************/
 
-	_compare: function ( i_label_item, i_value_item )
+	_compareStoreItems: function ( i_label_item, i_value_item )
 	{
-		var label_field = this.label_store.getValue(i_label_item, this.label_store_id_attribute || 'id');
-		var value_field = this.value_store.getValue(i_value_item, this.value_store_id_attribute || 'id');
+		var label_field = this.label_store.getValue(i_label_item, this.label_store_id_attribute || this.label_store_default_id_attribute);
+		var value_field = null;
+
+		// value items may come from label or value stores
+		// items from label store are usualy in selection
+		if ( this.label_store.isItem(i_value_item) )
+			value_field = this.label_store.getValue(i_value_item, this.value_store_id_attribute || this.value_store_default_id_attribute);
+		else
+			value_field = this.value_store.getValue(i_value_item, this.value_store_id_attribute || this.value_store_default_id_attribute);
 
 		if ( label_field == value_field )
 			return true;
@@ -371,11 +372,13 @@ dojo.declare(
 	{
 		dojo.empty(this.n_list);
 
+		this._destroyCheckboxes();
+
 		if ( dojo.isArray(i_label_data) )
 		{
 			i_label_data.forEach( function ( i_label_item )
 			{
-				var id = this.label_store.getValue(i_label_item, this.label_store_id_attribute || 'id');
+				var id = this.label_store.getValue(i_label_item, this.label_store_id_attribute || this.label_store_default_id_attribute);
 				var label = this.formatter(i_label_item);
 
 				var selected = false;
@@ -383,11 +386,20 @@ dojo.declare(
 				var node_params =
 				{
 					'data-identifier': id,
-					'class': selected ? 'selected' : '',
-					innerHTML: label
+					'class': selected ? 'selected' : ''
 				};
 
+				var cb_id = this.id + id;
+
 				var node = dojo.create('li', node_params, this.n_list);
+				var n_label = dojo.create('label', {for: cb_id, innerHTML: label})
+
+				var cb = new dijit.form.CheckBox({id: cb_id});
+
+				this._checkboxes.push(cb);
+
+				cb.placeAt(node);
+				dojo.place(n_label, node);
 
 				node['data-item'] = i_label_item;
 			}, this);
@@ -398,29 +410,35 @@ dojo.declare(
 
 	_unselectItems: function ()
 	{
-		dojo.query('li', this.n_list).forEach( function ( i_item )
+		dojo.query('li', this.n_list).forEach( function ( i_node )
 		{
-			dojo.removeClass(i_item, 'selected');
-		});
+			var label_item = dojo.getNodeProp(i_node, 'data-item');
+
+			this._unselectNode(i_node);
+
+			this._removeItemFromSelection(label_item);
+		}, this);
 	},
 
-	_selectItems: function ( i_value_data )
+	_selectItems: function ( i_value_items )
 	{
-		this._unselectItems();
-
-		if ( dojo.isArray(i_value_data) )
+		dojo.query('li', this.n_list).forEach( function ( i_node )
 		{
-			dojo.query('li', this.n_list).forEach( function ( i_node )
-			{
-				var label_item = dojo.getNodeProp(i_node, 'data-item');
+			var label_item = dojo.getNodeProp(i_node, 'data-item');
 
-				i_value_data.forEach( function ( i_value_item )
+			i_value_items.forEach( function ( i_value_item )
+			{
+				if ( !i_value_item ) // upon delete of array index, taht index is now undefined
+					return;
+
+				if ( this._compareStoreItems(label_item, i_value_item) )
 				{
-					if ( this._compare(label_item, i_value_item) )
-						dojo.addClass(i_node, 'selected');
-				}, this)
-			}, this);
-		}
+					this._selectNode(i_node);
+
+					this._addItemToSelection(label_item);
+				}
+			}, this)
+		}, this);
 	},
 
 /******************************************************************************/
@@ -484,6 +502,84 @@ dojo.declare(
 		}
 	},
 
+/******************************************************************************/
+/** Item selection manipulation ***********************************************/
+
+	_toggleSelectedItem: function ( i_item )
+	{
+		var item_was_deleted = false;
+
+		this.selection.forEach( function ( i_selection_item, i_index )
+		{
+			if ( i_selection_item == i_item )
+			{
+				delete this.selection[i_index];
+
+				item_was_deleted = true;
+			}
+		}, this );
+
+		if ( !item_was_deleted )
+			this.selection.push(i_item);
+	},
+
+	_addItemToSelection: function ( i_item )
+	{
+		var already_in_selection = dojo.some( this.selection, function ( i_selection_item )
+		{
+			return (i_selection_item == i_item);
+		});
+
+		if ( !already_in_selection )
+		{
+			this.selection.push(i_item);
+		}
+	},
+
+	_removeItemFromSelection: function ( i_item )
+	{
+		this.selection.forEach( function ( i_selection_item, i_index )
+		{
+			if ( i_selection_item == i_item )
+				delete this.selection[i_index];
+		}, this );
+	},
+
+/******************************************************************************/
+/** Node selection manipulation ***********************************************/
+
+	_toggleSelectedNode: function ( i_node )
+	{
+		//dojo.toggleClass(i_node, 'selected');
+
+		if ( dojo.hasClass(i_node, 'selected') )
+			this._unselectNode(i_node);
+		else
+			this._selectNode(i_node);
+	},
+
+	_selectNode: function ( i_node )
+	{
+		dojo.addClass(i_node, 'selected');
+
+		dojo.query('.dijitCheckBox', i_node).forEach( function ( i_cb_node )
+		{
+			dijit.byNode(i_cb_node).set('checked', true);
+		});
+	},
+
+	_unselectNode: function ( i_node )
+	{
+		dojo.removeClass(i_node, 'selected');
+
+		dojo.query('.dijitCheckBox', i_node).forEach( function ( i_cb_node )
+		{
+			dijit.byNode(i_cb_node).set('checked', false);
+		});
+	},
+
+/******************************************************************************/
+
 	_createSearchBox: function ()
 	{
 		this.w_search_box = new pwl.widget.form.TextBox({}, dojo.create('span', null, this.n_search));
@@ -496,57 +592,31 @@ dojo.declare(
 			this._search_timer = setTimeout(dojo.hitch(this, 'search'), 500);
 		};
 
+		this.focusNode = this.w_search_box.domNode;
+
 		dojo.connect(this.w_search_box, 'onKeyUp', this, func);
 		dojo.connect(this.w_search_box, 'onErase', this, func);
 	},
 
-	_createAcceptWidget: function ()
+	_getTargetListItem: function ( i_original_target )
 	{
-		dojo.style(this.n_accept_container, 'height', '2.6em');
+		// cascade upwards until li is found
 
-		this.w_accept_widget = new pwl.widget.Accept(dojo.mixin({}, this.accept_widget_mixin || {}), dojo.create('span', null, this.n_accept));
+		var node = i_original_target;
 
-		dojo.connect(this.w_accept_widget, 'onAccept', this, 'save');
-		dojo.connect(this.w_accept_widget, 'onCancel', this, 'reset');
+		while ( node.nodeName != 'LI' )
+			node = node.parentNode;
+
+		return node;
 	},
 
-	_acceptWidgetIsVisible: function ()
+	_destroyCheckboxes: function ()
 	{
-		if ( this.w_accept_widget )
+		this._checkboxes.forEach( function ( i_checkbox )
 		{
-			var b_accept = dojo.marginBox(this.n_accept);
+			i_checkbox.destroy();
+		});
 
-			return b_accept.h > 0;
-		}
-
-		return false;
-	},
-
-	_showAcceptWidget: function ()
-	{
-		if ( this.w_accept_widget )
-		{
-			if ( !this._acceptWidgetIsVisible() )
-			{
-				dojo.fx.wipeIn(
-				{
-					node: this.n_accept
-				}).play();
-			}
-		}
-	},
-
-	_hideAcceptWidget: function ()
-	{
-		if ( this.w_accept_widget )
-		{
-			if ( this._acceptWidgetIsVisible() )
-			{
-				dojo.fx.wipeOut(
-				{
-					node: this.n_accept
-				}).play();
-			}
-		}
+		this._checkboxes = [];
 	}
 });

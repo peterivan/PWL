@@ -13,7 +13,7 @@ dojo.require('pwl.widget._Acceptable');
 
 dojo.declare(
 	'pwl.widget.form.ToolbarForm',
-	[dijit._Widget, pwl.widget.form.Form, pwl.widget._Acceptable],
+	[pwl.widget.form.Form, pwl.widget._Acceptable],
 {
 	baseClass: 'pwlWidgetFormToolbarForm',
 
@@ -47,13 +47,14 @@ dojo.declare(
 		this.set('toolbar_position', this.toolbar_position);
 
 		this._connect();
-		this.resize();
 	},
 
 
 	resize: function ()
 	{
 		this.inherited(arguments);
+
+		console.log('resize');
 
 		var b_parent = dojo.contentBox(this.domNode.parentNode);
 
@@ -71,37 +72,34 @@ dojo.declare(
  			overflow: 'auto'
  		});
 	},
+
 /******************************************************************************/
 /** Events ********************************************************************/
 
-	onAccept: function ()
-	{
-
-	},
-
-	onCancel: function ()
-	{
-	},
-
-	onChange: function ()
-	{
-		this.inherited(arguments);
-
-		this.showAccept();
-	},
-
-	onReset: function ()
-	{
-
-	},
+	onAccept: function () {},
+	onCancel: function () {},
 
 /******************************************************************************/
 
-	reset: function ()
+	connectChildren: function ()
 	{
 		this.inherited(arguments);
 
-		this.onReset();
+		this.getDescendants().forEach( function ( i_child )
+		{
+			if ( !i_child.is_connected )
+			{
+				if ( dojo.isFunction(i_child.onChange) )
+				{
+					if ( i_child.isInstanceOf(dijit.form.TextBox) )
+						dojo.connect(i_child, 'onKeyUp', this, '_onChange');
+					else
+						dojo.connect(i_child, 'onChange', this, '_onChange');
+				}
+
+				i_child.is_connected = true;
+			}
+		}, this);
 	},
 
 /******************************************************************************/
@@ -133,29 +131,30 @@ dojo.declare(
 
 	_connect: function ()
 	{
-		this.getChildren().forEach( function ( i_child )
-		{
-			if ( i_child.isInstanceOf(dijit.form.Form) )
-			{
-				dojo.connect(i_child, 'onChange', this, 'onChange');
-				dojo.connect(i_child, 'onSave', this, 'hideAccept');
-			}
-
-			if ( dojo.isFunction(i_child.onChange) )
-			{
-				if ( i_child.declaredClass.match(/textbox/i) )
-					dojo.connect(i_child, 'onKeyUp', this, 'showAccept');
-				else
-					dojo.connect(i_child, 'onChange', this, 'showAccept');
-			}
-		}, this);
-
 		dojo.connect(this, 'onCancel', this, 'hideAccept');
 		dojo.connect(this, 'onReset', this, 'hideAccept');
 
 		dojo.connect(this.w_accept, 'onAccept', this, 'onAccept');
 
-		dojo.connect(this.w_accept, 'onCancel', this, 'reset');
 		dojo.connect(this.w_accept, 'onCancel', this, 'onCancel');
+	},
+
+/******************************************************************************/
+/** System events *************************************************************/
+
+	_onChange: function ()
+	{
+		this.showAccept();
+
+		this.onChange();
+	},
+
+	_onCancel: function ()
+	{
+		this.hideAccept();
+
+		this.reset();
+
+		this.onCancel();
 	}
 });

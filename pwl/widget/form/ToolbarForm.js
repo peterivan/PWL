@@ -54,8 +54,6 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
-		console.log('resize');
-
 		var b_parent = dojo.contentBox(this.domNode.parentNode);
 
 		dojo.contentBox(this.domNode, b_parent);
@@ -64,7 +62,7 @@ dojo.declare(
 
 		var b_toolbar_box = dojo.marginBox(this.n_toolbar_box);
 
-		var work_height = b_this.h - b_toolbar_box.h - 10;
+		var work_height = b_this.h - b_toolbar_box.h - 1;
 
  		dojo.style(this.containerNode,
  		{
@@ -75,6 +73,13 @@ dojo.declare(
 
 /******************************************************************************/
 /** Events ********************************************************************/
+
+	onSave: function ()
+	{
+		this.inherited(arguments);
+
+		this.hideAccept();
+	},
 
 	onAccept: function () {},
 	onCancel: function () {},
@@ -87,7 +92,7 @@ dojo.declare(
 
 		this.getDescendants().forEach( function ( i_child )
 		{
-			if ( !i_child.is_connected )
+			if ( !i_child.is_connected && !i_child.ignore_form_events )
 			{
 				if ( dojo.isFunction(i_child.onChange) )
 				{
@@ -131,12 +136,13 @@ dojo.declare(
 
 	_connect: function ()
 	{
-		dojo.connect(this, 'onCancel', this, 'hideAccept');
 		dojo.connect(this, 'onReset', this, 'hideAccept');
 
-		dojo.connect(this.w_accept, 'onAccept', this, 'onAccept');
+		dojo.connect(this.w_accept, 'onAccept', this, '_onAccept');
 
-		dojo.connect(this.w_accept, 'onCancel', this, 'onCancel');
+		dojo.connect(this.w_accept, 'onCancel', this, '_onCancel');
+
+		this.connectChildren();
 	},
 
 /******************************************************************************/
@@ -147,6 +153,13 @@ dojo.declare(
 		this.showAccept();
 
 		this.onChange();
+	},
+
+	_onAccept: function ()
+	{
+		this.save();
+
+		this.onAccept();
 	},
 
 	_onCancel: function ()

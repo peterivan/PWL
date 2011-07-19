@@ -14,6 +14,9 @@ dojo.declare(
 {
 	is_modified: false,
 
+	_children_with_save: 0,
+	_saved_children: 0,
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -23,7 +26,15 @@ dojo.declare(
 
 /******************************************************************************/
 
-	save: function () {},
+	save: function ()
+	{
+		this.getDescendants().forEach( function ( i_child )
+		{
+			if ( dojo.isFunction(i_child.save) )
+				i_child.save();
+		}, this);
+	},
+
 	reload: function () {},
 
 	reset: function ()
@@ -36,6 +47,23 @@ dojo.declare(
 				i_widget.reset();
 		}, this);
 
+	},
+
+	connectChildren: function ()
+	{
+		this.inherited(arguments);
+
+		this.getDescendants().forEach( function ( i_child )
+		{
+			if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
+			{
+				dojo.connect(i_child, 'onSave', this, '_onSave');
+
+				this._children_with_save++;
+
+				i_child.is_pwl_form_connected = true;
+			}
+		}, this);
 	},
 
 /******************************************************************************/
@@ -55,4 +83,15 @@ dojo.declare(
 /** protected **/
 /******************************************************************************/
 
+	_onSave: function ()
+	{
+		this._saved_children++;
+
+		if ( this._children_with_save == this._saved_children )
+		{
+			this._saved_children = 0;
+
+			this.onSave();
+		}
+	}
 });

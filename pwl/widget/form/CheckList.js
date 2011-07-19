@@ -74,6 +74,7 @@ dojo.declare(
 
 		this.selection = [];
 		this._checkboxes = [];
+		this._value_data = [];
 	},
 
 	postCreate: function ()
@@ -136,7 +137,7 @@ dojo.declare(
 			{
 				var b_list_container = dojo.contentBox(this.n_list_container);
 
-				dojo.style(this.w_search_box.domNode, 'width', b_list_container.w + 'px');
+				//dojo.style(this.w_search_box.domNode, 'width', b_list_container.w + 'px');
 			}
 		}
 	},
@@ -215,8 +216,9 @@ dojo.declare(
 					dojo.hitch(this.save_mixin.onComplete)();
 			},
 
-			onError: function ()
+			onError: function ( i_error )
 			{
+				this.onSaveError(i_error);
 			}
 		};
 
@@ -235,7 +237,8 @@ dojo.declare(
 	{
 		this.selection = [];
 
-		this.reload();
+		this._unselectItems();
+		this._selectItems(this._value_data);
 	},
 
 	formatter: function ( i_item )
@@ -275,7 +278,7 @@ dojo.declare(
 			queryOptions: query_options,
 
 			onComplete: function ( i_data )
-			{console.log(i_data);
+			{
 				this._renderItems(i_data, this.selection);
 			}
 		});
@@ -582,7 +585,7 @@ dojo.declare(
 
 	_createSearchBox: function ()
 	{
-		this.w_search_box = new pwl.widget.form.TextBox({}, dojo.create('span', null, this.n_search));
+		this.w_search_box = new pwl.widget.form.TextBox({ignore_form_events: true}, dojo.create('span', null, this.n_search));
 
 		var func = function ()
 		{

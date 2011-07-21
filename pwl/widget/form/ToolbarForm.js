@@ -92,7 +92,7 @@ dojo.declare(
 
 		this.getDescendants().forEach( function ( i_child )
 		{
-			if ( !i_child.is_connected && !i_child.ignore_form_events )
+			if ( !i_child.is_pwl_toolbar_form_connected && !i_child.ignore_form_events )
 			{
 				if ( dojo.isFunction(i_child.onChange) )
 				{
@@ -102,7 +102,7 @@ dojo.declare(
 						dojo.connect(i_child, 'onChange', this, '_onChange');
 				}
 
-				i_child.is_connected = true;
+				i_child.is_pwl_toolbar_form_connected = true;
 			}
 		}, this);
 	},
@@ -150,9 +150,12 @@ dojo.declare(
 
 	_onChange: function ()
 	{
-		this.showAccept();
+		if ( !this.disable_change_event )
+		{
+			this.showAccept();
 
-		this.onChange();
+			this.onChange();
+		}
 	},
 
 	_onAccept: function ()

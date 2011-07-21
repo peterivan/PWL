@@ -14,6 +14,8 @@ dojo.declare(
 {
 	is_modified: false,
 
+	disable_change_event: false,
+
 	_children_with_save: 0,
 	_saved_children: 0,
 

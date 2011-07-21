@@ -96,7 +96,9 @@ dojo.declare(
 			{
 				if ( dojo.isFunction(i_child.onChange) )
 				{
-					if ( i_child.isInstanceOf(dijit.form.TextBox) )
+					if ( dojo.isFunction(dijit.Editor) && i_child.isInstanceOf(dijit.Editor) )
+						dojo.connect(i_child, 'onKeyUp', this, '_onChange');
+					else if ( dojo.isFunction(dijit.form.TextBox) && i_child.isInstanceOf(dijit.form.TextBox) )
 						dojo.connect(i_child, 'onKeyUp', this, '_onChange');
 					else
 						dojo.connect(i_child, 'onChange', this, '_onChange');

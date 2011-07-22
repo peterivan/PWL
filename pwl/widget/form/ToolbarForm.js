@@ -94,14 +94,16 @@ dojo.declare(
 		{
 			if ( !i_child.is_pwl_toolbar_form_connected && !i_child.ignore_form_events )
 			{
-				if ( dojo.isFunction(i_child.onChange) )
+				if ( dojo.isFunction(i_child.onChange)  && !i_child.isInstanceOf(dijit.form.Button) )
 				{
 					if ( dojo.isFunction(dijit.Editor) && i_child.isInstanceOf(dijit.Editor) )
 						dojo.connect(i_child, 'onKeyUp', this, '_onChange');
 					else if ( dojo.isFunction(dijit.form.TextBox) && i_child.isInstanceOf(dijit.form.TextBox) )
 						dojo.connect(i_child, 'onKeyUp', this, '_onChange');
-					else
-						dojo.connect(i_child, 'onChange', this, '_onChange');
+					//else
+					dojo.connect(i_child, 'onChange', this, '_onChange');
+
+					console.log(i_child.id);
 				}
 
 				i_child.is_pwl_toolbar_form_connected = true;

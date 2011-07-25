@@ -20,9 +20,14 @@
 .pwlLayoutIconStackContainer > div[dojoAttachPoint=containerNode]
 {
 	position: absolute;
-
+	overflow:hidden;
 	top: 0;
 	bottom: 0;
 	left: 120px;
 	right: 0;
+}
+
+.pwlLayoutIconStackContainer .dijitVisible
+{
+	position: absolute;
 }

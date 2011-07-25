@@ -2,8 +2,9 @@
 .pwlWidgetLayoutWizard
 {
 	position:relative;
-	border:1px solid gray;
+	border:1px solid #d5d5bd;
 	overflow:hidden;
+	border-radius:4px;
 }
 
 
@@ -14,10 +15,13 @@
 	
 }	
 
-.pwlWidgetLayoutWizard .container > div
+.pwlWidgetLayoutWizard .container > div ,.pwlWidgetLayoutWizard .container > section
 {
 	position:absolute;
 	background-color: white;
+	border:2px solid #edede0;
+	padding:4px;
+	border-radius:4px;
 }
 
 .pwlWidgetLayoutWizard .navigation
@@ -28,22 +32,23 @@
 	line-height: 40px;
     background-attachment: scroll;
     background-color: transparent;
-    background-image: -moz-linear-gradient(100% 100% 90deg, #E0E0E0, #FFFFFF);
+    background-image: -moz-linear-gradient(100% 100% 90deg, #d5d5bd, #FFFFFF);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #FFFFFF),color-stop(0,#d5d5bd));
     background-position: 0 0;
     background-repeat: repeat;
-    border-top-color: gray;
-    border-top-style: solid;
-    border-top-width: 2px;
+	border-radius:4px;
     bottom: 0;
-    position: absolute;
     width: 100%;	
+	text-align: right;
 }	
 
 .pwlWidgetLayoutWizard .navigation span
 {
     background-attachment: scroll;
     background-color: transparent;
-    background-image: -moz-linear-gradient(center top , #FFFFFF, #E0E0E0);
+    background-image: -moz-linear-gradient(center top , #FFFFFF, #edede0);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.08, #FFFFFF),color-stop(0.54,#edede0));
+
     background-position: 0 0;
     background-repeat: repeat;
     border-bottom-color: #E0E0E0;
@@ -57,7 +62,7 @@
     border-top-style: solid;
     border-top-width: 1px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    color: gray;
+    color: black;
     cursor: pointer;
     font-size: 1em;
     

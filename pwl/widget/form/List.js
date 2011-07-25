@@ -95,6 +95,10 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
+		var b_parent = dojo.contentBox(this.domNode.parentNode);
+
+		dojo.marginBox(this.domNode, b_parent);
+			
 		var b_this = dojo.contentBox(this.domNode);
 
 		var b_header = dojo.marginBox(this.n_header);

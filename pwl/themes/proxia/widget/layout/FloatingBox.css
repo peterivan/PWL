@@ -1,0 +1,10 @@
+.pwlWidgetLayoutFloatingBox
+{
+	position:absolute;
+	background-color:White;
+	border:1px solid gray;
+	min-height:1.5em;
+ 	padding:5px; 
+	width:150px;
+	border-radius:5px;
+}

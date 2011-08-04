@@ -1,0 +1,87 @@
+
+.pwlLayoutTabletContainer
+{
+	position:relative;
+	border:1px solid #d5d5bd;
+	overflow:hidden;
+	border-radius:4px;
+}
+
+.pwlLayoutTabletContainer .container
+{
+	top:0;
+	margin: 0 auto;
+}	
+
+.pwlLayoutTabletContainer .container > div ,.pwlLayoutTabletContainer .container > section
+{
+	position:absolute;
+	background-color: white;
+	padding:4px;
+	border-radius:4px;
+}
+
+.pwlLayoutTabletContainer > .message
+{
+	
+	position:absolute;
+	bottom:0;
+	height:45px;
+	line-height:22px;
+	padding:0 10px;
+	color:White;
+	
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(1, rgb(175,180,184)),
+		color-stop(0, rgb(123,139,153))
+	);
+	background-image: -moz-linear-gradient(
+		center bottom,
+		rgb(175,180,184) 100%,
+		rgb(123,139,153) 0%
+	);	
+}
+
+.pwlLayoutTabletContainer .navigation_left
+{
+	position:absolute;
+	bottom:0;
+	top:0;
+	left:0;
+	width:40px;
+	background:rgb(123, 139, 153) url(../images/icons/TabletWizard/bg_navi.png) right repeat-y;
+	z-index:100;
+}	
+
+.pwlLayoutTabletContainer .navigation_left span
+{
+	display:block;
+	width:40px;
+	height:55px;
+	background:url(../images/icons/TabletWizard/ico-nav-left.png) right no-repeat;
+	cursor:pointer;
+}
+
+.pwlLayoutTabletContainer .navigation_right
+{
+	position:absolute;
+	bottom:0;
+	top:0;
+	right:0;
+	width:40px;
+	background:rgb(123, 139, 153) url(../images/icons/TabletWizard/bg_navi.png) left repeat-y;
+	z-index:100;
+}	
+
+.pwlLayoutTabletContainer .navigation_right span
+{
+	display:block;
+	width:40px;
+	height:55px;
+	background:url(../images/icons/TabletWizard/ico-nav-right.png) left no-repeat;
+	cursor:pointer;
+}

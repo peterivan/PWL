@@ -58,7 +58,12 @@ dojo.declare(
 		console.debug("message_enabled",this.message_enabled)
 		
 		var index = 0;
-					
+		
+		var b_parent = dojo.contentBox(this.domNode.parentNode);
+		
+		if(!this.container_height)
+			this.container_height = b_parent.h;
+		
 		console.debug("this.container_height",this.container_height)
 		
 		dojo.forEach(this.getChildren(),function(pane)
@@ -184,7 +189,6 @@ dojo.declare(
 		}
 		dojo.marginBox(this.domNode, {h: b_this.h});
 		dojo.marginBox(this.containerNode, {h:this.container_height,w: this.container_width});
-		
 		dojo.marginBox(this.n_messageNode, {w: this.container_width});
 		
 		
@@ -193,13 +197,9 @@ dojo.declare(
 		dojo.style(this.n_prev,"marginTop",marginSpan+"px")
 		dojo.style(this.n_next,"marginTop",marginSpan+"px")
 		
-		dojo.forEach(this.panes,function(pane)
-		{
-			pane.resize({h:this.container_height,w: this.container_width});
-			
-		},this)		
-		//console.debug("left in resize",this.left_to)
-		//console.debug("resize finished")
+		if(this.current_pane)
+			this.current_pane.resize({h:this.container_height,w: this.container_width});
+		
 	},
 		
 	addPane: function(pane)
@@ -310,6 +310,8 @@ dojo.declare(
 			
 			this.setNavigation();
 		}
+		
+		//console.debug("prev: this.current_pane",this.current_pane.id)
 	},	
 	
 	_transition: function ( i_new_widget, i_old_widget)
@@ -332,7 +334,8 @@ dojo.declare(
 		
 		 this._showChild(i_new_widget);
 
-		 console.debug("i_old_widget",i_old_widget)
+		 console.debug("i_old_widget",i_old_widget.id)
+		 console.debug("i_new_widget",i_new_widget.id)
 		 console.debug("direction",this.direction)
 		
  		if ( i_old_widget )
@@ -371,7 +374,7 @@ dojo.declare(
 			
 		});		
 		anim.play();
-		
+
 	},
 	
 	slideIn: function(position,page)
@@ -404,7 +407,7 @@ dojo.declare(
 			
 		});		
 		anim.play();
-
+		
 		
 	},
 	
@@ -421,7 +424,7 @@ dojo.declare(
 			index++;
 		})
 		
-		console.debug(select_pane)
+		//console.debug(select_pane)
 		
 		if(select_pane)
 		{

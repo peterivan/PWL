@@ -58,7 +58,7 @@ dojo.declare(
 		console.debug("message_enabled",this.message_enabled)
 		
 		var index = 0;
-		
+					
 		console.debug("this.container_height",this.container_height)
 		
 		dojo.forEach(this.getChildren(),function(pane)
@@ -198,7 +198,7 @@ dojo.declare(
 			pane.resize({h:this.container_height,w: this.container_width});
 			
 		},this)		
-		
+		//console.debug("left in resize",this.left_to)
 		//console.debug("resize finished")
 	},
 		
@@ -379,7 +379,7 @@ dojo.declare(
 		var b_this = dojo.contentBox(this.domNode);
 		
 		dojo.style(page.domNode,{"left":b_this.w + "px"});//,"zIndex":"100"
-		
+
 		/* slide to left */
 		var params = {duration:this.slide_duration,left:this.left_to};//this.left_to
 		

@@ -319,8 +319,6 @@ dojo.declare(
 		var old_index = 0;
 		var new_index = 0;
 
-		//console.debug("i_old_widget",i_old_widget)
-		//console.debug("i_new_widget",i_new_widget)
 		
 		this.getChildren().forEach( function ( i_child, i_index )
 		{
@@ -332,14 +330,12 @@ dojo.declare(
 				
 		//var direction = old_index > new_index ? 'left' : 'right';
 		
-		 this._showChild(i_new_widget);
-
-		 console.debug("i_old_widget",i_old_widget.id)
-		 console.debug("i_new_widget",i_new_widget.id)
-		 console.debug("direction",this.direction)
+		this._showChild(i_new_widget);
 		
  		if ( i_old_widget )
  			this.slideOut(this.direction,i_old_widget);
+		
+		this.__old_pane = i_old_widget;
 		
 		this.slideIn(this.direction,i_new_widget);
 			
@@ -371,6 +367,7 @@ dojo.declare(
 		{
 			if(this.message_enabled)
 				dojo.style(this.n_messageNode,"display","block");
+			dojo.publish("/pwl/layout/TabletContainer/slideOut", [{pane:page}]);
 			
 		});		
 		anim.play();
@@ -379,6 +376,7 @@ dojo.declare(
 	
 	slideIn: function(position,page)
 	{
+		
 		var b_this = dojo.contentBox(this.domNode);
 		
 		dojo.style(page.domNode,{"left":b_this.w + "px"});//,"zIndex":"100"
@@ -404,6 +402,8 @@ dojo.declare(
 		{
 			if(this.message_enabled)
 				dojo.style(this.n_messageNode,"display","block");
+			
+			dojo.publish("/pwl/layout/TabletContainer/slideIn", [{current_pane:page,old_pane:this.__old_pane}]);
 			
 		});		
 		anim.play();

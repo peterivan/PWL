@@ -103,7 +103,7 @@ dojo.declare(
 					//else
 					dojo.connect(i_child, 'onChange', this, '_onChange');
 
-					console.log(i_child.id);
+					//console.log(i_child.id);
 				}
 
 				i_child.is_pwl_toolbar_form_connected = true;

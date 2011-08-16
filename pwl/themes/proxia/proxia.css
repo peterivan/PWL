@@ -7,6 +7,7 @@
 
 @import url('widget/layout/CommonBox.css');
 @import url('widget/layout/InlineHelp.css');
+@import url('widget/layout/InlineMessage.css');
 @import url('widget/layout/Wizard.css');
 
 @import url('widget/layout/TabletWizard.css');

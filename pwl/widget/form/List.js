@@ -104,7 +104,7 @@ dojo.declare(
 		{
 			h: b_this.h - b_header.h - b_search.h - 5
 		});
-		console.debug(b_this.h - b_header.h - b_search.h - 5);
+
 		dojo.style(this.n_list_container,"overflow","auto");
 		/**********************************************************************/
 	},

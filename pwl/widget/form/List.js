@@ -95,6 +95,10 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
+		var b_parent = dojo.contentBox(this.domNode.parentNode);
+
+		dojo.marginBox(this.domNode, b_parent);
+			
 		var b_this = dojo.contentBox(this.domNode);
 
 		var b_header = dojo.marginBox(this.n_header);
@@ -334,38 +338,44 @@ dojo.declare(
 	{
 		var p = new dojo.Deferred();
 
-		this._data = null;
-
-		var search_attr = this.search_attribute || this.default_search_attribute;
-
-		if ( this.query && this.query[search_attr] )
-			this.query[search_attr] = '*';
-
-		var query_string = dojo.objectToQuery(this.query);
-
-		if ( query_string )
-			query_string = '?' + query_string;
-
-		if ( this._shouldLoadAll() )
+		if (this.store)
 		{
-			this.store.fetch(
+			this._data = null;
+
+			var search_attr = this.search_attribute || this.default_search_attribute;
+
+			if ( this.query && this.query[search_attr] )
+				this.query[search_attr] = '*';
+
+			var query_string = dojo.objectToQuery(this.query);
+
+			if ( query_string )
+				query_string = '?' + query_string;
+
+			if ( this._shouldLoadAll() )
 			{
-				scope: this,
-				query: query_string,
-
-				onComplete: function ( i_data )
+				this.store.fetch(
 				{
-					this._data = i_data;
+					scope: this,
+					query: query_string,
 
-					p.callback(i_data);
-				}
-			});
+					onComplete: function ( i_data )
+					{
+						this._data = i_data;
+
+						p.callback(i_data);
+					}
+				});
+			}
+			else
+			{
+				this._data = [];
+				p.callback([]);
+			}
+		
 		}
-		else
-		{
-			this._data = [];
-			p.callback([]);
-		}
+
+
 
 		return p;
 	},

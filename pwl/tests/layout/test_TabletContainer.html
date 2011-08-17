@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.layout.TabletContainer</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('dijit.layout.ContentPane');
+
+		dojo.require('pwl.layout.TabletContainer');
+
+		dojo.addOnLoad( function ()
+		{
+			//dijit.byId("W1").createWizard();
+		});
+		
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">PWL.layout.TabletContainer</h1>
+
+ 	<div  style="width: 800px; height: 400px;" >
+ 		<div id="W1" dojoType="pwl.layout.TabletContainer" message_enabled="true" first_next_visible="true" >
+			<div dojoType="dijit.layout.ContentPane" title="1111111" style="background-color:red">
+				Slide 1
+			</div>
+			<div dojoType="dijit.layout.ContentPane"  title="2222222"  style="background-color:blue">
+				Slide 2
+			</div>	
+			<div dojoType="dijit.layout.ContentPane"  title="33333333"  style="background-color:yellow">
+				Slide 3
+			</div>				
+			<div dojoType="dijit.layout.ContentPane"  title="44"  style="background-color:green">
+				Slide 4
+			</div>	
+			<div dojoType="dijit.layout.ContentPane"  title="55"  style="background-color:orange">
+				Slide 5
+			</div>	
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.layout.CommonBox Design</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.layout.FloatingBox');
+		
+		var fB = null;
+		
+		dojo.addOnLoad(function ()
+		{
+		
+			var el1 = dojo.byId("22");
+			var el2 = dojo.byId("33");
+			
+			fB = new pwl.widget.layout.FloatingBox();
+//			fB.set("sourceElement",el1);
+			
+			dojo.connect(el1,"onmouseover",function()
+			{
+				fB.set("message",el1.innerHTML + "...");
+				fB.set("sourceElement",el1);
+			});
+
+			dojo.connect(el1,"onmouseout",function()
+			{
+				
+				fB.hide();
+			});
+
+			
+			dojo.connect(el2,"onmouseover",function()
+			{
+				fB.set("message",el2.innerHTML + "...");
+				fB.set("sourceElement",el2);
+			});
+
+			dojo.connect(el2,"onmouseout",function()
+			{
+				
+				fB.hide();
+			});
+
+		})
+		
+		
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.layout.FloatingBox Design</h1>
+	
+	<div style="width:500px;margin:0 auto;">
+		<span id="22" style="background-color:silver;">skuska</span>
+	</div>
+	<div style="width:300px;margin:0 auto;">
+		<span id="33" style="background-color:silver;">skuska 33</span>
+	</div>
+	
+</body>
+</html>

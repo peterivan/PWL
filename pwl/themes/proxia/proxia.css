@@ -1,5 +1,6 @@
 @import url('layout/IconStackContainer.css');
 @import url('layout/IconStackController.css');
+@import url('layout/TabletContainer.css');
 
 @import url('widget/Accept.css');
 @import url('widget/ItemListEditor.css');
@@ -7,6 +8,9 @@
 @import url('widget/layout/CommonBox.css');
 @import url('widget/layout/InlineHelp.css');
 @import url('widget/layout/Wizard.css');
+
+@import url('widget/layout/TabletWizard.css');
+@import url('widget/layout/FloatingBox.css');
 
 @import url('widget/media/Audio.css');
 

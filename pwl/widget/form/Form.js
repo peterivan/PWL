@@ -15,6 +15,7 @@ dojo.declare(
 	is_modified: false,
 
 	disable_change_event: false,
+	disable_autosave: false,
 
 	_children_with_save: 0,
 	_saved_children: 0,
@@ -30,11 +31,14 @@ dojo.declare(
 
 	save: function ()
 	{
-		this.getDescendants().forEach( function ( i_child )
+		if ( !this.disable_autosave )
 		{
-			if ( dojo.isFunction(i_child.save) )
-				i_child.save();
-		}, this);
+			this.getDescendants().forEach( function ( i_child )
+			{
+				if ( dojo.isFunction(i_child.save) )
+					i_child.save();
+			}, this);
+		}
 	},
 
 	reload: function () {},
@@ -55,17 +59,20 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
-		this.getDescendants().forEach( function ( i_child )
+		if ( !this.disable_autosave )
 		{
-			if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
+			this.getDescendants().forEach( function ( i_child )
 			{
-				dojo.connect(i_child, 'onSave', this, '_onSave');
+				if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
+				{
+					dojo.connect(i_child, 'onSave', this, '_onSave');
 
-				this._children_with_save++;
+					this._children_with_save++;
 
-				i_child.is_pwl_form_connected = true;
-			}
-		}, this);
+					i_child.is_pwl_form_connected = true;
+				}
+			}, this);
+		}
 	},
 
 /******************************************************************************/

@@ -16,9 +16,8 @@ dojo.declare(
 
 	templateString: dojo.cache('pwl.widget.layout', 'templates/InlineMessage.html'),
 			 
-	widgetsInTemplate : true,
-	helpToken: '',
-	label_button_edit: "Upraviť",
+	widgetsInTemplate: true,
+
 
 /******************************************************************************/
 /** public **/
@@ -30,21 +29,9 @@ dojo.declare(
 	postCreate: function ()
 	{
 		this.inherited(arguments);
-
-		//this.help_store = academy.StoreManager.getStore({ target:djConfig.serviceRoot+'/help',cacheByDefault: false});
-
-// 		dojo.connect(this.buttonEdit, 'onClick', this, '_toogleButton');
-// 
-// 		dojo.subscribe("saved_help", dojo.hitch(this,function(message){
-// 			this.wView.setContent(message.text)
-// 		}));
 		
 	},
 
-	_toogleButton: function()
-	{
-		console.debug("zmena helpu");
-	},
 	
 	startup : function ()
 	{
@@ -61,9 +48,9 @@ dojo.declare(
 		var t_box = dojo.contentBox(this.domNode);
 	},
 
-	
-	loadText: function()
+	_setContentAttr: function( i_message )
 	{
-
-	},
+		this.containerNode.innerHTML = i_message
+	}
+	
 });

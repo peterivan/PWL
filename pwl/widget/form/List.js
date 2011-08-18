@@ -341,8 +341,7 @@ dojo.declare(
 		var node_params =
 		{
 			'data-identifier': id,
-			innerHTML: label,
-			'class': 'dummy'
+			innerHTML: label
 		};
 
 		var node = dojo.create('li', node_params, this.n_list);
@@ -358,7 +357,8 @@ dojo.declare(
 		var node_params =
 		{
 			'data-identifier': i_item.id,
-			innerHTML: i_item.label || ''
+			innerHTML: i_item.label || '',
+			'class': 'dummy'
 		};
 
 		var node = dojo.create('li', node_params, this.n_list, i_item.position);

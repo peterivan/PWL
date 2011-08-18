@@ -25,6 +25,7 @@ dojo.declare(
 	label_store_id_attribute: 'id',
 	label_store_default_id_attribute: 'id',
 	label_store_label_attribute: '',
+	label_store_query: null,
 
 	value_store: null,
 	value_store_id_attribute: 'id',
@@ -260,7 +261,7 @@ dojo.declare(
 
 		var search_attr = this.search_attribute || this.default_search_attribute;
 
-		var query = {};
+		var query = this.label_store_query || {};
 		query[search_attr] = search_term + '*';
 
 		var query_options =
@@ -472,9 +473,15 @@ dojo.declare(
 	{
 		if ( this.label_store )
 		{
+			var query = null;
+
+			if ( this.label_store_query )
+				query = '?' + dojo.objectToQuery(this.label_store_query);
+
 			this.label_store.fetch(
 			{
 				scope: this,
+				query: query,
 
 				onComplete: function ( i_data )
 				{

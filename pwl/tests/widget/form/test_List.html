@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>pwl.widget.form.List</title>
+
+	<style type="text/css">
+		@import url('../../../../dijit/themes/tundra/tundra.css');
+		@import url('../../resources/test.css');
+		@import url('../../../themes/proxia/proxia.css');
+	</style>
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('dojo.data.ItemFileWriteStore');
+
+		dojo.require('pwl.widget.form.List');
+
+		dojo.addOnLoad( function ()
+		{
+			var s1_label = new dojo.data.ItemFileWriteStore(
+			{
+				data:
+				{
+					identifier: 'id',
+					items: [
+						{id: 1, given_name: 'Peter', family_name: 'Ivan'},
+						{id: 2, given_name: 'Roman', family_name: 'Vrto'},
+						{id: 3, given_name: 'Ondrej', family_name: 'Remeselnik'},
+						{id: 4, given_name: 'Jozef', family_name: 'Drak'},
+						{id: 5, given_name: 'Jan', family_name: 'Melich'},
+						{id: 6, given_name: 'Valeria', family_name: 'Ciamporova'},
+						{id: 7, given_name: 'Alena', family_name: 'Ostrihonova'},
+						{id: 8, given_name: 'Alena', family_name: 'Matuskova'},
+						{id: 9, given_name: 'Dobroslav', family_name: 'Chrobak'},
+						{id: 10, given_name: 'Margita', family_name: 'Figuli'}
+					]
+				}
+			});
+
+			var w = new pwl.widget.form.List(
+			{
+				store: s1_label,
+
+				formatter: function ( i_item, i_store )
+				{
+					var given_name = i_store.getValue(i_item, 'given_name');
+					var family_name = i_store.getValue(i_item, 'family_name');
+
+					return given_name + ' ' + family_name;
+				}
+			}, 'W1').startup();
+
+		});
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">pwl.widget.form.List</h1>
+
+	<section>
+		<header>Plain CheckList</header>
+		<div style="width: 300px; height: 250px;">
+			<div id="W1"></div>
+		</div>
+	</section>
+
+</body>
+</html>

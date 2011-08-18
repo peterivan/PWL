@@ -44,6 +44,7 @@ dojo.declare(
 	value: [], // dummy attr, not really used, intentional
 
 	_data: null,
+	_dummy_items: [],
 
 	_search_timer: null,
 
@@ -98,7 +99,7 @@ dojo.declare(
 		var b_parent = dojo.contentBox(this.domNode.parentNode);
 
 		dojo.marginBox(this.domNode, b_parent);
-			
+
 		var b_this = dojo.contentBox(this.domNode);
 
 		var b_header = dojo.marginBox(this.n_header);
@@ -146,7 +147,7 @@ dojo.declare(
 		this.item = null;
 	},
 
-	formatter: function ( i_item )
+	formatter: function ( i_item, i_store )
 	{
 		var field = this.label_attribute || this.id_attribute || this.default_id_attribute;
 		var label = this.store.getValue(i_item, field);
@@ -177,6 +178,24 @@ dojo.declare(
 		this._renderItems(result);
 
 		this._search_timer = null;
+	},
+
+/******************************************************************************/
+/** Dummy items ***************************************************************/
+
+	addDummyItem: function ( i_identifier, i_label, i_position )
+	{
+		var item =
+		{
+			id: i_identifier,
+			label: i_label,
+			position: i_position || 'last',
+			is_dummy: true
+		};
+
+		this._dummy_items.push(item);
+
+		this._renderDummyItem(item);
 	},
 
 /******************************************************************************/
@@ -309,24 +328,40 @@ dojo.declare(
 	{
 		dojo.empty(this.n_list);
 
-		i_data.forEach( function ( i_item )
-		{
-			this._renderItem(i_item);
-		}, this);
+		i_data.forEach( this._renderItem, this );
+
+		this._dummy_items.forEach( this._renderDummyItem, this );
 	},
 
 	_renderItem: function ( i_item )
 	{
 		var id = this.store.getValue(i_item, this.id_attribute || this.default_id_attribute);
-		var label = this.formatter(i_item);
+		var label = this.formatter(i_item, this.store);
 
 		var node_params =
 		{
 			'data-identifier': id,
-			innerHTML: label
+			innerHTML: label,
+			'class': 'dummy'
 		};
 
 		var node = dojo.create('li', node_params, this.n_list);
+
+		node['data-item'] = i_item;
+	},
+
+	_renderDummyItem: function ( i_item )
+	{
+		if ( !i_item.id )
+			throw 'Dummy item must have id field.';
+
+		var node_params =
+		{
+			'data-identifier': i_item.id,
+			innerHTML: i_item.label || ''
+		};
+
+		var node = dojo.create('li', node_params, this.n_list, i_item.position);
 
 		node['data-item'] = i_item;
 	},
@@ -372,10 +407,8 @@ dojo.declare(
 				this._data = [];
 				p.callback([]);
 			}
-		
+
 		}
-
-
 
 		return p;
 	},
@@ -390,8 +423,6 @@ dojo.declare(
 		qs = dojo.objectToQuery(qs);
 
 		var load_all = this.load_everything || qs;
-
-		console.debug(load_all, this.load_everything, qs);
 
 		return load_all;
 	},

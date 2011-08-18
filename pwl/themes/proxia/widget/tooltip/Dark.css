@@ -1,0 +1,53 @@
+.proxia .dijitTooltip[class~=dark]
+{
+    border:none;
+}
+
+.proxia .dijitTooltip[class~=dark] .dijitTooltipContainer {
+	/*
+		The part with the text.
+	*/
+	background-image:none;
+	background-color: #3a3a3a;
+	border: 2px solid #ececec;
+	padding: 0.45em;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	color:White;
+}
+
+.proxia .dijitTooltip[class~=dark][class~=dijitTooltipAbove] .dijitTooltipConnector {
+	/* the arrow piece for tooltips above an element */
+	bottom: 1px;
+	left: 10px;
+	background:url("../../images/tooltip/dark/tooltipConnectorDown.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}
+
+.proxia .dijitTooltip[class~=dark][class~=dijitTooltipBelow] .dijitTooltipConnector {
+	/* the arrow piece for tooltips below an element */
+	top: 1px;
+	left: 10px;
+	background:url("../../images/tooltip/dark/tooltipConnectorUp.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}
+
+.proxia .dijitTooltip[class~=dark][class~=dijitTooltipLeft] .dijitTooltipConnector {
+	/* the arrow piece for tooltips to the left of an element, bottom borders aligned */
+	right: 0px;
+	bottom: 3px;
+	background:url("../../images/tooltip/dark/tooltipConnectorRight.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}
+
+.proxia .dijitTooltip[class~=dark][class~=dijitTooltipRight] .dijitTooltipConnector {
+	/* the arrow piece for tooltips to the right of an element, bottom borders aligned */
+	left: 0px;
+	bottom: 3px;
+	background:url("../../images/tooltip/dark/tooltipConnectorLeft.png") no-repeat top left;
+	width:16px;
+	height:14px;
+}

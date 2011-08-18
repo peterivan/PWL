@@ -1,0 +1,47 @@
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Error"]
+{
+	border: none;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Error"] > div
+{
+	margin:  0 5px 0 5px;
+	padding:5px;
+	background:#fff url("../../../images/icons/22x22/dialog-warning.png") no-repeat right top;
+	
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em; 
+	border:1px solid #a72b00;
+}
+
+/*--------- Default Bottom --------*/
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Error"] > connector
+{
+	position:relative;
+	bottom: 1px;
+	left: 20px;
+	background:url("../../../images/icons/16x16/tooltipConnectorDown-red.png") no-repeat top left;
+	width:16px;
+	height:14px;
+	display:block;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Error"] > connector[type="top"]
+{
+	display:none;
+}
+
+/*-------- TOP ---------*/
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Error"][class~="Top"] > connector[type="bottom"]
+{
+	display:none;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Error"][class~="Top"] > connector[type="top"]
+{
+	display:block;
+	background:url("../../../images/icons/16x16/tooltipConnectorUp-red.png") no-repeat top left;
+	top:1px;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.layout.CommonBox Design</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.layout.InlineMessage');
+		dojo.require("dijit.Tooltip");
+		
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.layout.InlineMessage Design</h1>
+
+	<div id="W0" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" >boo hoo</div>
+	
+	<div id="W9" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" class="Info">Info boo hoo</div>
+	
+	<div id="W1" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" class="Info Top Blue">Info Blue <br> Info Blue <br>Info Blue <br> </div>
+	<div id="W11" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" class="Info Bottom Blue Gradient">Info Blue <br> Info Blue <br>Info Blue <br> </div>
+	
+	<div id="W2" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" class="Info Top Green">Info Top Green <br>Error boo hoo <br></div>
+	
+	<div id="W20" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" class="Info Bottom Green">Info Bottom Green <br>Error boo hoo <br></div>
+	
+	<div id="W3" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" class="Error">Error boo hoo <br> Error boo hoo <br> Error boo hoo <br></div>
+	
+	<div id="W4" dojoType="pwl.widget.layout.InlineMessage" style="width: 300px;float: left; margin: 5px;" class="Error Top">Error Top boo hoo</div>
+
+</body>
+</html>

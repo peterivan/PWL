@@ -24,7 +24,7 @@ dojo.declare(
 	label_store: null,
 	label_store_id_attribute: 'id',
 	label_store_default_id_attribute: 'id',
-	label_store_label_attribute: null,
+	label_store_label_attribute: '',
 
 	value_store: null,
 	value_store_id_attribute: 'id',
@@ -429,18 +429,21 @@ dojo.declare(
 		{
 			var label_item = dojo.getNodeProp(i_node, 'data-item');
 
-			i_value_items.forEach( function ( i_value_item )
+			if(dojo.isArray(i_value_items))
 			{
-				if ( !i_value_item ) // upon delete of array index, taht index is now undefined
-					return;
-
-				if ( this._compareStoreItems(label_item, i_value_item) )
+				i_value_items.forEach( function ( i_value_item )
 				{
-					this._selectNode(i_node);
+					if ( !i_value_item ) // upon delete of array index, taht index is now undefined
+						return;
 
-					this._addItemToSelection(label_item);
-				}
-			}, this)
+					if ( this._compareStoreItems(label_item, i_value_item) )
+					{
+						this._selectNode(i_node);
+
+						this._addItemToSelection(label_item);
+					}
+				}, this)
+			}
 		}, this);
 	},
 

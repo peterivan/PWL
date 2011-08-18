@@ -1,0 +1,122 @@
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"]
+{
+	border: none;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"] > div
+{
+	margin:  0 5px 0 5px;
+	
+	background:#fff url("../../../images/icons/22x22/dialog-information.png") no-repeat right top;
+	
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em; 
+}
+
+/* GREEN */
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Green"] > div
+{
+	
+	background: url("../../../images/icons/22x22/info-green.jpeg") no-repeat 101% -5px;
+	
+	border:1px solid #57703e;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Green"][class~="Gradient"] > div
+{
+	
+	background: url("../../../images/icons/22x22/info-green.jpeg") no-repeat 101% -5px,-webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0.5, #FFFFFF),
+		color-stop(1, #afc29c)
+	);
+	
+	background: url("../../../images/icons/22x22/info-green.jpeg") no-repeat 101% -5px, -moz-linear-gradient(
+		center top,
+		#FFFFFF 50%,
+		#afc29c 100%
+	);
+	
+	border:1px solid #57703e;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Green"] > connector[type="bottom"]
+{
+	background:url("../../../images/icons/16x16/tooltipConnectorDown-green.png") no-repeat top left;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Green"] > connector[type="top"]
+{
+	background:url("../../../images/icons/16x16/tooltipConnectorUp-green.png") no-repeat top left;
+}
+
+/* BLUE */
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Blue"] > div
+{
+	background: url("../../../images/icons/22x22/dialog-information.png") no-repeat 101% -5px;
+	
+	border:1px solid #3b659f;
+}
+
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Blue"][class~="Gradient"] > div
+{
+	background: url("../../../images/icons/22x22/dialog-information.png") no-repeat 101% -5px, -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0.5, #FFFFFF),
+		color-stop(1, #b7cdeb)
+	);
+	background: url("../../../images/icons/22x22/dialog-information.png") no-repeat 101% -5px, -moz-linear-gradient(
+		center top,
+		#FFFFFF 50%,
+		#b7cdeb 100%
+	);	
+	
+	border:1px solid #3b659f;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Blue"] > connector[type="bottom"]
+{
+	background:url("../../../images/icons/16x16/tooltipConnectorDown-blue.png") no-repeat top left;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Blue"] > connector[type="top"]
+{
+	background:url("../../../images/icons/16x16/tooltipConnectorUp-blue.png") no-repeat top left;
+}
+/*--------- Default Bottom --------*/
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"] > connector
+{
+	position:relative;
+	bottom: 1px;
+	left: 20px;
+	width:16px;
+	height:14px;
+	display:block;
+	
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"] > connector[type="top"]
+{
+	display:none;
+}
+
+/*-------- TOP ---------*/
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Top"] > connector[type="bottom"]
+{
+	display:none;
+}
+
+section[class~="pwlWidgetLayoutInlineMessage"][class~="Info"][class~="Top"] > connector[type="top"]
+{
+	display:block;
+	top:1px;
+}

@@ -16,6 +16,7 @@ dojo.declare(
 
 	disable_change_event: false,
 	disable_autosave: false,
+	disable_autoreset: false,
 
 	_children_with_save: 0,
 	_saved_children: 0,
@@ -45,14 +46,16 @@ dojo.declare(
 
 	reset: function ()
 	{
-		this.inherited(arguments);
-
-		this.getChildren().forEach( function ( i_widget )
+		if ( !this.disable_autoreset )
 		{
-			if ( dojo.isFunction(i_widget.reset) )
-				i_widget.reset();
-		}, this);
+			this.inherited(arguments);
 
+			this.getChildren().forEach( function ( i_widget )
+			{
+				if ( dojo.isFunction(i_widget.reset) )
+					i_widget.reset();
+			}, this);
+		}
 	},
 
 	connectChildren: function ()

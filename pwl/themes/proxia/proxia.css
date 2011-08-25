@@ -21,3 +21,19 @@
 @import url('widget/form/ToolbarForm.css');
 
 @import url('widget/Tooltip.css');
+
+
+.not_found
+{
+	text-align:center;
+	margin:15px;
+	font-size:1.2em;
+	color:#ae0000;
+}
+
+.loading
+{
+	text-align:center;
+	margin:15px;
+	font-size:1.2em;
+}

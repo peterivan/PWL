@@ -11,6 +11,7 @@ dojo.declare(
 	'pwl.layout.RangedItemList',
 	[dijit.layout._LayoutWidget],
 {
+	
 	store: '',
 	items_per_page: 20,
 
@@ -22,6 +23,8 @@ dojo.declare(
 
 	_fetch_locked: false,
 
+	n_not_found: null,
+	
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -34,6 +37,8 @@ dojo.declare(
 		this.inherited(arguments);
 
 		dojo.connect(this.containerNode, 'onscroll', this, '_loadNextPage');
+		
+		
 	},
 
 /******************************************************************************/
@@ -43,7 +48,9 @@ dojo.declare(
 		if ( this.item_widget )
 		{
 			var object = dojo.getObject(this.item_widget);
-			var item = new object(i_item);
+			var item = new object();
+			
+			item.set('identity',i_item);
 
 			return item;
 		}
@@ -52,7 +59,11 @@ dojo.declare(
 /******************************************************************************/
 /** Events ********************************************************************/
 
-
+	onAddChild: function()
+	{
+		
+	},
+	
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
@@ -82,16 +93,25 @@ dojo.declare(
 		}
 	},
 
+	
 	_loadData: function ()
 	{
+		if(this.n_not_found)
+			dojo.destroy( this.n_not_found );
+		
+		var n_loading = dojo.create("div",{class:'loading',innerHTML:'načítavam...'},this.domNode);
+		
 		this.store.fetch(
 		{
 			scope: this,
+			query: this.query,
 			start: this._current_offset,
 			count: this.items_per_page,
 
 			onComplete: function ( i_data, i_store, i_io )
 			{
+				dojo.destroy( n_loading );
+				
 				var content_range = i_io.xhr.getResponseHeader('Content-Range');
 
 				var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
@@ -103,20 +123,45 @@ dojo.declare(
 				this._total_item_count = total;
 				this._loaded_items_count += top - bottom + 1;
 				this._current_offset = this._current_offset + this.items_per_page;
-
-				i_data.forEach( function ( i_item )
+				
+				i_data.forEach( function ( i_item, i_index )
 				{
-					var child = this.createItem(i_item);
+/*					if(i_index <= top)
+					{*/
+						var child = this.createItem( i_item );
 
-					if ( child )
-						this.addChild(child);
+						if ( child )
+							this.addChild( child );
+						
+						this.onAddChild( child )
+//					}
 				}, this);
 
 				this._loadNextPage();
 
 				this._fetch_locked = false;
+				
+				if(i_data.length == 0)
+				{
+					this.n_not_found = dojo.create("div",{class:'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
+				}
 			}
 		});
+	},
+	
+	_clearResult: function()
+	{
+		dojo.forEach( this.getChildren(),function( i_child )
+		{
+			this.removeChild(i_child);
+			dojo.destroy(i_child);
+		},this );
+		
+		dojo.empty(this.containerNode);
+		
+		this._current_offset = 0;
+		this._total_item_count = 0;
+		this._loaded_items_count = 0;
 	},
 
 /******************************************************************************/
@@ -126,11 +171,16 @@ dojo.declare(
 	{
 		this.store = this._fixStore(i_store);
 
-		dojo.empty(this.containerNode);
+		//dojo.empty(this.containerNode);
 
-		this._loadData();
+		//this._loadData();
 	},
 
+	_setQueryAttr: function ( i_query )
+	{
+		this.query = i_query;
+	},
+	
 	_fixStore: function ( i_store )
 	{
 		console.warn('ProxiaAcademy: JsonRestStore::fetch must be fixed so it returns ioArgs.');

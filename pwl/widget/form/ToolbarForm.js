@@ -154,6 +154,7 @@ dojo.declare(
 
 	_onChange: function ()
 	{
+		console.debug("this.disable_change_event",this.disable_change_event)
 		if ( !this.disable_change_event )
 		{
 			this.showAccept();

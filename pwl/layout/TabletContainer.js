@@ -17,17 +17,16 @@ dojo.declare(
 
 	templateString: dojo.cache('pwl.layout', 'templates/TabletContainer.html'),
 
-	panes:[],
-	current_pane:null,
-	current_pane_index:0,
+	panes: [],
+	current_pane: null,
+	current_pane_index: 0,
 	slide_duration: 500,
 	is_created : false,
-	first_next_visible:true,
+	show_next_navi_panel: true,
 	is_next_pane: false,
-	is_prev_pane:false,
+	is_prev_pane: false,
 	message_enabled: true,
-	navigation_width:40,
-	is_programatically_pane:false,
+	navigation_width: 40,
 	
 /******************************************************************************/
 /** public **/
@@ -52,19 +51,15 @@ dojo.declare(
 			
 		}, this);
 		
-		dojo.connect(this.n_prev, 'onclick', this, 'prev');
-		dojo.connect(this.n_next, 'onclick', this, 'next');
-		
-		console.debug("message_enabled",this.message_enabled)
-		
+		dojo.connect(this.n_navigation_left, 'onclick', this, 'prev');
+		dojo.connect(this.n_navigation_right, 'onclick', this, 'next');
+				
 		var index = 0;
 		
 		var b_parent = dojo.contentBox(this.domNode.parentNode);
 		
 		if(!this.container_height)
 			this.container_height = b_parent.h;
-		
-		console.debug("this.container_height",this.container_height)
 		
 		dojo.forEach(this.getChildren(),function(pane)
 		{
@@ -97,7 +92,7 @@ dojo.declare(
 
 		dojo.style(this.n_navigation_left,"display","none");
 
-		if(!this.first_next_visible)	
+		if( !this.show_next_navi_panel )	
 			dojo.style(this.n_navigation_right,"display","none");
 		
 		this.message_height = dojo.style(this.n_messageNode,"height");
@@ -129,7 +124,7 @@ dojo.declare(
 		var b_navigation_right = dojo.marginBox(this.n_navigation_right);
 		
 		this.left_to  = b_navigation_left.w;//b_navigation_left.w this.navigation_width
-		
+
 		this.container_height = b_this.h;
 		if(this.message_enabled)
 		{
@@ -145,35 +140,45 @@ dojo.declare(
 		this.container_width = b_this.w - b_navigation_left.w - b_navigation_right.w  ;
 		//this.container_width = b_this.w - this.navigation_width ;
 
-		if(!this.first_next_visible)
+		if( !this.show_next_navi_panel )
 		{
 			/*ak sa nezobrazuje na zaciatku prvy "next"... */
-			//this.container_width += b_navigation_left.w
+			
+			/* vzdy schovam pravu stranu...*/
+			dojo.style(this.n_navigation_right,"display","none");
 			
 			if(this.current_pane_index == 0)
 			{
 				/* ak je na prvom slide... tak sa rozsisri na komplet sirku */
+				
 				this.container_width = b_this.w 
 
-				dojo.style(this.n_navigation_right,"display","none");
 			}
 			
 			if(this.is_next_pane && this.is_prev_pane)
 			{
-				this.container_width = b_this.w - 2 * this.navigation_width
+				/* ak je existuje aj prev a next pane */
+				
+				this.container_width = b_this.w - this.navigation_width
 				this.left_to  = this.navigation_width
 			}
 			
 			if(this.is_next_pane && !this.is_prev_pane)
 			{
+				/* ak je existuje next pane  a neexistuje prev*/
+				
 				this.container_width = b_this.w
 			}
 			
 			if(!this.is_next_pane && this.is_prev_pane)
 			{
+				/* ak je existuje prev a neexistuje next pane */
+				
 				this.container_width = b_this.w - this.navigation_width
 			}			
-		}else{
+		}
+		else
+		{
 			
 			if(this.current_pane_index == 0 || !this.is_next_pane && this.is_prev_pane)
 			{
@@ -187,6 +192,8 @@ dojo.declare(
 				this.left_to  = this.navigation_width
 			}			
 		}
+
+		
 		dojo.marginBox(this.domNode, {h: b_this.h});
 		dojo.marginBox(this.containerNode, {h:this.container_height,w: this.container_width});
 		dojo.marginBox(this.n_messageNode, {w: this.container_width});
@@ -198,7 +205,10 @@ dojo.declare(
 		dojo.style(this.n_next,"marginTop",marginSpan+"px")
 		
 		if(this.current_pane)
+		{
 			this.current_pane.resize({h:this.container_height,w: this.container_width});
+			dojo.style(this.current_pane.domNode,"left",this.left_to + "px")
+		}
 		
 	},
 		
@@ -230,95 +240,44 @@ dojo.declare(
 
 	next: function()
 	{
+
+		var new_selected_index = this.current_pane_index + 1;
 		
-		this.current_pane_index++;
-		
-		if(this.current_pane_index >= this.max_panes)
+		if(new_selected_index >= this.max_panes)
 		{
-			this.current_pane_index--;
+			new_selected_index--;
 			return;
 		}
-				
-		var nextPane = this._adjacent(true);
 		
-		this.direction = "left";
-		
-		this.left_to  = this.navigation_width
-		
-		this.selectChild(nextPane);
+		this.selectPane( new_selected_index, "left" )
 
-		this.current_pane = nextPane;
-		
-		var title = this.current_pane.title ? this.current_pane.title : "";
-		this.n_messageNode.innerHTML = title
-
-		this.is_next_pane = !nextPane.isLastChild;
-		this.is_prev_pane = !nextPane.isFirstChild;
-		
- 		this.setNavigation();
 	},	
 	
 	prev: function()
 	{
-		//console.debug("this.is_programatically_pane",this.is_programatically_pane)
 		
-		if(this.is_programatically_pane)
+		var new_selected_index = this.current_pane_index - 1;
+
+		if( new_selected_index < 0 )
 		{
-			this.left_to = 0; //navtrdo ze bude vzdy v lavo
-			
-			this.direction = "right";
-					
-			this.selectChild(this.old_pane);
-			
-			this.current_pane = this.old_pane;
-			
-			var title = this.current_pane.title ? this.current_pane.title : "";
-			this.n_messageNode.innerHTML = title
-
-			this.is_next_pane = !this.current_pane.isLastChild;
-			this.is_prev_pane = !this.current_pane.isFirstChild;
-			
-			this.setNavigation();
-			
-			this.is_programatically_pane = false;
-			
-		}else{
-			
-			this.current_pane_index--;
-
-			if(this.current_pane_index < 0)
-			{
-				this.current_pane_index = 0;
-				return;
-			}
-			if(this.current_pane_index == 0)
-				this.left_to = 0;
-					
-			var prevPane = this._adjacent(false);    
-			
-			this.direction = "right";
-					
-			this.selectChild(prevPane);
-			
-			this.current_pane = prevPane;		
-			
-			var title = this.current_pane.title ? this.current_pane.title : "";
-			this.n_messageNode.innerHTML = title
-
-			this.is_next_pane = !prevPane.isLastChild;
-			this.is_prev_pane = !prevPane.isFirstChild;
-			
-			this.setNavigation();
+			this.current_pane_index = 0;
+			return;
 		}
 		
-		//console.debug("prev: this.current_pane",this.current_pane.id)
+		if( new_selected_index == 0 )
+			this.left_to = 0;
+		
+		if( !this.show_next_navi_panel )
+			new_selected_index = 0;
+		
+		this.selectPane( new_selected_index, "right" )
+		
 	},	
 	
 	_transition: function ( i_new_widget, i_old_widget)
 	{
 		var old_index = 0;
 		var new_index = 0;
-
 		
 		this.getChildren().forEach( function ( i_child, i_index )
 		{
@@ -328,7 +287,6 @@ dojo.declare(
 				old_index = i_index;
 		}, this);
 				
-		//var direction = old_index > new_index ? 'left' : 'right';
 		
 		this._showChild(i_new_widget);
 		
@@ -338,12 +296,12 @@ dojo.declare(
 		this.__old_pane = i_old_widget;
 		
 		this.slideIn(this.direction,i_new_widget);
-			
+		
 	},
 	
 	slideOut: function(position,page)
 	{
-		
+
 		var b_this = dojo.contentBox(this.domNode);
 		
 		dojo.style(page.domNode,{"zIndex":"90"});
@@ -376,7 +334,7 @@ dojo.declare(
 	
 	slideIn: function(position,page)
 	{
-		
+
 		var b_this = dojo.contentBox(this.domNode);
 		
 		dojo.style(page.domNode,{"left":b_this.w + "px"});//,"zIndex":"100"
@@ -411,28 +369,35 @@ dojo.declare(
 		
 	},
 	
-	selectPane: function(i_index)
+	selectPane: function( i_index , direction)
 	{
+
+		if(i_index == this.current_pane_index)
+			return;
 		
 		var select_pane = null;
+		
 		var index = 0;
-				
-		dojo.forEach(this.getChildren(),function(pane)
+		
+		var count_children = this.getChildren().length;
+		
+		dojo.forEach(this.getChildren(),function( pane )
 		{
 			if(i_index == index)
 				select_pane = pane;
 			index++;
-		})
+		})	
 		
-		//console.debug(select_pane)
-		
-		if(select_pane)
+		if( select_pane )
 		{
-			this.is_programatically_pane = true;
+			this.current_pane_index = i_index;
+
+			var is_last_child = (count_children - 1) == i_index;
+			var is_first_child =  i_index == 0;
 			
-			this.direction = "left";
+			this.direction = direction ? direction : "left";
 			
-			this.left_to  = this.navigation_width
+			this.left_to  = is_first_child ? 0 : this.navigation_width;
 			
 			this.selectChild(select_pane);
 
@@ -442,10 +407,14 @@ dojo.declare(
 			var title = this.current_pane.title ? this.current_pane.title : "";
 			this.n_messageNode.innerHTML = title
 
-			this.is_next_pane = false;
-			this.is_prev_pane = true;
-			
+			this.is_next_pane = !is_last_child;
+			this.is_prev_pane = !is_first_child;
+
 			this.setNavigation();
+
 		}
-	}
+		
+	},
+
+	
 });

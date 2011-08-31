@@ -1,7 +1,14 @@
 .proxia .pwlWidgetFormToolbarForm .toolbar
 {
 	position: relative;
-	height:40px
+	height:40px;
+	
+}
+
+.proxia .pwlWidgetFormToolbarForm .toolbar .dijitToolbar
+{
+	margin:5px;
+	border: 1px solid #CCC;
 }
 
 .proxia .pwlWidgetFormToolbarForm .toolbar span[dojoattachpoint="n_accept"]

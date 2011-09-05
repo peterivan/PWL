@@ -11,7 +11,7 @@ dojo.declare(
 	'pwl.layout.RangedItemList',
 	[dijit.layout._LayoutWidget],
 {
-	
+
 	store: '',
 	items_per_page: 20,
 
@@ -24,7 +24,7 @@ dojo.declare(
 	_fetch_locked: false,
 
 	n_not_found: null,
-	
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -37,8 +37,8 @@ dojo.declare(
 		this.inherited(arguments);
 
 		dojo.connect(this.containerNode, 'onscroll', this, '_loadNextPage');
-		
-		
+
+
 	},
 
 /******************************************************************************/
@@ -49,7 +49,7 @@ dojo.declare(
 		{
 			var object = dojo.getObject(this.item_widget);
 			var item = new object();
-			
+
 			item.set('identity',i_item);
 
 			return item;
@@ -61,9 +61,9 @@ dojo.declare(
 
 	onAddChild: function()
 	{
-		
+
 	},
-	
+
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
@@ -93,14 +93,14 @@ dojo.declare(
 		}
 	},
 
-	
+
 	_loadData: function ()
 	{
 		if(this.n_not_found)
 			dojo.destroy( this.n_not_found );
-		
-		var n_loading = dojo.create("div",{class:'loading',innerHTML:'načítavam...'},this.domNode);
-		
+
+		var n_loading = dojo.create("div",{'class':'loading',innerHTML:'načítavam...'},this.domNode);
+
 		this.store.fetch(
 		{
 			scope: this,
@@ -111,7 +111,7 @@ dojo.declare(
 			onComplete: function ( i_data, i_store, i_io )
 			{
 				dojo.destroy( n_loading );
-				
+
 				var content_range = i_io.xhr.getResponseHeader('Content-Range');
 
 				var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
@@ -123,7 +123,7 @@ dojo.declare(
 				this._total_item_count = total;
 				this._loaded_items_count += top - bottom + 1;
 				this._current_offset = this._current_offset + this.items_per_page;
-				
+
 				i_data.forEach( function ( i_item, i_index )
 				{
 /*					if(i_index <= top)
@@ -132,7 +132,7 @@ dojo.declare(
 
 						if ( child )
 							this.addChild( child );
-						
+
 						this.onAddChild( child )
 //					}
 				}, this);
@@ -140,15 +140,15 @@ dojo.declare(
 				this._loadNextPage();
 
 				this._fetch_locked = false;
-				
+
 				if(i_data.length == 0)
 				{
-					this.n_not_found = dojo.create("div",{class:'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
+					this.n_not_found = dojo.create("div",{'class':'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
 				}
 			}
 		});
 	},
-	
+
 	_clearResult: function()
 	{
 		dojo.forEach( this.getChildren(),function( i_child )
@@ -156,9 +156,9 @@ dojo.declare(
 			this.removeChild(i_child);
 			dojo.destroy(i_child);
 		},this );
-		
+
 		dojo.empty(this.containerNode);
-		
+
 		this._current_offset = 0;
 		this._total_item_count = 0;
 		this._loaded_items_count = 0;
@@ -180,7 +180,7 @@ dojo.declare(
 	{
 		this.query = i_query;
 	},
-	
+
 	_fixStore: function ( i_store )
 	{
 		console.warn('ProxiaAcademy: JsonRestStore::fetch must be fixed so it returns ioArgs.');

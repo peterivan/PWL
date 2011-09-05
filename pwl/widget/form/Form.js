@@ -49,15 +49,15 @@ dojo.declare(
 		if ( !this.disable_autoreset )
 		{
 			this.disable_change_event = true;
-			//console.debug("nasatvujem disable_change_event na true")
+
 			this.inherited(arguments);
-			
+
 			this.getChildren().forEach( function ( i_widget )
 			{
 				if ( dojo.isFunction( i_widget.reset ) )
 					i_widget.reset();
 			}, this);
-			
+
 			setTimeout(dojo.hitch(this, function()
 			{
 				this.disable_change_event = false;
@@ -89,7 +89,7 @@ dojo.declare(
 /******************************************************************************/
 /** Events ********************************************************************/
 
-	onChange: function () { this.is_modified = true; console.debug("onchange...vo form")},
+	onChange: function () { this.is_modified = true; },
 
 	onLoad: function () { this.is_modified = false; },
 	onLoadError: function ( i_error ) {},

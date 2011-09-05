@@ -396,7 +396,7 @@ dojo.declare(
 				var cb_id = this.id + id;
 
 				var node = dojo.create('li', node_params, this.n_list);
-				var n_label = dojo.create('label', {for: cb_id, innerHTML: label})
+				var n_label = dojo.create('label', {'for': cb_id, innerHTML: label})
 
 				var cb = new dijit.form.CheckBox({id: cb_id});
 

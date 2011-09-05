@@ -1,8 +1,11 @@
 <div baseClass="${baseClass}">
 
-	<button dojoAttachPoint="n_rewind" class="rewind" title="Na začiatok"></button>
-	<button dojoAttachPoint="n_play_stop" class="play" title="Hrať"></button>
-
+	<button dojoAttachPoint="n_stop" class="stop" title="Stop"></button>
+	<button dojoAttachPoint="n_pause" class="pause" title="Pauza"></button>
+	<button dojoAttachPoint="n_play" class="play" title="Hrať"></button>
+	
+	<canvas dojoAttachPoint="canvas" width="100" height="5">canvas not supported</canvas>
+	
 	<audio dojoAttachPoint="n_audio">
 		<source src="${src}" type="audio/ogg"></source>
 	</audio>

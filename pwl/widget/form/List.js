@@ -44,7 +44,7 @@ dojo.declare(
 	value: [], // dummy attr, not really used, intentional
 
 	_data: null,
-	_dummy_items: [],
+	_dummy_items: null,
 
 	_search_timer: null,
 
@@ -70,6 +70,8 @@ dojo.declare(
 	postCreate: function ()
 	{
 		this.inherited(arguments);
+
+		this._dummy_items = [];
 
 		var chanel = '/' + this.declaredClass.replace('.', '/') + '/';
 

@@ -56,13 +56,21 @@ dojo.declare(
 	{
 		if ( !this.disable_autoreset )
 		{
+			this.disable_change_event = true;
+
 			this.inherited(arguments);
 
 			this.getChildren().forEach( function ( i_widget )
 			{
-				if ( dojo.isFunction(i_widget.reset) )
+				if ( dojo.isFunction( i_widget.reset ) )
 					i_widget.reset();
 			}, this);
+
+			setTimeout(dojo.hitch(this, function()
+			{
+				this.disable_change_event = false;
+				//console.debug("nasatvujem disable_change_event na false")
+			}),0)
 		}
 	},
 

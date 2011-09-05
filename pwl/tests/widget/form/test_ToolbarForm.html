@@ -53,18 +53,20 @@
 	</script>
 
 </head>
-<body class="proxia claro">
+<body class="proxia tundra">
 
 	<h1 class="testTitle">pwl.widget.form.ToolbarForm</h1>
 
-	<div style="width: 800px; height: 600px; outline: 1px solid lime;">
+	<div style="width: 800px; height: 500px; outline: 1px solid lime;margin:0 auto">
 
-		<div id="W1" toolbar_position="bottom" dojoType="pwl.widget.form.ToolbarForm" >
+		<div id="W1" toolbar_position="top" dojoType="pwl.widget.form.ToolbarForm" >
 
 			<div dojoType="dijit.Toolbar">
-				<span dojoType="dijit.form.Button">Delete</span>
-				<span dojoType="dijit.form.Button">Cut</span>
-				<span dojoType="dijit.form.Button">Paste</span>
+				<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Delete</span>
+				<span dojoType="dijit.ToolbarSeparator"></span>
+				<span dojoType="dijit.form.Button" IconClass="dijitEditorIcon dijitEditorIconCopy">Cut</span>
+				<span dojoType="dijit.ToolbarSeparator"></span>
+				<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPaste">Paste</span>
 			</div>
 
 			<div>

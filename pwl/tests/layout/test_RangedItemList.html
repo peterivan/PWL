@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.layout.RangedItemList</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.layout.RangedItemList');
+		dojo.require('dojox.data.JsonRestStore');
+		dojo.require('pwl.tests.layout.rangedItemList.SimpleItem');
+
+		dojo.addOnLoad( function ()
+		{
+			var store = new dojox.data.JsonRestStore({target: dojo.moduleUrl('pwl.tests.layout.rangedItemList', 'service.php').uri});
+
+			dijit.byId('W1').set('store', store);
+
+
+		});
+
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">PWL.layout.RangedItemList</h1>
+
+	<ul id="W1" dojoType="pwl.layout.RangedItemList" style="width: 800px; height: 400px; outline: 1px solid lime; overflow: auto;" item_widget="pwl.tests.layout.rangedItemList.SimpleItem"></ul>
+</body>
+</html>

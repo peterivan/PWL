@@ -20,6 +20,8 @@ dojo.declare(
 
 	_children_with_save: 0,
 	_saved_children: 0,
+	
+	_event:{},
 
 /******************************************************************************/
 /** public **/
@@ -37,8 +39,14 @@ dojo.declare(
 			this.getDescendants().forEach( function ( i_child )
 			{
 				if ( dojo.isFunction(i_child.save) )
+				{
 					i_child.save();
+					this._eventBarStart();
+				}
+					
 			}, this);
+			
+			
 		}
 	},
 
@@ -104,6 +112,24 @@ dojo.declare(
 			this._saved_children = 0;
 
 			this.onSave();
+			this._eventBarFinish();
 		}
-	}
+	},
+	
+	_eventBarStart: function()
+	{
+		var event_manager = dijit.byId("EventBar").attr("event_manager");
+		this._event = new academy.widget.eventBar.event.Progress({
+			message:"Aktualizujem údaje",
+			after_succes_message:"Údaje boli zapísané",
+			count_iteration:1});
+		event_manager.registerEvent(this._event);
+		this._event.fire();
+	},
+	
+	_eventBarFinish: function()
+	{
+		this._event.incrementProgressBar();
+		this._event.finish();
+	},
 });

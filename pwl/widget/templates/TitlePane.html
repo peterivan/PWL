@@ -1,11 +1,15 @@
-<div>
-	<div dojoAttachEvent="onclick:_onTitleClick, onkeypress:_onTitleKey"
-			class="dijitTitlePaneTitle" dojoAttachPoint="titleBarNode">
-		<div class="dijitTitlePaneTitleFocus" dojoAttachPoint="focusNode">
-			<span dojoAttachPoint="arrowNodeInner" class="dijitArrowNodeInner"></span
-			><span dojoAttachPoint="titleNode" class="dijitTitlePaneTextNode"></span>
+<section class="pwlWidgetTitlePane">
+	<header>
+		<div dojoAttachPoint="n_title_widget" class="title_widget"></div>
+		
+		<div dojoAttachEvent="onclick:_onTitleClick, onkeypress:_onTitleKey" class="dijitTitlePaneTitle" dojoAttachPoint="titleBarNode">
+			<div class="dijitTitlePaneTitleFocus" dojoAttachPoint="focusNode">
+				<span dojoAttachPoint="arrowNodeInner" class="dijitArrowNodeInner"></span>
+				<span dojoAttachPoint="titleNode" class="dijitTitlePaneTextNode"></span>
+			</div>
 		</div>
-	</div>
+	</header>
+	
 	<div class="dijitTitlePaneContentOuter" dojoAttachPoint="hideNode" waiRole="presentation">
 		<div class="dijitReset" dojoAttachPoint="wipeNode" waiRole="presentation">
 			<div class="dijitTitlePaneContentInner" dojoAttachPoint="containerNode" waiRole="region" tabindex="-1" id="${id}_pane">
@@ -13,4 +17,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</section>

@@ -1,0 +1,28 @@
+
+.pwlWidgetTitle
+{
+	position: relative;
+}
+
+.pwlWidgetTitle > div
+{
+	overflow: hidden;
+}
+
+.pwlWidgetTitle .title
+{
+	white-space: pre;
+}
+
+.pwlWidgetTitle .gradient
+{
+	position: absolute;
+	
+	top: 0;
+	right: 0;
+	bottom: 0;
+	
+	width: 50px;
+	
+	background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0), #FFF);
+}

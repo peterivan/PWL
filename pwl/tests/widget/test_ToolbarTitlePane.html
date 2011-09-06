@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.ToolbarTitlePane</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.ToolbarTitlePane');
+
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">PWL.widget.ToolbarTitlePane</h1>
+
+	<div id="W1" dojoType="pwl.widget.ToolbarTitlePane" title="My Title">
+		<div dojoType="dijit.Toolbar">
+			<span dojoType="dijit.form.Button">Ok</span>
+			<span dojoType="dijit.form.Button">Cancel</span>
+		</div>
+		
+		<div>foo</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+.pwlWidgetTitlePaneToolbarTitleWidget
+{ 
+    
+}
+
+.pwlWidgetTitlePaneToolbarTitleWidget > .title
+{
+	position: absolute;
+	
+	left: 0;
+}
+
+.pwlWidgetTitlePaneToolbarTitleWidget > .toolbar_container
+{
+	position: absolute;
+	
+	right: 0;
+}
+
+.pwlWidgetTitlePaneToolbarTitleWidget .dijitToolbar
+{
+	display: inline-block;
+}
+

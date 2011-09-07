@@ -17,7 +17,7 @@ dojo.declare(
 	autosave_disabled: false,
 	autoreset_disabled: false,
 
-	_connections: [],
+	_connections: null,
 
 /******************************************************************************/
 /** public **/
@@ -25,6 +25,13 @@ dojo.declare(
 
 /******************************************************************************/
 /** Startup, Teardown *********************************************************/
+
+	postMixInProperties: function ()
+	{
+		this.inherited(arguments);
+		
+		this._connections = [];
+	},
 
 /******************************************************************************/
 
@@ -40,11 +47,14 @@ dojo.declare(
 			// form elements can be ignored by seting flag: ignore_change_event
 			if ( !i_child.widget_group && !i_child.ignore_change_event )
 			{
-				console.debug('--', i_child);
 				var c = null;
 				
 				if ( this._childIsInstanceOf(i_child, 'dijit.form.TextBox') )
+				{
 					c = dojo.connect(i_child, 'onKeyUp', this, '_onChange');
+					
+					dojo.connect(i_child, 'onkeyUp', function () { console.debug('asdas'); });
+				}
 				else if ( this._childIsInstanceOf(i_child, 'dijit.form.ComboBox') )
 					c = dojo.connect(i_child, 'onChange', this, '_onChange');
 				else if ( this._childIsInstanceOf(i_child, 'dijit.form.CheckBox') )

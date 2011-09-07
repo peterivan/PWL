@@ -40,12 +40,18 @@ dojo.declare(
 		{
 			if ( i_child.isInstanceOf(dijit.Toolbar) )
 			{
+				i_child.getChildren().forEach( function ( i_button ) 
+				{
+					i_button.ignore_change_event = true;
+				}, this);
+				
 				i_child.placeAt(this.n_toolbar);
 			}
 		}, this);
 
 		this.set('toolbar_position', this.toolbar_position);
 
+		this.connectChildren(true);
 		this._connect();
 	},
 
@@ -69,6 +75,16 @@ dojo.declare(
  			height: work_height + 'px',
  			overflow: 'auto'
  		});
+	},
+
+/******************************************************************************/
+
+	connectChildren: function ( i_connect )
+	{
+		// delay connection until toolbar is setup
+		
+		if ( i_connect ) 
+			this.inherited(arguments);
 	},
 
 /******************************************************************************/

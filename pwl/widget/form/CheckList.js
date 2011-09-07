@@ -5,17 +5,19 @@ dojo.provide('pwl.widget.form.CheckList');
 
 dojo.require('dijit.layout._LayoutWidget');
 
+dojo.require('dojo.DeferredList');
+
 dojo.require('dijit.form._FormWidget');
 dojo.require('dijit.form.CheckBox');
 
-dojo.require('pwl.widget.form._FormWidget');
+dojo.require('pwl.widget.form.WidgetGroup');
 dojo.require('pwl.widget.form.TextBox');
 
 /******************************************************************************/
 
 dojo.declare(
 	'pwl.widget.form.CheckList',
-	[pwl.widget.form._FormWidget, dijit.layout._LayoutWidget],
+	[pwl.widget.form.WidgetGroup],
 {
 	baseClass: 'pwlWidgetFormCheckList',
 
@@ -364,9 +366,9 @@ dojo.declare(
 
 	_render: function ()
 	{
-		this._loadData().then( dojo.hitch(this, function( i_data )
+		this._loadData().then( dojo.hitch(this, function()
 		{
-			this._renderItems(i_data[0], i_data[1]);
+			this._renderItems(this._label_data, this._value_data);
 
 			this.onLoad();
 		}));
@@ -453,8 +455,6 @@ dojo.declare(
 
 	_loadData: function ()
 	{
-		var p = new dojo.Deferred();
-
 		this._label_data = null;
 		this._value_data = null;
 
@@ -463,14 +463,16 @@ dojo.declare(
 		if ( this.value_store )
 			this._value_data_loaded = false;
 
-		this._loadLabelData(p);
-		this._loadValueData(p);
+		var p1 = this._loadLabelData();
+		var p2 = this._loadValueData();
 
-		return p;
+		return new dojo.DeferredList([p1, p2]);
 	},
 
-	_loadLabelData: function ( i_promise )
+	_loadLabelData: function ()
 	{
+		var p = new dojo.Deferred();
+		
 		if ( this.label_store )
 		{
 			var query = null;
@@ -488,15 +490,18 @@ dojo.declare(
 					this._label_data = i_data;
 					this._label_data_loaded = true;
 
-					if ( i_promise && this._label_data_loaded && this._value_data_loaded )
-						i_promise.callback([this._label_data, this._value_data]);
+					p.callback();
 				}
 			});
 		}
+		
+		return p;
 	},
 
-	_loadValueData: function ( i_promise )
+	_loadValueData: function ()
 	{
+		var p = new dojo.Deferred();
+		
 		if ( this.value_store )
 		{
 			this.value_store.fetch(
@@ -508,11 +513,12 @@ dojo.declare(
 					this._value_data = i_data;
 					this._value_data_loaded = true;
 
-					if ( i_promise && this._label_data_loaded && this._value_data_loaded )
-						i_promise.callback([this._label_data, this._value_data]);
+					p.callback();
 				}
 			});
 		}
+		
+		return p;
 	},
 
 /******************************************************************************/

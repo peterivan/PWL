@@ -40,6 +40,7 @@ dojo.declare(
 			// form elements can be ignored by seting flag: ignore_change_event
 			if ( !i_child.widget_group && !i_child.ignore_change_event )
 			{
+				console.debug('--', i_child);
 				var c = null;
 				
 				if ( this._childIsInstanceOf(i_child, 'dijit.form.TextBox') )

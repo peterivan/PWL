@@ -81,7 +81,5 @@ dojo.declare(
 
 			this.onSave();
 		}
-	},
-	
-
+	}
 });

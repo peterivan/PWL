@@ -11,7 +11,7 @@
 
 .pwlWidgetTitle .title
 {
-	white-space: pre;
+	white-space: nowrap;
 }
 
 .pwlWidgetTitle .gradient
@@ -22,7 +22,9 @@
 	right: 0;
 	bottom: 0;
 	
-	width: 50px;
+	width: 30px;
+	
+	cursor: text;
 	
 	background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0), #FFF);
 }

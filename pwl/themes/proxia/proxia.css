@@ -4,6 +4,8 @@
 
 @import url('widget/Accept.css');
 @import url('widget/ItemListEditor.css');
+@import url('widget/Title.css');
+@import url('widget/TitlePane.css');
 
 @import url('widget/layout/CommonBox.css');
 @import url('widget/layout/InlineHelp.css');

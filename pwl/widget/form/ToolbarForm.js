@@ -85,36 +85,6 @@ dojo.declare(
 	onCancel: function () {},
 
 /******************************************************************************/
-
-	connectChildren: function ()
-	{
-		this.inherited(arguments);
-
-		this.getDescendants().forEach( function ( i_child )
-		{
-			if ( !i_child.widget_group ) // widget group is responsible for emiting change events
-			{
-				if ( !i_child.is_pwl_toolbar_form_connected && !i_child.ignore_form_events )
-				{
-					if ( dojo.isFunction(i_child.onChange)  && !i_child.isInstanceOf(dijit.form.Button) )
-					{
-						if ( dojo.isFunction(dijit.Editor) && i_child.isInstanceOf(dijit.Editor) )
-							dojo.connect(i_child, 'onKeyUp', this, '_onChange');
-						else if ( dojo.isFunction(dijit.form.TextBox) && i_child.isInstanceOf(dijit.form.TextBox) )
-							dojo.connect(i_child, 'onKeyUp', this, '_onChange');
-						//else
-						dojo.connect(i_child, 'onChange', this, '_onChange');
-
-
-					}
-
-					i_child.is_pwl_toolbar_form_connected = true;
-				}
-			}
-		}, this);
-	},
-
-/******************************************************************************/
 /** protected **/
 /******************************************************************************/
 
@@ -149,7 +119,7 @@ dojo.declare(
 
 		dojo.connect(this.w_accept, 'onCancel', this, '_onCancel');
 
-		this.connectChildren();
+		//this.connectChildren();
 	},
 
 /******************************************************************************/

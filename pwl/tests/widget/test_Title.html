@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.Title</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.Title');
+
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">PWL.widget.Title</h1>
+
+	<div style="width: 810px;">
+		<div style="width: 150px; outline: 1px solid lime; float: left;">
+			<div id="W1" dojoType="pwl.widget.Title" title="My stupidly long title which shoud be trimmed to sensible length."></div>
+			<div id="W2" dojoType="pwl.widget.Title" title="My Title"></div>
+			<div id="W3" dojoType="pwl.widget.Title" title="My Title"></div>
+			<div id="W4" dojoType="pwl.widget.Title" title="My Title"></div>
+		</div>
+
+		<div style="float: right; width: 650px;">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lobortis tincidunt erat at laoreet. Vivamus ut ornare ipsum. Nulla malesuada, lorem et eleifend elementum, leo turpis tincidunt ipsum, sit amet condimentum turpis nisl at urna. Praesent ultrices dolor eu arcu aliquet sagittis at tincidunt risus. Mauris nec faucibus tortor. Nulla eleifend, quam a volutpat varius, enim diam auctor elit, placerat pulvinar eros ligula non mi. Phasellus venenatis velit at purus euismod eu vehicula ligula placerat. Morbi turpis libero, volutpat non lobortis id, aliquet ut felis.
+
+			Donec mattis pretium mauris, condimentum condimentum ligula vestibulum eu. Nullam fringilla tellus a mauris tempor molestie. Sed commodo pretium aliquet. Nulla et elit justo, eu pulvinar erat. Cras dictum malesuada imperdiet. Donec dictum rutrum pretium. Maecenas elit orci, iaculis a varius ac, ullamcorper in arcu.
+
+			In vel eros elit, sit amet venenatis tellus. Proin non est elit, sit amet consectetur ligula. Aenean convallis eleifend commodo. Suspendisse ac lorem risus, id rhoncus nulla. In metus diam, rutrum sed semper nec, condimentum a augue. Aenean et feugiat arcu. Sed non felis lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+			Sed feugiat, dui ut lacinia dapibus, nisl odio volutpat mauris, in consequat mi nunc eu nibh. Aliquam sit amet mollis dolor. Aliquam enim tortor, ornare ut viverra non, elementum et elit. Integer augue tortor, scelerisque et tincidunt ultrices, porttitor non eros. Morbi ut lectus lacus, nec laoreet turpis. Suspendisse vel tempor felis. Aenean tempor urna vitae nisl lacinia sit amet facilisis sem vestibulum. Mauris libero justo, adipiscing vitae mollis vitae, convallis ut felis. Vivamus dictum quam vel massa aliquet tristique. Nullam et urna vel risus interdum porttitor. Suspendisse luctus convallis est ut ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+		</div>
+	</div>
+		
+</body>
+</html>

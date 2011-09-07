@@ -1,0 +1,54 @@
+@import url('titlePane/ToolbarTitleWidget.css');
+
+.pwlWidgetTitlePane
+{
+	
+}
+
+.pwlWidgetTitlePane > header
+{
+	position: relative;
+	
+	height: 58px;
+}
+
+.pwlWidgetTitlePane > header > .title_widget
+{
+	position: absolute;
+	
+	left: 0;
+	right: 210px;
+	top: 0;
+	bottom: 0;
+	
+	border: 1px solid red;
+}
+
+.pwlWidgetTitlePane > header > .title_widget > *
+{
+	position: absolute;
+	
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.pwlWidgetTitlePane .dijitTitlePaneTitle
+{
+	position: absolute;
+	
+	right: 0;
+	top: 0;
+	bottom: 0;
+	
+	display: inline-block;
+	
+	width: 200px;
+	height: 50px;
+}
+
+.pwlWidgetTitlePane .dijitTitlePaneTextNode
+{
+	display: none;
+}

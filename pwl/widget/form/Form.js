@@ -3,14 +3,16 @@ dojo.provide('pwl.widget.form.Form');
 /******************************************************************************/
 /******************************************************************************/
 
-dojo.require('dijit.form.Form');
 dojo.require('dijit.layout._LayoutWidget');
+dojo.require('dijit.form.Form');
+
+dojo.require('pwl.widget.form._FormMixin');
 
 /******************************************************************************/
 
 dojo.declare(
 	'pwl.widget.form.Form',
-	[dijit.layout._LayoutWidget, dijit.form.Form],
+	[dijit.layout._LayoutWidget, dijit.form.Form, pwl.widget.form._FormMixin],
 {
 	is_modified: false,
 
@@ -41,7 +43,6 @@ dojo.declare(
 				if ( dojo.isFunction(i_child.save) )
 				{
 					i_child.save();
-					this._eventBarStart();
 				}
 					
 			}, this);
@@ -69,43 +70,9 @@ dojo.declare(
 			setTimeout(dojo.hitch(this, function()
 			{
 				this.disable_change_event = false;
-				//console.debug("nasatvujem disable_change_event na false")
-			}),0)
+			}), 0)
 		}
 	},
-
-	connectChildren: function ()
-	{
-		this.inherited(arguments);
-
-		if ( !this.disable_autosave )
-		{
-			this.getDescendants().forEach( function ( i_child )
-			{
-				if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
-				{
-					dojo.connect(i_child, 'onSave', this, '_onSave');
-
-					this._children_with_save++;
-
-					i_child.is_pwl_form_connected = true;
-				}
-			}, this);
-		}
-	},
-
-/******************************************************************************/
-/** Events ********************************************************************/
-
-	onChange: function () { this.is_modified = true; },
-
-	onLoad: function () { this.is_modified = false; },
-	onLoadError: function ( i_error ) {},
-
-	onSave: function ( i_data ) { this.is_modified = false; },
-	onSaveError: function ( i_error ) {},
-
-	onReset: function () { this.is_modified = false; },
 
 /******************************************************************************/
 /** protected **/
@@ -120,24 +87,8 @@ dojo.declare(
 			this._saved_children = 0;
 
 			this.onSave();
-			this._eventBarFinish();
 		}
 	},
 	
-	_eventBarStart: function()
-	{
-		var event_manager = dijit.byId("EventBar").attr("event_manager");
-		this._event = new academy.widget.eventBar.event.Progress({
-			message:"Aktualizujem údaje",
-			after_succes_message:"Údaje boli zapísané",
-			count_iteration:1});
-		event_manager.registerEvent(this._event);
-		this._event.fire();
-	},
-	
-	_eventBarFinish: function()
-	{
-		this._event.incrementProgressBar();
-		this._event.finish();
-	},
+
 });

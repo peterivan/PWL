@@ -22,6 +22,8 @@ dojo.declare(
 
 	_children_with_save: 0,
 	_saved_children: 0,
+	
+	_event:{},
 
 /******************************************************************************/
 /** public **/
@@ -39,8 +41,13 @@ dojo.declare(
 			this.getDescendants().forEach( function ( i_child )
 			{
 				if ( dojo.isFunction(i_child.save) )
+				{
 					i_child.save();
+				}
+					
 			}, this);
+			
+			
 		}
 	},
 
@@ -83,4 +90,5 @@ dojo.declare(
 		}
 	},
 	
+
 });

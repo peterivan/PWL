@@ -22,7 +22,18 @@ dojo.declare(
 			if ( dojo.isFunction(this.selectedChildWidget.canLeavePage) )
 			{
 				if ( !this.selectedChildWidget.canLeavePage() )
+				{
+
+					if( this.selectedChildWidget != i_page )
+					{
+						var event_manager = dijit.byId("EventBar").attr("event_manager");
+						var e = new academy.widget.eventBar.event.Notification({message: "Na stránke ste vykonali zmeny, uložte ich alebo zrušte, potom možete opustiť stránku."});
+						event_manager.registerEvent(e);
+						e.fire();
+					}
+					
 					return false;
+				}
 			}
 		}
 

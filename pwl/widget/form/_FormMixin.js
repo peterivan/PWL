@@ -50,11 +50,9 @@ dojo.declare(
 				var c = null;
 				
 				if ( this._childIsInstanceOf(i_child, 'dijit.form.TextBox') )
-				{
 					c = dojo.connect(i_child, 'onKeyUp', this, '_onChange');
-					
-					dojo.connect(i_child, 'onkeyUp', function () { console.debug('asdas'); });
-				}
+				if ( this._childIsInstanceOf(i_child, 'dijit.form.DateTextBox') )
+					c = dojo.connect(i_child, 'onChange', this, '_onChange');
 				else if ( this._childIsInstanceOf(i_child, 'dijit.form.ComboBox') )
 					c = dojo.connect(i_child, 'onChange', this, '_onChange');
 				else if ( this._childIsInstanceOf(i_child, 'dijit.form.CheckBox') )

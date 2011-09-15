@@ -124,14 +124,17 @@ dojo.declare(
 
 	_setTitleAttr: function ( i_title )
 	{
+		if ( !i_title )
+			i_title = '';
+		
 		this.title = i_title.replace(/\<br\>/g, '\n');
 		this.original_title = i_title;
-		
+
 		if ( this.w_edit_box )
 			this.w_edit_box.set('value', this.title);
 		else
 			this.n_title.innerHTML = this.title;
-		
+
 		if ( this._started && this.use_tooltip )
 			this._setupTooltip();
 	}

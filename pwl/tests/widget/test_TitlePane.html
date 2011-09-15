@@ -30,6 +30,14 @@
 
 		dojo.require('pwl.widget.TitlePane');
 
+		dojo.addOnLoad( function ()
+		{
+			dojo.connect(dijit.byId('W1'), 'onTitleChange', function (i_value) 
+			{
+				console.debug('Title changed to: ', i_value)
+			});
+		});
+
 	</script>
 
 </head>

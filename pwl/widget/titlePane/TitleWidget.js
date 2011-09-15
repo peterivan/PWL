@@ -1,31 +1,26 @@
-dojo.provide('pwl.widget.TitlePane');
+dojo.provide('pwl.widget.titlePane.TitleWidget');
 
 /******************************************************************************/
 /******************************************************************************/
 
-dojo.require('dijit.layout._LayoutWidget');
-dojo.require('dijit.TitlePane');
+dojo.require('dijit._Widget');
+dojo.require('dijit._Templated');
 
-dojo.require('pwl.widget.titlePane.TitleWidget');
+dojo.require('pwl.widget.Title');
 
 /******************************************************************************/
 
 dojo.declare(
-	'pwl.widget.TitlePane',
-	[dijit.TitlePane],
+	'pwl.widget.titlePane.TitleWidget',
+	[dijit._Widget, dijit._Templated],
 {
-	templateString: dojo.cache('pwl.widget', 'templates/TitlePane.html'),
+	templateString: dojo.cache('pwl.widget.titlePane', 'templates/TitleWidget.html'),
 	widgetsInTemplate: true,
 
-	title: '',
 	title_is_editable: '',
 
-	title_widget: 'pwl.widget.titlePane.TitleWidget',
+	w_title: null,
 	
-	w_title_widget: null,
-	
-	n_title_widget: null,
-
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -36,20 +31,8 @@ dojo.declare(
 	postCreate: function ()
 	{
 		this.inherited(arguments);
-
-		if ( this.title_widget )
-			this._createTitleWidget().placeAt(this.n_title_widget);
-	},
-
-/******************************************************************************/
-/** Layout ********************************************************************/
-
-	resize: function ()
-	{
-		this.inherited(arguments);
 		
-		if ( this.w_title_widget && dojo.isFunction(this.w_title_widget.resize) )
-			this.w_title_widget.resize();
+		dojo.connect(this.w_title, 'onChange', this, 'onTitleChange');
 	},
 
 /******************************************************************************/
@@ -61,27 +44,11 @@ dojo.declare(
 /** protected **/
 /******************************************************************************/
 
-	_createTitleWidget: function ()
-	{
-		var obj = dojo.getObject(this.title_widget);
-		
-		this.w_title_widget = new obj(
-		{
-			title: this.title,
-			title_is_editable: this.title_is_editable
-		});
-		
-		dojo.connect(this.w_title_widget, 'onTitleChange', this, 'onTitleChange');
-		
-		return this.w_title_widget;
-	},
-	
 /******************************************************************************/
 /** Attr handlers *************************************************************/
 
-	_setTitleAttr: function ( i_title )
+	_setTitleAttr: function( i_title )
 	{
-		if ( this.w_title_widget )
-			this.w_title_widget.set('title', i_title);
+		this.w_title.set('title', i_title);
 	}
 });

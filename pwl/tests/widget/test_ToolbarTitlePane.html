@@ -29,6 +29,14 @@
 	<script language="JavaScript" type="text/javascript">
 
 		dojo.require('pwl.widget.ToolbarTitlePane');
+		
+		dojo.addOnLoad( function ()
+		{
+			dojo.connect(dijit.byId('W1'), 'onTitleChange', function (i_value) 
+			{
+				console.debug('Title changed to: ', i_value)
+			});
+		});
 
 	</script>
 

@@ -34,6 +34,8 @@ dojo.declare(
 			if ( i_child.isInstanceOf(dijit.Toolbar) )
 				this.w_title_widget.set('w_toolbar', i_child);
 		}, this);
+		
+		this.w_title_widget.resize();
 	},
 
 /******************************************************************************/

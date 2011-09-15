@@ -6,6 +6,8 @@ dojo.provide('pwl.widget.titlePane.ToolbarTitleWidget');
 dojo.require('dijit._Widget');
 dojo.require('dijit._Templated');
 
+dojo.require('pwl.widget.Title');
+
 /******************************************************************************/
 
 dojo.declare(
@@ -13,10 +15,13 @@ dojo.declare(
 	[dijit._Widget, dijit._Templated],
 {
 	templateString: dojo.cache('pwl.widget.titlePane', 'templates/ToolbarTitleWidget.html'),
+	widgetsInTemplate: true,
 	
+	title_is_editable: '',
+	
+	w_title: null,
 	w_toolbar: null,
 	
-	n_title: null,
 	n_toolbar_container: null,
 
 /******************************************************************************/
@@ -30,7 +35,7 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
-		
+		dojo.connect(this.w_title, 'onChange', this, 'onTitleChange');
 	},
 
 /******************************************************************************/
@@ -39,17 +44,19 @@ dojo.declare(
 	resize: function ()
 	{
 		this.inherited(arguments);
-		console.debug('ok');
-		var b_this = dojo.contentBox();
+		
+		var b_this = dojo.contentBox(this.domNode);
 		var b_tc = dojo.marginBox(this.n_toolbar_container);
 		
 		var w = b_this.w - b_tc.w - 10; // 10 - buffer
 		
-		dojo.marginBox(this.n_title, {w: w});
+		dojo.marginBox(this.w_title.domNode, {w: w});
 	},
 
 /******************************************************************************/
 /** Events ********************************************************************/
+
+	onTitleChange: function ( i_value ) {},
 
 /******************************************************************************/
 /** protected **/
@@ -72,6 +79,6 @@ dojo.declare(
 	
 	_setTitleAttr: function( i_title )
 	{
-		this.n_title.innerHTML = i_title;
+		this.w_title.set('title', i_title);
 	}
 });

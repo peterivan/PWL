@@ -1,24 +1,26 @@
 .pwlWidgetTitlePaneToolbarTitleWidget
 { 
-    
+  padding:0;
+
 }
 
 .pwlWidgetTitlePaneToolbarTitleWidget > .title
 {
 	position: absolute;
-	
-	left: 0;
+
+
 }
 
 .pwlWidgetTitlePaneToolbarTitleWidget > .toolbar_container
 {
 	position: absolute;
-	
-	right: 0;
+	top:2px;
+	right: 65px;
 }
 
 .pwlWidgetTitlePaneToolbarTitleWidget .dijitToolbar
 {
 	display: inline-block;
+	border: 1px solid #CCC;	
 }
 

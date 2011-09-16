@@ -234,7 +234,15 @@ dojo.declare(
 				
 		this.resize();
 	},
-	
+
+/******************************************************************************/
+/** Events ********************************************************************/
+
+	onAnimationEnd: function()
+	{
+		
+	},
+
 /******************************************************************************/
 /** Action ********************************************************************/
 
@@ -325,6 +333,7 @@ dojo.declare(
 		{
 			if(this.message_enabled)
 				dojo.style(this.n_messageNode,"display","block");
+			
 			dojo.publish("/pwl/layout/TabletContainer/slideOut", [{pane:page}]);
 			
 		});		
@@ -362,6 +371,8 @@ dojo.declare(
 				dojo.style(this.n_messageNode,"display","block");
 			
 			dojo.publish("/pwl/layout/TabletContainer/slideIn", [{current_pane:page,old_pane:this.__old_pane}]);
+			
+			this.onAnimationEnd( page );
 			
 		});		
 		anim.play();

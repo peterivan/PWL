@@ -57,7 +57,12 @@
 			dojo.connect(dojo.byId("slide5"),"onclick",function()
 			{
 				dijit.byId("W1").selectPane(4,'right')
-			})			
+			})		
+			
+			dojo.connect(dijit.byId("W1"),"onSlideEnd",function( page )
+			{
+				console.debug("novy slide je ", page)
+			})				
 		});
 		
 	</script>

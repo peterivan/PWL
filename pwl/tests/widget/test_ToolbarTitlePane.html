@@ -46,7 +46,7 @@
 
 	<h1 class="testTitle">PWL.widget.ToolbarTitlePane</h1>
 
-	<div id="W1" dojoType="pwl.widget.ToolbarTitlePane" title="My Title" style="width:1000px;margin:0 auto">
+	<div id="W1" dojoType="pwl.widget.ToolbarTitlePane" title_is_editable="true" title="My Title" style="width:1000px;margin:10px auto">
 		<div dojoType="dijit.Toolbar">
 			<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Ok</span>
 			<span dojoType="dijit.ToolbarSeparator"></span>
@@ -55,5 +55,35 @@
 		
 		<div>foo</div>
 	</div>
+	
+	<div id="W2" class="blue" dojoType="pwl.widget.ToolbarTitlePane" title_is_editable="true" title="My Title" style="width:1000px;margin:10px auto">
+		<div dojoType="dijit.Toolbar">
+			<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Ok</span>
+			<span dojoType="dijit.ToolbarSeparator"></span>
+			<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Cancel</span>
+		</div>
+		
+		<div>foo</div>
+	</div>
+	
+	<div id="W3" class="green"  dojoType="pwl.widget.ToolbarTitlePane" title_is_editable="true"  open="false" title="My Title" style="width:1000px;margin:10px auto">
+		<div dojoType="dijit.Toolbar">
+			<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Ok</span>
+			<span dojoType="dijit.ToolbarSeparator"></span>
+			<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Cancel</span>
+		</div>
+		
+		<div>foo</div>
+	</div>
+	
+	<div id="W4" class="red"  dojoType="pwl.widget.ToolbarTitlePane" title_is_editable="true" title="My Title" style="width:1000px;margin:10px auto">
+		<div dojoType="dijit.Toolbar">
+			<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Ok</span>
+			<span dojoType="dijit.ToolbarSeparator"></span>
+			<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Cancel</span>
+		</div>
+		
+		<div>foo</div>
+	</div>	
 </body>
 </html>

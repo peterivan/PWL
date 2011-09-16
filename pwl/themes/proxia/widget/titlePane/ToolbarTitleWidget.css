@@ -7,8 +7,6 @@
 .pwlWidgetTitlePaneToolbarTitleWidget > .title
 {
 	position: absolute;
-
-
 }
 
 .pwlWidgetTitlePaneToolbarTitleWidget > .toolbar_container
@@ -24,3 +22,11 @@
 	border: 1px solid #CCC;	
 }
 
+.pwlWidgetTitlePaneToolbarTitleWidget .dijitToolbar
+{
+	display: inline-block;
+	border: 1px solid #CCC;	
+}
+
+
+	

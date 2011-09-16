@@ -1,0 +1,32 @@
+
+.pwlWidgetTitlePane[class~=green] > header > .title_widget
+{
+	
+	background-color: #ccdeb9;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#91b471), to(#ccdeb9)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(top, #91b471, #ccdeb9); /* Chrome 10+, Saf5.1+, iOS 5+ */
+	background-image:    -moz-linear-gradient(top, #91b471, #ccdeb9); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top, #91b471, #ccdeb9); /* IE10 */
+	background-image:      -o-linear-gradient(top, #91b471, #ccdeb9); /* Opera 11.10+ */
+	background-image:         linear-gradient(top, #91b471, #ccdeb9);		
+}
+
+.pwlWidgetTitlePane[class~=green] > header > .title_widget div.title
+{
+	color: #485b35;
+}
+
+.pwlWidgetTitlePane[class~=green] .dijitTitlePaneTitle:hover
+{
+	background-color:#7d9964;
+}
+
+.pwlWidgetTitlePane[class~=green] .dijitClosed
+{
+	background: #556844 url(../../../../themes/proxia/images/icons/12x12/draw-triangle4.png) no-repeat center center;	
+}
+
+.pwlWidgetTitlePane[class~=green] .dijitOpen
+{
+	background: #556844 url(../../../../themes/proxia/images/icons/12x12/draw-triangle3.png) no-repeat center center;	
+}

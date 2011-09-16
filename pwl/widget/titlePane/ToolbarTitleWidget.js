@@ -48,8 +48,10 @@ dojo.declare(
 		var b_this = dojo.contentBox(this.domNode);
 		var b_tc = dojo.marginBox(this.n_toolbar_container);
 		
-		var w = b_this.w - b_tc.w - 10; // 10 - buffer
+		var b_tc_left = dojo.style(this.n_toolbar_container,"right").replace("px","");
 		
+		var w = b_this.w - b_tc.w - b_tc_left - 10; // 10 - buffer
+
 		dojo.marginBox(this.w_title.domNode, {w: w});
 	},
 

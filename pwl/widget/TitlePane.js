@@ -26,6 +26,9 @@ dojo.declare(
 	
 	n_title_widget: null,
 
+	_on_show_counter: 0,
+	_on_hide_counter: 0,
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -39,7 +42,11 @@ dojo.declare(
 
 		if ( this.title_widget )
 			this._createTitleWidget().placeAt(this.n_title_widget);
+		
+		this._connectAnimation();
 	},
+
+	//startup: 
 
 /******************************************************************************/
 /** Layout ********************************************************************/
@@ -56,10 +63,19 @@ dojo.declare(
 /** Events ********************************************************************/
 
 	onTitleChange: function ( i_value ) {},
-
+	
+	onOpen: function () {},
+	onClose: function () {},
+	
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
+
+	_connectAnimation: function ()
+	{
+		dojo.connect(this._wipeIn, 'onEnd', this, 'onOpen');
+		dojo.connect(this._wipeOut, 'onEnd', this, 'onClose');
+	},
 
 	_createTitleWidget: function ()
 	{

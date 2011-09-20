@@ -26,7 +26,7 @@ dojo.declare(
 	label_store: null,
 	label_store_id_attribute: 'id',
 	label_store_default_id_attribute: 'id',
-	label_store_label_attribute: '',
+	label_store_label_attribute: 'title',
 	label_store_query: null,
 
 	value_store: null,
@@ -517,6 +517,8 @@ dojo.declare(
 				}
 			});
 		}
+		else
+			p.callback();
 		
 		return p;
 	},

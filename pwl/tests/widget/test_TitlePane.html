@@ -37,6 +37,12 @@
 			{
 				console.debug('Title changed to: ', i_value)
 			});
+			
+			dojo.connect(dijit.byId('W1'), 'onOpen', function ()
+			{
+				console.log('onOpen');
+			});
+			dojo.connect(dijit.byId('W1'), 'onClose', function () { console.log('onClose') });
 		});
 
 	</script>

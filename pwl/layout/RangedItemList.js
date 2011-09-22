@@ -13,6 +13,7 @@ dojo.declare(
 {
 
 	store: '',
+	query: '',
 	items_per_page: 20,
 
 	item_widget: '',
@@ -171,9 +172,9 @@ dojo.declare(
 	{
 		this.store = this._fixStore(i_store);
 
-		//dojo.empty(this.containerNode);
+		dojo.empty(this.containerNode);
 
-		//this._loadData();
+		this._loadData();
 	},
 
 	_setQueryAttr: function ( i_query )

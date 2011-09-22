@@ -49,9 +49,11 @@ dojo.declare(
 		if ( this.item_widget )
 		{
 			var object = dojo.getObject(this.item_widget);
-			var item = new object({store: i_store});
-
-			item.set('identity',i_item);
+			var item = new object(
+			{
+				store: i_store, 
+				identity: i_item
+			});
 
 			return item;
 		}
@@ -109,7 +111,7 @@ dojo.declare(
 			start: this._current_offset,
 			count: this.items_per_page,
 
-			onComplete: function ( i_data, i_store, i_io )
+			onComplete: function ( i_data, i_args, i_io )
 			{
 				dojo.destroy( n_loading );
 
@@ -129,7 +131,7 @@ dojo.declare(
 				{
 /*					if(i_index <= top)
 					{*/
-						var child = this.createItem( i_item, i_store );
+						var child = this.createItem( i_item, this.store );
 
 						if ( child )
 							this.addChild( child );

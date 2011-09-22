@@ -16,5 +16,12 @@ dojo.declare(
 /** public **/
 /******************************************************************************/
 
-	templateString: '<li id=${id} style="height: 80px;">${title}</li>',
+	templateString: '<li id=${id} style="height: 80px;" dojoAttachPoint="titleNode">${title}</li>',
+	
+	postCreate: function ()
+	{
+		this.inherited(arguments);
+		console.log(this.store)
+		this.titleNode.innerHTML = this.store.getValue(this.identity, 'title');
+	}
 });

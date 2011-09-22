@@ -44,12 +44,12 @@ dojo.declare(
 
 /******************************************************************************/
 
-	createItem: function ( i_item )
+	createItem: function ( i_item, i_store )
 	{
 		if ( this.item_widget )
 		{
 			var object = dojo.getObject(this.item_widget);
-			var item = new object();
+			var item = new object({store: i_store});
 
 			item.set('identity',i_item);
 
@@ -129,7 +129,7 @@ dojo.declare(
 				{
 /*					if(i_index <= top)
 					{*/
-						var child = this.createItem( i_item );
+						var child = this.createItem( i_item, i_store );
 
 						if ( child )
 							this.addChild( child );

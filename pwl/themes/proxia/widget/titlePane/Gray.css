@@ -4,6 +4,7 @@
 	-moz-box-shadow: 5px 5px 5px #ccc;
 	-webkit-box-shadow: 5px 5px 5px #ccc;
 	box-shadow: 5px 5px 5px #ccc;
+	margin:10px;
 }
 
 .pwlWidgetTitlePane > header
@@ -91,10 +92,15 @@
 
 .pwlWidgetTitlePane .dijitOpen
 {
-	background: #4d4d4d url(../../../../themes/proxia/images/icons/12x12/draw-triangle3.png) no-repeat center center;	
+	background: #6a6a6a url(../../../../themes/proxia/images/icons/12x12/draw-triangle3.png) no-repeat center center;	
 }
 
 .pwlWidgetTitlePane .dijitTitlePaneTextNode
 {
 	display: none;
+}
+
+.pwlWidgetTitlePane .dijitTitlePaneContentInner
+{
+	padding:5px;
 }

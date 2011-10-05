@@ -46,7 +46,8 @@ dojo.declare(
 
 		var b_container = dojo.contentBox(this.containerNode);
 
-		this.selectedChildWidget.resize(b_container);
+		if ( this.selectedChildWidget )
+			this.selectedChildWidget.resize(b_container);
 	},
 
 /******************************************************************************/

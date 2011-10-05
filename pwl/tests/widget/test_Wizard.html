@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.Wizard</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+		dojo.require('dijit.layout.ContentPane');
+
+		dojo.require('pwl.widget.Wizard');
+		
+		dojo.require('pwl.tests.widget.wizard.Step1_SimpleForm');
+		dojo.require('pwl.tests.widget.wizard.Step2_WidgetGroup');
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">PWL.widget.Wizard</h1>
+
+	<div id="W1" dojoType="pwl.widget.Wizard" style="width: 800px; height: 400px; margin: 0 auto;">
+		<div id="C1" dojoType="pwl.tests.widget.wizard.Step1_SimpleForm" is_mandatory="true" legend="Step 1"></div>
+		<div id="C2" dojoType="pwl.tests.widget.wizard.Step2_WidgetGroup" is_mandatory="true" legend="Step 2"></div>
+		<div id="C3" dojoType="dijit.layout.ContentPane">Invalid Pane</div>
+	</div>
+		
+</body>
+</html>

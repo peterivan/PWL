@@ -1,0 +1,20 @@
+
+@import url('wizard/Legend.css');
+@import url('wizard/StepContainer.css');
+
+.pwlWidgetWizard
+{
+	position: relative;
+	
+	
+}
+
+.pwlWidgetWizard > .container
+{
+	position: absolute;
+	
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+

@@ -14,7 +14,8 @@ dojo.declare(
 	'pwl.widget.form.WidgetGroup',
 	[dijit.layout._LayoutWidget, dijit._Templated, pwl.widget.form._FormMixin],
 {
-	is_modified: false,
+	templateString: dojo.cache('pwl.widget.form', 'templates/WidgetGroup.html'),
+	
 	change_event_disabled: false,
 
 /******************************************************************************/
@@ -35,6 +36,8 @@ dojo.declare(
 		{
 			i_child.set('widget_group', this);
 		}, this);
+		
+		this.connectChildren();
 	},
 
 /******************************************************************************/

@@ -20,6 +20,8 @@ dojo.declare(
 	templateString: dojo.cache('pwl.widget.form', 'templates/ToolbarForm.html'),
 	widgetsInTemplate: true,
 
+	disable_change_event: false,
+
 	toolbar_position: 'top',
 
 	accept_label: '',
@@ -79,11 +81,10 @@ dojo.declare(
 
 /******************************************************************************/
 
-	connectChildren: function ( i_connect )
+	connectChildren: function ( i_connect_now )
 	{
 		// delay connection until toolbar is setup
-		
-		if ( i_connect ) 
+		if ( i_connect_now ) 
 			this.inherited(arguments);
 	},
 
@@ -134,8 +135,6 @@ dojo.declare(
 		dojo.connect(this.w_accept, 'onAccept', this, '_onAccept');
 
 		dojo.connect(this.w_accept, 'onCancel', this, '_onCancel');
-
-		//this.connectChildren();
 	},
 
 /******************************************************************************/

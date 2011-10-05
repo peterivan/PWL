@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>pwl.widget.form.ToolbarForm with widget groups</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+	<link rel="stylesheet" href="../../../../academy/themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.form.ToolbarForm');
+		
+		dojo.require('pwl.tests.widget.form.widgetGroup.Group1');
+		dojo.require('pwl.tests.widget.form.widgetGroup.Group2');
+
+		dojo.addOnLoad( function ()
+		{
+			
+		});
+		
+	</script>
+
+</head>
+<body class="proxia tundra">
+
+	<h1 class="testTitle">pwl.widget.form.ToolbarForm with widget groups</h1>
+
+	<div style="width: 800px; height: 500px; outline: 1px solid lime; margin: 0 auto">
+
+		<div id="W1" toolbar_position="top" dojoType="pwl.widget.form.ToolbarForm" >
+
+			<div dojoType="dijit.Toolbar">
+				<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconDelete">Delete</span>
+				<span dojoType="dijit.ToolbarSeparator"></span>
+				<span dojoType="dijit.form.Button" IconClass="dijitEditorIcon dijitEditorIconCopy">Cut</span>
+				<span dojoType="dijit.ToolbarSeparator"></span>
+				<span dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPaste">Paste</span>
+			</div>
+
+			<div dojoType="pwl.tests.widget.form.widgetGroup.Group1"></div>
+			<br>
+			<div dojoType="pwl.tests.widget.form.widgetGroup.Group2"></div>
+	
+		</div>
+
+	</div>
+</body>
+</html>

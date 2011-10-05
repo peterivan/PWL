@@ -1,0 +1,17 @@
+
+.pwlWidgetWizardStepContainer
+{
+	position: relative;
+}
+
+.pwlWidgetWizardStepContainer > .button_container
+{
+	position: absolute;
+	
+	bottom: 0;
+	left: 0;
+	right: 0;
+	
+	height: 50px;
+	line-height: 50px;
+}

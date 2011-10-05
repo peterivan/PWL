@@ -14,10 +14,18 @@ dojo.declare(
 	is_modified: false,
 	
 	change_event_disabled: false,
+	
 	autosave_disabled: false,
 	autoreset_disabled: false,
 
+	autosave: true,
+	autoreset: true,
+
 	_connections: null,
+	
+	_modified_children: 0,
+	_children_with_save: 0,
+	_children_saved: 0,
 
 /******************************************************************************/
 /** public **/
@@ -41,47 +49,36 @@ dojo.declare(
 
 		this._connections.forEach(dojo.disconnect);
 
-		this.getDescendants().forEach( function ( i_child )
+		this.getChildren().forEach( function ( i_child )
 		{
-			// widget group is responsible for emiting change events
-			// form elements can be ignored by seting flag: ignore_change_event
-			if ( !i_child.widget_group && !i_child.ignore_change_event )
+			if ( this._shouldListenToChangeEvent(i_child) )
 			{
-				var c = null;
-				
-				if ( this._childIsInstanceOf(i_child, 'dijit.form.TextBox') )
-					c = dojo.connect(i_child, 'onKeyUp', this, '_onChange');
-				else if ( this._childIsInstanceOf(i_child, 'dijit.form.DateTextBox') )
-					c = dojo.connect(i_child, 'onChange', this, '_onChange');
-				else if ( this._childIsInstanceOf(i_child, 'dijit.form.TimeTextBox') )
-					c = dojo.connect(i_child, 'onChange', this, '_onChange');
-				else if ( this._childIsInstanceOf(i_child, 'dijit.form.ComboBox') )
-					c = dojo.connect(i_child, 'onChange', this, '_onChange');
-				else if ( this._childIsInstanceOf(i_child, 'dijit.form.CheckBox') )
-					c = dojo.connect(i_child, 'onChange', this, '_onChange');
-				else if ( this._childIsInstanceOf(i_child, 'dijit.Editor') )
-					c = dojo.connect(i_child, 'onKeyUp', this, '_onChange');
-				else if ( this._childIsInstanceOf(i_child, 'dijit.form.Button') )
-					c = dojo.connect(i_child, 'onClick', this, '_onChange');
-				else if ( this._childIsInstanceOf(i_child, 'dijit.form.SimpleTextArea') )
-					c = dojo.connect(i_child, 'onKeyUp', this, '_onChange');
-				else if ( dojo.isFunction(i_child.onChange) )
-					c = dojo.connect(i_child, 'onChange', this, '_onChange');
-				
-				if ( c )
-					this._connections.push(c);
-				
+				var change_events = this._findChangeEvents( i_child );
+			
+				change_events.forEach( function ( i_event ) 
+				{
+					var c = dojo.connect(i_child, i_event, this, '_onChange');
+						
+					if ( c )
+						this._connections.push(c);
+				}, this);
+								
 				/**************************************************************/
 				
-				if ( !this.disable_autosave )
-				{ // TODO: try autosave
-					if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
+				if ( !this.disable_autosave || !this.autosave_disabled )
+				{
+					if ( i_child.autosave )
 					{
-						dojo.connect(i_child, 'onSave', this, '_onSave');
+						console.warn('Autosaving of widget groups is bugged, though it works in simple cases. Consider custom handling.');
+						
+						if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
+						{
+							dojo.connect(i_child, 'onSave', this, '_onSave');
 
-						this._children_with_save++;
+							this._children_with_save++;
 
-						i_child.is_pwl_form_connected = true;
+							i_child.is_pwl_form_connected = true;
+						}
 					}
 				}
 			}			
@@ -94,19 +91,12 @@ dojo.declare(
 
 	onChange: function ( i_data )
 	{
-		this.is_modified = true;
-
-		if ( this.change_topic )
-		{
-			console.debug('published topic: ', this.change_topic, i_data);
-
-			dojo.publish(this.change_topic, [i_data]);
-		}
+		this.set('is_modified', true);
 	},
 
 	onLoad: function ( i_data )
 	{
-		this.is_modified = false;
+		this.set('is_modified', false);
 
 		if ( this.load_topic )
 		{
@@ -120,7 +110,7 @@ dojo.declare(
 
 	onSave: function ( i_data )
 	{
-		this.is_modified = false;
+		this.set('is_modified', false);
 
 		if ( this.save_topic )
 		{
@@ -134,7 +124,7 @@ dojo.declare(
 
 	onReset: function ( i_data )
 	{
-		this.is_modified = false;
+		this.set('is_modified', false);
 
 		if ( this.reset_topic )
 		{
@@ -158,16 +148,80 @@ dojo.declare(
 		return false;
 	},
 
+	/**
+	 * Determine if child should be observed for change event.
+	 * 
+	 * Child that is members of widget group (WG) is ignored, WG is responsible 
+	 * for observation of its children.
+	 * 
+	 * Change event can also be ignored by setting "ignore_change_event" flag.
+	 */
+	_shouldListenToChangeEvent: function ( i_child )
+	{
+		if ( i_child.ignore_change_event )
+			return false;
+		
+		// don't listen when child is member of group other then this
+		if ( i_child.widget_group && i_child.widget_group != this )
+			return false;
+		
+		return true;
+	},
+
+	/**
+	 * Find appropriate change event for child.
+	 * In most cases its onChange, but may differ for each widget.
+	 */
+	_findChangeEvents: function ( i_child )
+	{
+		var all_events = [];
+		
+		if ( this._childIsInstanceOf(i_child, 'dijit.form.ComboBox') )
+			all_events.push('onChange');
+		if ( this._childIsInstanceOf(i_child, 'dijit.form.TextBox') )
+			all_events.push('onKeyUp');
+		if ( this._childIsInstanceOf(i_child, 'dijit.form.DateTextBox') )
+			all_events.push('onChange');
+		if ( this._childIsInstanceOf(i_child, 'dijit.form.TimeTextBox') )
+			all_events.push('onChange');			
+		if ( this._childIsInstanceOf(i_child, 'dijit.form.CheckBox') )
+			all_events.push('onChange');
+		if ( this._childIsInstanceOf(i_child, 'dijit.Editor') )
+			all_events.push('onKeyUp');
+		if ( this._childIsInstanceOf(i_child, 'dijit.form.Button') )
+			all_events.push('onClick');
+		if ( this._childIsInstanceOf(i_child, 'dijit.form.SimpleTextArea') )
+			all_events.push('onKeyUp');
+		if ( dojo.isFunction(i_child.onChange) )
+			all_events.push('onChange');
+		
+		/**********************************************************************/
+		
+		var events = [];
+		
+		all_events.forEach( function ( i_event ) 
+		{
+			if ( dojo.indexOf(events, i_event)  == -1 )
+				events.push(i_event);
+		});
+		
+		return events;
+	},
+
 /******************************************************************************/
 /** Events ********************************************************************/
 
 	_onChange: function ( i )
 	{
-		if ( !this.disable_change_event )
+		if ( !this.disable_change_event || !this.change_event_disabled )
 			this.onChange();
+	},
+	
+	_onSave: function ()
+	{
 	}
 	
 /******************************************************************************/
 /** Attr handlers *************************************************************/
-
+	
 });

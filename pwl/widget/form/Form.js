@@ -40,7 +40,7 @@ dojo.declare(
 		{
 			this.getDescendants().forEach( function ( i_child )
 			{
-				if ( dojo.isFunction(i_child.save) )
+				if ( i_child.autosave && dojo.isFunction(i_child.save) )
 				{
 					i_child.save();
 				}
@@ -59,10 +59,13 @@ dojo.declare(
 		{
 			this.inherited(arguments);
 
-			this.getChildren().forEach( function ( i_widget )
+			this.getChildren().forEach( function ( i_child )
 			{
-				if ( dojo.isFunction( i_widget.reset ) )
-					i_widget.reset();
+				if ( !i_child.autoreset )
+					return;
+				
+				if ( dojo.isFunction( i_child.reset ) )
+					i_child.reset();
 			}, this);
 		}
 	},
@@ -81,5 +84,12 @@ dojo.declare(
 
 			this.onSave();
 		}
+	},
+	
+	_setIs_modifiedAttr: function ( i_is_modified )
+	{
+		this.is_modified = i_is_modified;
+		
+		console.debug('IM change: ', i_is_modified);
 	}
 });

@@ -3,12 +3,83 @@
 {
 	position: absolute;
 	
-	top: 0;
-	bottom: 0;
-	left: 0;
+	top: 5px;
+	bottom: 5px;
+	left: 5px;
 	
 	width: 15em;
 	
-	border: 1px solid red;
+	border:1px solid #B8D4ED;
+	
+	background-color:White;
+	
+	border-radius:6px;
+	
+	overflow:auto;
 }
 
+.pwlWidgetWizardLegend ol
+{
+	display: block;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 0.3em;
+    margin-top: 0.5em;
+	padding-left: 0.4em;
+	list-style-position: inside;
+}
+
+.pwlWidgetWizardLegend ol > li
+{
+	font-size:0.8em;
+	padding-left: 0.5em;
+	border-radius: 4px;
+	margin-bottom: 2px;	
+	line-height: 1.4em;
+}
+
+.pwlWidgetWizardLegend ol > li > a
+{
+	display:inline-block;
+	color:Gray;
+	font-size:1.1em;
+}
+
+.pwlWidgetWizardLegend ol > li.enabled
+{
+	color: silver;
+	border: 1px solid #B8D4ED;
+	background: #deefff; /* Old browsers */
+	background: -moz-linear-gradient(top, #deefff 0%, #ffffff 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#deefff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #deefff 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #deefff 0%,#ffffff 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #deefff 0%,#ffffff 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#deefff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #deefff 0%,#ffffff 100%); /* W3C */	
+}
+
+.pwlWidgetWizardLegend ol > li.active
+{
+	background:none;
+	color: gray;
+	background: #99BEDE url("../../images/icons/12x12/tooltipConnectorRight-blue.png") no-repeat 99% center;
+}
+
+.pwlWidgetWizardLegend ol > li.active a
+{
+	color:#3F4C6B;
+}
+
+.pwlWidgetWizardLegend ol > li.completed
+{
+	background: #deefff url("../../images/icons/16x16/checkmark.png") no-repeat 99% center;
+}
+
+.pwlWidgetWizardLegend ol > li.disabled
+{
+	border-bottom: 1px solid #e0e0e0;
+	color: silver;
+	border-radius: 0;
+	background-color:none;
+}

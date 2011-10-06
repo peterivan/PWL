@@ -6,15 +6,27 @@
 {
 	position: relative;
 	
+	border:1px solid #98bede;
+	padding:5px;
+	background-color:#deefff;
 	
+	-moz-box-shadow: 0 0 5px 5px #e0e0e0;
+	-webkit-box-shadow: 0 0 5px 5px #e0e0e0;
+	box-shadow: 0 0 5px 5px #e0e0e0;	
+	
+	border-radius:6px;
 }
 
 .pwlWidgetWizard > .container
 {
 	position: absolute;
 	
-	top: 0;
-	bottom: 0;
-	right: 0;
+	top: 5px;
+	bottom: 5px;
+	right: 5px;
+	
+	border:1px solid #B8D4ED;
+	border-radius:6px;
+	background-color:White;
 }
 

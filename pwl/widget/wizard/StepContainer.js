@@ -83,6 +83,8 @@ dojo.declare(
 	{
 		dojo.connect(this.w_next_button, 'onClick', this.w_wizard, 'next');
 		
+		dojo.connect(this.w_prev_button, 'onClick', this.w_wizard, 'prev');
+		
 		if ( this.w_step )
 		{
 			dojo.connect(this, 'onShow', this.w_step, 'onShow');

@@ -1,0 +1,12 @@
+.academyBlankButton[class~=dijitButton] .dijitButtonNode,
+.academyBlankButton[class~=dijitButtonHover] .dijitButtonNode,
+.academyBlankButton[class~=dijitButtonActive] .dijitButtonNode,
+
+.academyBlankButton[class~=dijitToggleButton] .dijitButtonNode,
+.academyBlankButton[class~=dijitToggleButtonHover] .dijitButtonNode,
+.academyBlankButton[class~=dijitToggleButtonActive] .dijitButtonNode,
+.academyBlankButton[class~=dijitToggleButtonChecked] .dijitButtonNode
+{
+	border: none;
+	background: none;
+}

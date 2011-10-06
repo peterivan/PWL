@@ -33,6 +33,9 @@
 		
 		dojo.require('pwl.tests.widget.wizard.Step1_SimpleForm');
 		dojo.require('pwl.tests.widget.wizard.Step2_WidgetGroup');
+		
+		dojo.require('pwl.widget.wizard.legend.Item');
+		
 	</script>
 
 </head>
@@ -40,11 +43,45 @@
 
 	<h1 class="testTitle">PWL.widget.Wizard</h1>
 
-	<div id="W1" dojoType="pwl.widget.Wizard" style="width: 800px; height: 400px; margin: 0 auto;">
+	<div id="W1" dojoType="pwl.widget.Wizard" style="width: 900px; height: 500px; margin: 0 auto;">
 		<div id="C1" dojoType="pwl.tests.widget.wizard.Step1_SimpleForm" is_mandatory="true" legend="Step 1"></div>
 		<div id="C2" dojoType="pwl.tests.widget.wizard.Step2_WidgetGroup" is_mandatory="true" legend="Step 2"></div>
-		<div id="C3" dojoType="dijit.layout.ContentPane">Invalid Pane</div>
-	</div>
 		
+		<div id="C4" dojoType="dijit.layout.ContentPane" is_mandatory="true" legend="Step 2">Invalid Pane</div>
+	</div>
+<!--	
+	<div id="W2" class="pwlWidgetWizardLegend" style="width: 500px; height: 250px; margin: 0 auto;">
+		<ol>
+			<li id="pwl_widget_wizard_legend_Item_0" title="Step 1" dojoType="pwl.widget.wizard.legend.Item" class="enabled completed">
+				<a>Step 1</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_1" title="Step 2" dojoType="pwl.widget.wizard.legend.Item" class="enabled">
+				<a>Step 2</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_2" title="Step 3" dojoType="pwl.widget.wizard.legend.Item" class="enabled active">
+				<a>Step 3</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_3" title="Step 4" dojoType="pwl.widget.wizard.legend.Item" class="disabled">
+				<a>Step 4</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_4" title="Step 5" dojoType="pwl.widget.wizard.legend.Item" class="disabled">
+				<a>Step 5</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_5" title="Step 6" dojoType="pwl.widget.wizard.legend.Item" class="disabled">
+				<a>Step 6</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_6" title="Step 7" dojoType="pwl.widget.wizard.legend.Item" class="disabled">
+				<a>Step 7</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_7" title="Step 8" dojoType="pwl.widget.wizard.legend.Item" class="disabled">
+				<a>Step 8</a>
+			</li>
+			<li id="pwl_widget_wizard_legend_Item_8" title="Step 9" dojoType="pwl.widget.wizard.legend.Item" class="disabled">
+				<a>Step 9</a>
+			</li>		
+		
+		</ol>
+	</div>
+	-->
 </body>
 </html>

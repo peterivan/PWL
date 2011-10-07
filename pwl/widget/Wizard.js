@@ -94,6 +94,10 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 		
+		var b_parent = dojo.contentBox(this.domNode.parentNode);
+		//console.debug("b_parent", b_parent)
+		dojo.marginBox(this.domNode,b_parent);
+		
 		var b_this = dojo.contentBox(this.domNode);
 		var b_container = b_this;
 		
@@ -144,21 +148,62 @@ dojo.declare(
 /******************************************************************************/
 /** Content manipulation ******************************************************/
 
-	addGroup: function ( i_group )
+	addIntro: function ( i_intro )
 	{
-		//TODO: implement groups
+		if ( !i_intro.isInstanceOf(pwl.widget.wizard.Intro) )
+		{
+			console.error('Intro is invalid: ', i_intro);
+			
+			return this;
+		}
+		
+		this.w_intro = i_intro;
+		this.w_intro.w_wizard = this;
+		
+		this.w_container.addChild(i_intro, 0);
+		this.w_legend.addIntro(i_intro);
+		
+		return this;
 	},
 	
-	addStep: function ( i_step )
+	addSummary: function ()
+	{
+		
+	},
+
+	addGroup: function ( i_group )
+	{
+		if ( !i_group.isInstanceOf(pwl.widget.wizard.StepGroup) )
+		{
+			console.error('Step group is invalid: ', i_group);
+			
+			return this;
+		}
+		
+		this.w_legend.addGroup(i_group);
+		
+		//TODO: check validity
+		
+		i_group.getChildren().forEach( function ( i_step )
+		{
+			this.addStep(i_step, false);
+		}, this);
+		
+		return this;
+	},
+	
+	addStep: function ( i_step, i_add_into_legend )
 	{
 		i_step.w_wizard = this;
 		
 		var container = new pwl.widget.wizard.StepContainer({w_wizard: this});
 		
-		container.addChild(i_step);		
+		container.addChild(i_step);
 		
 		this.w_container.addChild(container);
-		this.w_legend.addStep(i_step);
+		
+		if ( i_add_into_legend )
+			this.w_legend.addStep(i_step);
 	},
 	
 	selectStep: function ( i_step )
@@ -214,7 +259,7 @@ dojo.declare(
 	_setupStep: function ( i_step )
 	{
 		if ( i_step.isInstanceOf(pwl.widget.wizard.Step) )
-			this.addStep(i_step);
+			this.addStep(i_step, true);
 		else if ( i_step.isInstanceOf(pwl.widget.wizard.StepGroup) )
 			this.addStepGroup(i_step);
 		else if ( i_step.isInstanceOf(pwl.widget.wizard.Intro) )

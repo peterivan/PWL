@@ -7,11 +7,12 @@
 .pwlWidgetWizardStepContainer > .button_container
 {
 	position: absolute;
-	
 	bottom: 0;
 	left: 0;
 	right: 0;
 	
+	text-align:center;
+
 	line-height: 40px;
 	
 	background: #98bede; /* Old browsers */
@@ -32,7 +33,7 @@
 
 .pwlWidgetWizardStepContainer > .container > div
 {
-	margin:15px 10px;
+	margin:10px;
 }
 
 .pwlWidgetWizardStepContainer > .button_container .stepPrev
@@ -41,15 +42,9 @@
 	color:#CC0033;
 }
 
-.pwlWidgetWizardStepContainer > .button_container .stepNext
+.pwlWidgetWizardStepContainer > .button_container .stepNext 
 {
 	
-}
-
-.pwlWidgetWizardStepContainer > .button_container .stepNext[class~='dijitHover'] .dijitButtonNode
-{
-	border:1px solid #CC0033;
-	background: #ffffff url("../../images/icons/TabletWizard/ico-nav-right-small-active-hover.png") no-repeat 95% center;	
 }
 
 .pwlWidgetWizardStepContainer > .button_container .stepNext[class~='dijitButtonDisabled'] .dijitButtonNode
@@ -63,7 +58,7 @@
 	text-shadow: none;
 }
 
-.pwlWidgetWizardStepContainer > .button_container .stepNext > .dijitButtonNode
+.pwlWidgetWizardStepContainer > .button_container .stepNext[class~='dijitButton']  .dijitButtonNode
 {
 	border:1px solid #F36A70;
 	color:#CC0033;
@@ -77,4 +72,9 @@
 	text-shadow: 0.1em 0.1em 0.2em gray;
 }
 
+.pwlWidgetWizardStepContainer > .button_container .stepNext[class~='dijitButtonHover'] .dijitButtonNode
+{
+	border:1px solid #CC0033;
+	background: #ffffff url("../../images/icons/TabletWizard/ico-nav-right-small-active-hover.png") no-repeat 95% center;	
+}
 

@@ -42,7 +42,7 @@ dojo.declare(
 	{
 		console.log(i_group);
 		
-		var group = new pwl.widget.wizard.legend.Group();
+		var group = new pwl.widget.wizard.legend.Group({label: i_group.legend});
 		
 		i_group.getChildren().forEach( function ( i_step ) 
 		{
@@ -86,6 +86,7 @@ dojo.declare(
 		//this.addStep(i_step);
 		
 		var step = this._findStep(i_step);
+		
 	},
 	
 	enableStep: function ( i_step )

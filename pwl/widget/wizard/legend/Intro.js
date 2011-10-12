@@ -13,7 +13,7 @@ dojo.declare(
 	'pwl.widget.wizard.legend.Intro',
 	[dijit._Widget, dijit._Templated, dijit._CssStateMixin],
 {
-	templateString: dojo.cache('pwl.widget.wizard.legend', 'templates/Item.html'),
+	templateString: dojo.cache('pwl.widget.wizard.legend', 'templates/Intro.html'),
 	
 	baseClass: 'pwlWidgetWizardLegendIntro',
 	

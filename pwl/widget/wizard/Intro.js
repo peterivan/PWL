@@ -39,6 +39,10 @@ dojo.declare(
 		this.inherited(arguments);
 		
 		dojo.connect(this.w_start, 'onClick', this.w_wizard, 'next');
+		
+		var _content = this.w_content.get('content');
+		if( !_content )
+			this.w_content.set('content', 'Dotazník spustíte stlačením tlačítka štart.');
 	},
 
 /******************************************************************************/
@@ -49,11 +53,12 @@ dojo.declare(
 		this.inherited(arguments);
 		
 		var b_parent = dojo.contentBox(this.domNode.parentNode);
+		var b_header = dojo.marginBox(this.n_header);
 		var b_button = dojo.marginBox(this.n_button);
 		
 		var box = 
 		{
-			h: b_parent.h - b_button.h - 5
+			h: b_parent.h - b_header.h - b_button.h + 5
 		};
 		
 		this.w_content.resize(box);

@@ -1,19 +1,18 @@
-dojo.provide('pwl.widget.wizard.legend.Item');
+dojo.provide('pwl.widget.wizard.legend.Group');
 
 /******************************************************************************/
 /******************************************************************************/
 
-dojo.require('dijit._Widget');
+dojo.require('dijit.layout._LayoutWidget');
 dojo.require('dijit._Templated');
-dojo.require('dijit._CssStateMixin');
 
 /******************************************************************************/
 
 dojo.declare(
-	'pwl.widget.wizard.legend.Item',
-	[dijit._Widget, dijit._Templated, dijit._CssStateMixin],
+	'pwl.widget.wizard.legend.Group',
+	[dijit.layout._LayoutWidget, dijit._Templated],
 {
-	templateString: dojo.cache('pwl.widget.wizard.legend', 'templates/Item.html'),
+	templateString: dojo.cache('pwl.widget.wizard.legend', 'templates/Group.html'),
 	
 	w_step: null,
 	

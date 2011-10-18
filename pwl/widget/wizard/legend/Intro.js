@@ -1,4 +1,4 @@
-dojo.provide('pwl.widget.wizard.legend.Item');
+dojo.provide('pwl.widget.wizard.legend.Intro');
 
 /******************************************************************************/
 /******************************************************************************/
@@ -10,14 +10,14 @@ dojo.require('dijit._CssStateMixin');
 /******************************************************************************/
 
 dojo.declare(
-	'pwl.widget.wizard.legend.Item',
+	'pwl.widget.wizard.legend.Intro',
 	[dijit._Widget, dijit._Templated, dijit._CssStateMixin],
 {
-	templateString: dojo.cache('pwl.widget.wizard.legend', 'templates/Item.html'),
+	templateString: dojo.cache('pwl.widget.wizard.legend', 'templates/Intro.html'),
 	
-	w_step: null,
+	baseClass: 'pwlWidgetWizardLegendIntro',
 	
-	label: '',
+	legend: 'Úvod',
 	
 /******************************************************************************/
 /** public **/

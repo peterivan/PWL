@@ -39,6 +39,8 @@
 		dojo.require('dijit.form.DropDownButton');
 		dojo.require('dijit.form.Textarea');
 		dojo.require('dijit.form.SimpleTextarea');
+		dojo.require('dijit.layout.TabContainer');
+		dojo.require('dijit.layout.ContentPane');
 		dojo.require('dijit.Editor');
 
 		dojo.require('pwl.widget.form.ToolbarForm');
@@ -49,6 +51,8 @@
 			
 			dojo.connect(form, 'onChange', function () {console.log('change called')});
 			dojo.connect(form, 'onReset', function () {console.log('reset called')});
+			
+			dijit.byId('TC1').resize();
 		});
 
 		function testProgramaticValueChange()
@@ -65,7 +69,7 @@
 
 	<h1 class="testTitle">pwl.widget.form.ToolbarForm</h1>
 
-	<div style="width: 800px; height: 500px; outline: 1px solid lime;margin:0 auto">
+	<div style="width: 800px; outline: 1px solid lime;margin:0 auto">
 
 		<div id="W1" toolbar_position="top" dojoType="pwl.widget.form.ToolbarForm" >
 
@@ -95,6 +99,26 @@
 			<div>
 				<label>Editor: </label>
 				<span dojoType="dijit.Editor"></span>
+			</div>
+			
+			<div>
+				<div id="TC1" dojoType="dijit.layout.TabContainer" style="width: 500px; height: 300px;">
+					<div dojoType="dijit.layout.ContentPane" title="Tab1">
+						<label>Textbox 1: </label><span id="TB2" dojoType="dijit.form.TextBox"></span>
+						<br>
+						<label>Textbox 2: </label><span id="TB3" dojoType="dijit.form.TextBox"></span>
+					</div>
+					<div dojoType="dijit.layout.ContentPane" title="Tab2">
+						<label>Textbox 3: </label><span id="TB4" dojoType="dijit.form.TextBox"></span>
+						<br>
+						<label>Textbox 4: </label><span id="TB5" dojoType="dijit.form.TextBox"></span>
+					</div>
+					<div dojoType="dijit.layout.ContentPane" title="Tab3">
+						<label>Textbox 5: </label><span id="TB6" dojoType="dijit.form.TextBox"></span>
+						<br>
+						<label>Textbox 6: </label><span id="TB7" dojoType="dijit.form.TextBox"></span>
+					</div>
+				</div>
 			</div>
 		</div>
 

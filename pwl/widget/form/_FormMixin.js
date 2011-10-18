@@ -27,6 +27,8 @@ dojo.declare(
 	_children_with_save: 0,
 	_children_saved: 0,
 
+	_children_to_handle: null,
+
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -48,42 +50,40 @@ dojo.declare(
 		this.inherited(arguments);
 
 		this._connections.forEach(dojo.disconnect);
-
-		this.getChildren().forEach( function ( i_child )
+		
+		this._children_to_handle = 
 		{
-			if ( this._shouldListenToChangeEvent(i_child) )
+			change: [],
+			reset: []
+		};
+
+		this._findChildren(this);
+		
+		this._children_to_handle.change.forEach( function ( i_child )
+		{
+			var change_events = this._findChangeEvents( i_child );
+
+			change_events.forEach( function ( i_event ) 
 			{
-				var change_events = this._findChangeEvents( i_child );
-			
-				change_events.forEach( function ( i_event ) 
-				{
-					var c = dojo.connect(i_child, i_event, this, '_onChange');
-						
-					if ( c )
-						this._connections.push(c);
-				}, this);
-								
-				/**************************************************************/
-				
-				if ( !this.disable_autosave || !this.autosave_disabled )
-				{
-					if ( i_child.autosave )
-					{
-						console.warn('Autosaving of widget groups is bugged, though it works in simple cases. Consider custom handling.');
-						
-						if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
-						{
-							dojo.connect(i_child, 'onSave', this, '_onSave');
+				var c = dojo.connect(i_child, i_event, this, '_onChange');
 
-							this._children_with_save++;
+				if ( c )
+					this._connections.push(c);
+			}, this);
+		}, this);		
 
-							i_child.is_pwl_form_connected = true;
-						}
-					}
-				}
-			}			
+		console.debug(this, this._children_to_handle);
+	},
 
-		}, this);
+	reset: function()
+	{
+		if ( !this.disable_autoreset )
+		{
+			this._children_to_handle.reset.forEach( function ( i_child )
+			{
+				i_child.reset();
+			}, this);
+		}
 	},
 
 /******************************************************************************/
@@ -206,6 +206,72 @@ dojo.declare(
 		});
 		
 		return events;
+	},
+
+	
+	_findChildren: function ( i_container )
+	{
+		i_container.getChildren().forEach( function ( i_child )
+		{
+			if ( i_child.isContainer )
+			{
+				var widget_group_exists = dojo.getObject('pwl.widget.form.WidgetGroup');
+				
+				if ( widget_group_exists && i_child.isInstanceOf(pwl.widget.form.WidgetGroup) )
+				{
+					this._children_to_handle.change.push(i_child);
+					
+					if ( this._childMayReset(i_child) )
+						this._children_to_handle.reset.push(i_child);
+				}
+				
+				this._findChildren(i_child);
+			}
+			else
+			{
+				if ( this._shouldListenToChangeEvent(i_child) )
+				{
+					this._children_to_handle.change.push(i_child);
+
+					/**********************************************************/
+					/** Autosave **********************************************/
+
+					if ( !this.disable_autosave || !this.autosave_disabled )
+					{
+						if ( i_child.autosave )
+						{
+							console.warn('Autosaving of widget groups is bugged, though it works in simple cases. Consider custom handling.');
+
+							if ( dojo.isFunction(i_child.save) && !i_child.is_pwl_form_connected )
+							{
+								dojo.connect(i_child, 'onSave', this, '_onSave');
+
+								this._children_with_save++;
+
+								i_child.is_pwl_form_connected = true;
+							}
+						}
+					}
+					
+					/**********************************************************/
+					/** Autoreset *********************************************/
+					
+					if ( this._childMayReset(i_child) )
+						this._children_to_handle.reset.push(i_child);
+				}
+			}
+		}, this);
+	},
+
+	_childMayReset: function ( i_child )
+	{
+		if ( i_child.autoreset == false )
+			return false;
+				
+		if ( !dojo.isFunction( i_child.reset ) )
+			return false;
+					
+		return true;
 	},
 
 /******************************************************************************/

@@ -11,10 +11,8 @@ dojo.require('dijit._Templated');
 
 dojo.declare(
 	'pwl.layout.TabletContainer',
-	[pwl.layout.StackContainer,dijit._Templated],
+	[pwl.layout.StackContainer, dijit._Templated],
 {
-	baseClass: 'pwlLayoutTabletContainer',
-
 	templateString: dojo.cache('pwl.layout', 'templates/TabletContainer.html'),
 
 	panes: [],
@@ -427,5 +425,19 @@ dojo.declare(
 		
 	},
 
+/******************************************************************************/
+/** Pages *********************************************************************/
+
+	/*selectPage: function ( i_page )
+	{
+		
+	},*/
 	
+	
+	
+	setupChild: function ( i_page )
+	{
+		console.log('asdasd');		
+		
+	}
 });

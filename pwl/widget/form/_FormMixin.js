@@ -77,6 +77,9 @@ dojo.declare(
 
 	reset: function()
 	{
+		this.change_event_disabled = true;
+		this.disable_change_event = true;
+		
 		if ( !this.disable_autoreset )
 		{
 			this._children_to_handle.reset.forEach( function ( i_child )
@@ -84,6 +87,13 @@ dojo.declare(
 				i_child.reset();
 			}, this);
 		}
+		
+		setTimeout(dojo.hitch(this, function ()
+		{
+			this.change_event_disabled = false;
+			this.disable_change_event = false;
+			this.onReset();
+		}, 0));		
 	},
 
 /******************************************************************************/

@@ -26,6 +26,13 @@ dojo.declare(
 /** public **/
 /******************************************************************************/
 
+	show: function()
+	{
+		this.inherited(arguments);
+		
+		this.w_wizard.w_container.selectChild( this.getParent() );
+	},
+	
 /******************************************************************************/
 /** Startup, Teardown *********************************************************/
 
@@ -35,7 +42,7 @@ dojo.declare(
 	onCompletionChange: function ( i_is_complete )
 	{
 		this.is_complete = i_is_complete;
-	},
+	}
 
 /******************************************************************************/
 /** protected **/

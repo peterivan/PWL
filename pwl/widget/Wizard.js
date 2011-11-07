@@ -78,6 +78,20 @@ dojo.declare(
 			this.w_container.addChild(this.w_summary);
 		
 		this.inherited(arguments);
+		
+		dojo.connect(window, "onkeypress", this, function( kp )
+		{
+			console.debug("key press", kp)
+			if( kp.keyCode == dojo.keys.DOWN_ARROW ||  kp.keyCode == dojo.keys.RIGHT_ARROW)
+			{
+				this.next();
+			}
+			
+			if( kp.keyCode == dojo.keys.LEFT_ARROW ||  kp.keyCode == dojo.keys.UP_ARROW)
+			{
+				this.prev();
+			}			
+		});
 	},
 
 	destroy: function ()
@@ -119,7 +133,7 @@ dojo.declare(
 /******************************************************************************/
 /** Events ********************************************************************/
 
-	onComplete: function () {},
+	onFinish: function () {},
 	onCancel: function () {},
 
 /******************************************************************************/
@@ -127,12 +141,18 @@ dojo.declare(
 
 	prev: function ()
 	{
-		
+		this.w_container.back();
+
 	},
 	
 	next: function ()
 	{
+		//var old_step =  this.w_container.selectedChildWidget.getChildren()[0]; 
+		//var o_step = this.w_legend._findStep( old_step );
+		
 		this.w_container.forward();
+
+		
 	},
 	
 	showNextButton: function ()
@@ -144,7 +164,11 @@ dojo.declare(
 	{
 		
 	},
-	
+
+	finish: function ()
+	{
+		this.onFinish()
+	},
 /******************************************************************************/
 /** Content manipulation ******************************************************/
 
@@ -166,9 +190,22 @@ dojo.declare(
 		return this;
 	},
 	
-	addSummary: function ()
+	addSummary: function ( i_summary )
 	{
+		if ( !i_summary.isInstanceOf(pwl.widget.wizard.Summary) )
+		{
+			console.error('Summary is invalid: ', i_summary);
+			
+			return this;
+		}
 		
+		this.w_summary = i_summary;
+		this.w_summary.w_wizard = this;
+		
+		this.w_container.addChild(i_summary, 'last');
+		this.w_legend.addSummary(i_summary);
+		
+		return this;		
 	},
 
 	addGroup: function ( i_group )
@@ -217,8 +254,7 @@ dojo.declare(
 		{
 			var step = null;
 			
-			this.w_container.getChildren().forEach( function ( i_sc )
-			{
+			this.w_container.getChildren().forEach( function ( i_sc ){
 				if ( i_sc.w_step.name == i_step )
 					step = i_sc.w_step;
 			});
@@ -229,6 +265,41 @@ dojo.declare(
 		return null;
 	},
 
+	reset: function()
+	{
+		/* destroy container */
+		this.w_container.getChildren().forEach( function ( i_child )
+		{
+			this.w_container.removeChild( i_child );
+			dojo.destroy( i_child )
+		},this);		
+		
+		/* destroy legend */
+		this.w_legend.getChildren().forEach( function ( i_child )
+		{
+			this.w_legend.removeChild( i_child );
+			dojo.destroy( i_child )
+		},this);		
+		
+	},
+	
+	getValues: function()
+	{
+		var r_value = [];
+		
+		this.w_container.getChildren().forEach( function ( i_child )
+		{
+			if( i_child.isInstanceOf( pwl.widget.wizard.StepContainer ) )
+			{
+				
+				var child = i_child.getChildren()[0];
+				r_value.push( child.get("value") ) ;
+			}
+			
+		},this);		
+		
+		return r_value;
+	},	
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
@@ -284,5 +355,7 @@ dojo.declare(
 			return true;
 		
 		return false;
-	},
+	}
+	
+	
 });

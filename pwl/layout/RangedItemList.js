@@ -59,6 +59,15 @@ dojo.declare(
 		}
 	},
 
+	addChild: function()
+	{
+		if( this.n_not_found )
+			dojo.destroy( this.n_not_found );
+		
+		this.inherited(arguments);
+		
+	},
+	
 /******************************************************************************/
 /** Events ********************************************************************/
 
@@ -134,7 +143,7 @@ dojo.declare(
 	/*					if(i_index <= top)
 						{*/
 							var child = this.createItem( i_item, this.store );
-
+//console.debug("child", child);
 							if ( child )
 								this.addChild( child );
 
@@ -178,7 +187,8 @@ dojo.declare(
 	{
 		this.store = this._fixStore(i_store);
 
-		dojo.empty(this.containerNode);
+//		dojo.empty(this.containerNode);
+		this._clearResult();
 
 		this._loadData();
 	},

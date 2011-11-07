@@ -7,6 +7,7 @@ dojo.require('dijit.layout._LayoutWidget');
 dojo.require('dijit._Templated');
 
 dojo.require('pwl.widget.wizard.legend.Intro');
+dojo.require('pwl.widget.wizard.legend.Summary');
 dojo.require('pwl.widget.wizard.legend.Group');
 dojo.require('pwl.widget.wizard.legend.Item');
 
@@ -19,6 +20,10 @@ dojo.declare(
 	templateString: dojo.cache('pwl.widget.wizard', 'templates/Legend.html'),
 	
 	w_intro: null,
+	w_summary: null,
+	
+	w_current_step: null,
+	w_previous_step: null,
 	
 /******************************************************************************/
 /** public **/
@@ -33,6 +38,7 @@ dojo.declare(
 	
 	addSummary: function ( i_summary )
 	{
+		this.w_summary = new pwl.widget.wizard.legend.Summary({label: i_summary.legend || ''}, this.n_summary);
 	},
 
 /******************************************************************************/
@@ -40,7 +46,7 @@ dojo.declare(
 
 	addGroup: function ( i_group )
 	{
-		console.log(i_group);
+		//console.log(i_group);
 		
 		var group = new pwl.widget.wizard.legend.Group({label: i_group.legend});
 		
@@ -48,8 +54,18 @@ dojo.declare(
 		{
 			var item = new pwl.widget.wizard.legend.Item({label: i_step.legend});
 			
-			group.addChild(item);
-		});
+			item.w_step = i_step;
+			
+			group.addChild( item );
+			
+			dojo.connect( i_step ,"onCompletionChange", this, function( value )
+			{
+				this.setStepCompletion( item, value);
+			});
+
+			dojo.connect( item, "onClick", i_step, "show");
+			
+		},this);
 		
 		this.addChild(group);
 	},
@@ -73,6 +89,13 @@ dojo.declare(
 			item.w_step = i_step;
 			
 			this.addChild(item);
+			
+			dojo.connect( i_step ,"onCompletionChange", this, function( value )
+			{
+				this.setStepCompletion( item, value);
+			});
+			
+			//dojo.connect( item, "onClick", i_step, "show");
 		}
 	},
 	
@@ -81,27 +104,66 @@ dojo.declare(
 		console.log('remove')
 	},
 
-	selectStep: function ( i_step )
+	selectStep: function ( i_active_step )
 	{
 		//this.addStep(i_step);
+		//console.log('selectStep', i_active_step);
+		var step = this._findStep( i_active_step );
+		this.w_current_step = step;
 		
-		var step = this._findStep(i_step);
+		/* zrusi sa disabled a nastavy active */
+		if( this.w_previous_step ) 
+		{
+			dojo.removeClass(this.w_previous_step.domNode,"active");
+			dojo.removeClass(this.w_previous_step.domNode,"disabled");
+			dojo.addClass(this.w_previous_step.domNode,"enabled");
+		}
 		
+		if( step )
+		{
+			
+			dojo.removeClass(step.domNode,"disabled");
+			dojo.addClass(step.domNode,"active");		
+		}
+		
+		this.w_previous_step = this.w_current_step;
 	},
-	
+
 	enableStep: function ( i_step )
 	{
 		console.log('enable step');
+		
+		dojo.removeClass(i_step.domNode,"disabled");
+		dojo.addClass(i_step.domNode,"enabled");
+		
+		/* zrusi sa disabled a nastavy default*/
 	},
 	
 	disableStep: function ( i_step )
 	{
 		console.log('disable step');
+		dojo.addClass(i_step.domNode,"disabled");
+		
 	},
 	
 	setStepCompletion: function ( i_step, i_is_completed )
 	{
-		console.log('complete');
+		console.log('is complete ', i_is_completed);
+		dojo.removeClass(i_step.domNode,"disabled");
+		//dojo.removeClass(i_step.domNode,"active");			
+		//dojo.removeClass(i_step.domNode,"completed");			
+		
+		if( i_is_completed )
+		{
+			dojo.addClass(i_step.domNode,"active");
+			dojo.addClass(i_step.domNode,"completed");
+						
+		}else{
+			dojo.removeClass(i_step.domNode,"completed");
+		}
+		//	dojo.addClass(i_step.domNode,"enabled");
+		
+		/* zrusi sa disabled ak je a nastavy li.completed */
 	},
 
 /******************************************************************************/
@@ -110,13 +172,14 @@ dojo.declare(
 
 	_stepExists: function ( i_step )
 	{
-		return dojo.some(this.getChildren(), function ( i_item ) 
-		{
-			if ( i_item.w_step == i_step )
-				return true;
-			
-			return false;
-		});
+//		return dojo.some(this.getChildren(), function ( i_item ) 
+//		{
+//			if ( i_item.w_step == i_step )
+//				return true;
+//			
+//			return false;
+//		});
+		return this._findStep( i_step ) ? true : false;
 	},
 	
 	_findStep: function ( i_step )
@@ -125,8 +188,22 @@ dojo.declare(
 		
 		this.getChildren().forEach( function ( i_item ) 
 		{
-			if ( i_item.w_step == i_step )
-				step = i_item;
+			//console.debug(i_item);
+			
+			if ( i_item.isInstanceOf( pwl.widget.wizard.legend.Group ))
+			{
+				i_item.getChildren().forEach( function ( i_gitem ) 
+				{
+					//console.debug(i_gitem);
+					
+					if ( i_gitem.w_step == i_step )
+					step = i_gitem;	
+				}, this);
+			}else{
+				if ( i_item.w_step == i_step )
+					step = i_item;		
+			}
+			
 		}, this);
 		
 		return step;

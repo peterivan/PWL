@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<title>PWL.Fx</title>
+
+		<style type="text/css">
+			@import url('../../dijit/themes/tundra/tundra.css');
+		</style>
+
+		<script type="text/javascript">
+		//<![CDATA[
+
+		var djConfig =
+		{
+			parseOnLoad: true,
+			isDebug: true,
+			usePlainJson: true,
+			debugAtAllCosts: true,
+			preventBackButtonFix: false,
+ 			modulePaths:
+ 			{
+				'pwl': '../pwl'
+			},
+			serviceRoot: 'http://sirius.esoft.sk/~ivan/Academy-Services/src/public_html/services/rest',
+
+			fakeIdKey: '226906fb-4246-4b19-b9ad-e2ff5630c170feec5d7e',
+			clientId: 'ce53688a-13be-40b8-a680-659af2d549d9',
+			locale: 'sk'
+		};
+		//]]>
+		</script>
+
+		<script type="text/javascript" src="../../dojo/dojo.js"></script>
+
+		<script type="text/javascript">
+		//<![CDATA[
+
+		dojo.require('pwl.fx');
+
+		dojo.addOnLoad(function ()
+		{
+			var n1 = dojo.byId('N1');
+			
+			pwl.fx.outlineFade(n1, null, {outlineColor: 'lime'}).play();
+		});
+
+		//]]>
+		</script>
+	</head>
+
+	<body class="proxia tundra">
+		<h1>PWL.Fx</h1>
+
+		<div id="N1" style="width: 350px; height: 150px">To highlight</div>
+	</body>
+</html>

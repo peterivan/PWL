@@ -53,23 +53,6 @@ dojo.declare(
 
 	reload: function () {},
 
-	reset: function ()
-	{
-		if ( !this.disable_autoreset )
-		{
-			this.inherited(arguments);
-
-			this.getChildren().forEach( function ( i_child )
-			{
-				if ( !i_child.autoreset )
-					return;
-				
-				if ( dojo.isFunction( i_child.reset ) )
-					i_child.reset();
-			}, this);
-		}
-	},
-
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/

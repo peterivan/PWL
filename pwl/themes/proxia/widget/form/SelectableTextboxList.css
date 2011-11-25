@@ -1,0 +1,23 @@
+.pwlWidgetFormSelectableTextboxList
+{
+	margin:4px;
+}
+
+.pwlWidgetFormSelectableTextboxList > div[class~=dijitTextBox]
+{
+	display:block;
+	margin: 4px 2px;
+}
+
+.pwlWidgetFormSelectableTextboxList span.text-title
+{
+	display: inline-block;
+	font-weight: bold;
+}
+
+.pwlWidgetFormSelectableTextboxList span.check-title
+{
+	display: inline-block;
+	min-width: 18px;
+	font-weight: bold;
+}

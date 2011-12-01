@@ -38,10 +38,11 @@ dojo.declare(
 	{
 		if ( !this.disable_autosave )
 		{
+
 			this.getDescendants().forEach( function ( i_child )
 			{
 				if ( i_child.autosave && dojo.isFunction(i_child.save) )
-				{
+				{							
 					i_child.save();
 				}
 					

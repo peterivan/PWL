@@ -52,3 +52,12 @@
 {
 	margin: 5px;
 }
+
+ .pwlWidgetFormCheckList strong[dojoattachpoint="n_title"]
+ {
+	 font-size: 1.2em;
+	 color: #494949;
+	 display: block;
+	 padding-left: 10px;
+	 padding-top: 5px;
+ }

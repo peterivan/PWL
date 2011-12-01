@@ -1,8 +1,13 @@
+
+.proxia .pwlWidgetFormToolbarForm
+{
+	padding-top: 1px;
+}
+
 .proxia .pwlWidgetFormToolbarForm .toolbar
 {
 	position: relative;
-	height:40px;
-	
+	height:40px;	
 }
 
 .proxia .pwlWidgetFormToolbarForm .toolbar .dijitToolbar

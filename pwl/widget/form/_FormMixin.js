@@ -72,7 +72,7 @@ dojo.declare(
 			}, this);
 		}, this);		
 
-		console.debug(this, this._children_to_handle);
+	//	console.debug(this, this._children_to_handle);
 	},
 
 	reset: function()
@@ -118,6 +118,8 @@ dojo.declare(
 
 	onLoadError: function ( i_error ) {},
 
+	onSaveStart: function () {},
+	
 	onSave: function ( i_data )
 	{
 		this.set('is_modified', false);

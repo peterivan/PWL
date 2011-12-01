@@ -49,8 +49,11 @@ dojo.declare(
 	selection: null,
 
 	autolayout: true,
-
-	n_search: null,
+	
+	enable_title: false,
+	n_title: '',
+	
+	n_search: null,	
 	n_list_container: null,
 	n_list: null,
 
@@ -108,6 +111,9 @@ dojo.declare(
 		if ( this.enable_search )
 			this._createSearchBox();
 
+		if( this.enable_title)	
+			this.n_title.innerHTML = this.title;
+		
 		this._render();
 	},
 
@@ -133,12 +139,13 @@ dojo.declare(
 
 			var b_this = dojo.contentBox(this.domNode);
 			var b_search_box = dojo.marginBox(this.n_search);
+			var b_title_box = dojo.marginBox(this.n_title);
 
-			dojo.marginBox(this.n_list_container, {h: b_this.h - b_search_box.h});
+			dojo.marginBox(this.n_list_container, {h: b_this.h - b_search_box.h - b_title_box.h});
 
 			if ( this.w_search_box )
 			{
-				var b_list_container = dojo.contentBox(this.n_list_container);
+				//var b_list_container = dojo.contentBox(this.n_list_container);
 
 				//dojo.style(this.w_search_box.domNode, 'width', b_list_container.w + 'px');
 			}
@@ -149,6 +156,7 @@ dojo.declare(
 
 	save: function ( i_save_mixin )
 	{
+		
 		var current_value = this.get('value');
 		var old_value = this._value_data;
 
@@ -172,20 +180,23 @@ dojo.declare(
 				to_add.push(i_current_item);
 		}, this);
 
-		old_value.forEach( function ( i_old_item )
+		if( old_value )
 		{
-			var found = false;
-
-			current_value.forEach( function ( i_current_item )
+			old_value.forEach( function ( i_old_item )
 			{
-				if ( this._compareStoreItems(i_current_item, i_old_item) )
-					found = true;
-			}, this);
+				var found = false;
 
-			if ( !found )
-				to_delete.push(i_old_item);
-		}, this);
+				current_value.forEach( function ( i_current_item )
+				{
+					if ( this._compareStoreItems(i_current_item, i_old_item) )
+						found = true;
+				}, this);
 
+				if ( !found )
+					to_delete.push(i_old_item);
+			}, this);			
+		}
+		
 		/***********************************************************************/
 		/* apply differences ***************************************************/
 
@@ -215,8 +226,8 @@ dojo.declare(
 
 				this.onSave(this.get('value'));
 
-				if ( dojo.isFunction(save_mixin.onComplete) )
-					dojo.hitch(this.save_mixin.onComplete)();
+				//if ( dojo.isFunction(save_mixin.onComplete) )
+				//	dojo.hitch(this.save_mixin.onComplete)();
 			},
 
 			onError: function ( i_error )
@@ -225,7 +236,12 @@ dojo.declare(
 			}
 		};
 
-		this.value_store.save(save_handler);
+		if( this.value_store && this.value_store.isDirty()) //&& this.value_store.isDirty()
+		{
+			this.value_store.save(save_handler);
+			this.onSaveStart(this.get('value'));
+		}
+			
 	},
 
 	reload: function ()
@@ -292,7 +308,8 @@ dojo.declare(
 	createNewValueItem: function ( i_label_item, i_this )
 	{
 		var new_item = {};
-
+		
+		new_item['id'] = this.label_store.getValue(i_label_item, this.label_store_id_attribute);
 		new_item[this.value_store_id_attribute] = this.label_store.getValue(i_label_item, this.label_store_id_attribute);
 
 		for ( var i in i_label_item )

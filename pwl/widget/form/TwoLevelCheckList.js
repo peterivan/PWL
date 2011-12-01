@@ -8,6 +8,8 @@ dojo.require('dijit._Templated');
 
 dojo.require('dijit.layout.TabContainer');
 dojo.require('dijit.layout.ContentPane');
+dojo.require('pwl.widget.form.CheckList');
+dojo.require('dojo.data.ItemFileWriteStore');
 
 
 /******************************************************************************/
@@ -25,6 +27,8 @@ dojo.declare(
 	w_tab_container: null,
 	store: null,
 	data: null,
+	label_store_id_attribute: 'id',
+	value_store_id_attribute: 'id',
 	
 
 /******************************************************************************/
@@ -39,6 +43,11 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
+	},
+	
+	save: function()
+	{
+		this._save();
 	},
 
 
@@ -90,12 +99,10 @@ dojo.declare(
 
 	_loadData: function ()
 	{
-		console.debug('dddd2');
 		this.store.fetch({
 			scope: this,
 			onComplete: function ( i_data )
 			{
-				console.debug('dddd3',i_data);
 				this._removeAllTabs();
 				this.data = i_data;
 				this._renderTabs()
@@ -117,11 +124,142 @@ dojo.declare(
 		
 		this.data.forEach(function(data_tab)
 		{
-			var tab = new dijit.layout.ContentPane({'title':data_tab.title});
+			var child = null;			
+			
+			var store_label_data = [];
+			var store_value_data = [];
+			
+			data_tab.data.forEach(function(i_value,i_index)
+			{
+				if(typeof i_index == 'string')
+				{
+					var name = i_index.substr(0,2);
+					if(name != '__')
+					{
+						var tmp = {};
+						for (var i in i_value) 
+						{
+							if (typeof i == 'string')
+							{
+								var name = i.substr(0,2);
+								if(name != '__')
+								{
+									tmp[i] = i_value[i];
+								}
+							}
+							else
+								tmp[i] = i_value[i];
+							
+						}
+						store_label_data.push(tmp);
+					}
+				}
+				else
+				{
+					var tmp = {};
+					for (var i in i_value) 
+					{
+						if (typeof i == 'string')
+						{
+							var name = i.substr(0,2);
+							if(name != '__')
+							{
+								tmp[i] = i_value[i];
+							}
+						}
+						else
+							tmp[i] = i_value[i];
+
+					}
+					store_label_data.push(tmp);
+				}
+				
+			},this);
+			
+			data_tab.selection.forEach(function(i_value,i_index)
+			{
+				if(typeof i_index == 'string')
+				{
+
+					var name = i_index.substr(0,2);
+					if(name != '__')
+					{
+						var tmp = {};
+						tmp.organization = i_value.organization;
+						tmp.title = i_value.title;
+						store_value_data.push(tmp);
+					}
+						
+
+				}
+				else
+				{
+					var tmp = {};
+					tmp.organization = i_value.organization;
+					tmp.title = i_value.title;
+					store_value_data.push(tmp);
+				}
+					
+			},this);
+			
+			
+			var store_label = new dojo.data.ItemFileWriteStore(
+			{
+				data:
+				{
+					identifier: this.label_store_id_attribute,
+					items: store_label_data
+				}
+			});
+
+			var store_value = new dojo.data.ItemFileWriteStore(
+			{
+				data:
+				{
+					identifier: this.value_store_id_attribute,
+					items: store_value_data
+				}
+			});
+
+			
+			child = new pwl.widget.form.CheckList({
+				id: this.id+'CheckList'+data_tab.id,
+				label_store_id_attribute: this.label_store_id_attribute,
+				value_store_id_attribute: this.value_store_id_attribute,
+				label_store: store_label,
+				value_store: store_value
+			});
+			
+			
+			var tab = new dijit.layout.ContentPane({'title':data_tab.title,'content': child});
+			
 			this.w_tab_container.addChild(tab);
+			child.startup();
+			child.reload();
+			
 			
 		},this);
 		this.w_tab_container.resize();
+	},
+	
+	_save: function()
+	{
+		this.data.forEach(function(data_tab)
+		{
+			var data = dijit.byId(this.id+'CheckList'+data_tab.id).get('value');
+			var new_selection = [];
+			data.forEach(function(item)
+			{
+				var tmp = {};
+				tmp[this.value_store_id_attribute] = item[this.value_store_id_attribute];
+				new_selection.push(tmp);
+			},this);
+			
+			this.store.setValue(data_tab,'selection',new_selection);
+			
+		},this);
+		
+		this.store.save();
 	}
 
 	

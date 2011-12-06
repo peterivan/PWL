@@ -3,7 +3,7 @@ dojo.provide('pwl.widget.form.TwoLevelCheckList');
 /******************************************************************************/
 /******************************************************************************/
 
-dojo.require('dijit.layout._LayoutWidget');
+dojo.require('pwl.widget.form.WidgetGroup');
 dojo.require('dijit._Templated');
 
 dojo.require('dijit.layout.TabContainer');
@@ -16,9 +16,8 @@ dojo.require('dojo.data.ItemFileWriteStore');
 
 dojo.declare(
 	'pwl.widget.form.TwoLevelCheckList',
-	[dijit.layout._LayoutWidget, dijit._Templated,],
+	[pwl.widget.form.WidgetGroup, dijit._Templated],
 {
-	baseClass: 'pwlWidgetFormCheckList',
 
 	templateString: dojo.cache('pwl.widget.form', 'templates/TwoLevelCheckList.html'),
 	widgetsInTemplate : true,
@@ -29,6 +28,7 @@ dojo.declare(
 	data: null,
 	label_store_id_attribute: 'id',
 	value_store_id_attribute: 'id',
+	query: null,
 	
 
 /******************************************************************************/
@@ -62,7 +62,7 @@ dojo.declare(
 		{
 			var box = dojo.contentBox(this.domNode.parentNode);
 		
-			var w = box.w-10;
+			var w = box.w-15;
 			var h = box.h;
 			
 			this.w_tab_container.resize({w:w,h:h});
@@ -90,6 +90,15 @@ dojo.declare(
 		}
 			
 	},
+	
+	_setQueryAttr: function ( i_query )
+	{
+		if (i_query)
+		{
+			this.query = i_query;			
+		}
+			
+	},
 
 /******************************************************************************/
 
@@ -101,6 +110,7 @@ dojo.declare(
 	{
 		this.store.fetch({
 			scope: this,
+			query: '?' + dojo.objectToQuery(this.query),
 			onComplete: function ( i_data )
 			{
 				this._removeAllTabs();
@@ -131,43 +141,12 @@ dojo.declare(
 			
 			data_tab.data.forEach(function(i_value,i_index)
 			{
-				if(typeof i_index == 'string')
-				{
-					var name = i_index.substr(0,2);
-					if(name != '__')
-					{
-						var tmp = {};
-						for (var i in i_value) 
-						{
-							if (typeof i == 'string')
-							{
-								var name = i.substr(0,2);
-								if(name != '__')
-								{
-									tmp[i] = i_value[i];
-								}
-							}
-							else
-								tmp[i] = i_value[i];
-							
-						}
-						store_label_data.push(tmp);
-					}
-				}
-				else
+				if(i_index[0] != '_')
 				{
 					var tmp = {};
 					for (var i in i_value) 
 					{
-						if (typeof i == 'string')
-						{
-							var name = i.substr(0,2);
-							if(name != '__')
-							{
-								tmp[i] = i_value[i];
-							}
-						}
-						else
+						if(i[0] != '_')
 							tmp[i] = i_value[i];
 
 					}
@@ -176,33 +155,23 @@ dojo.declare(
 				
 			},this);
 			
+			
+			
 			data_tab.selection.forEach(function(i_value,i_index)
 			{
-				if(typeof i_index == 'string')
-				{
 
-					var name = i_index.substr(0,2);
-					if(name != '__')
-					{
-						var tmp = {};
-						tmp.organization = i_value.organization;
-						tmp.title = i_value.title;
-						store_value_data.push(tmp);
-					}
-						
-
-				}
-				else
+				var tmp = {};
+				for (var i in i_value) 
 				{
-					var tmp = {};
-					tmp.organization = i_value.organization;
-					tmp.title = i_value.title;
-					store_value_data.push(tmp);
+					if(i[0] != '_')
+						tmp[i] = i_value[i];
 				}
+				store_value_data.push(tmp);
+				
 					
 			},this);
 			
-			
+
 			var store_label = new dojo.data.ItemFileWriteStore(
 			{
 				data:
@@ -230,6 +199,7 @@ dojo.declare(
 				value_store: store_value
 			});
 			
+			dojo.connect(child,'onChange',this,'onChange');
 			
 			var tab = new dijit.layout.ContentPane({'title':data_tab.title,'content': child});
 			
@@ -251,7 +221,7 @@ dojo.declare(
 			data.forEach(function(item)
 			{
 				var tmp = {};
-				tmp[this.value_store_id_attribute] = item[this.value_store_id_attribute];
+				tmp[this.value_store_id_attribute] = item[this.value_store_id_attribute][0];
 				new_selection.push(tmp);
 			},this);
 			

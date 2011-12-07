@@ -115,7 +115,7 @@ $l1 = $limit - $offset;
 
 $result = array_slice($items, $offset, $l1 + 1);
 
-header("Content-Range: items={$offset}-{$limit}/" . (string)(count($items) - 1));
+//header("Content-Range: items={$offset}-{$limit}/" . (string)(count($items) - 1));
 
 echo json_encode($result);
 

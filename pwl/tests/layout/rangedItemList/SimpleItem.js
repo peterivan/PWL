@@ -21,7 +21,6 @@ dojo.declare(
 	postCreate: function ()
 	{
 		this.inherited(arguments);
-		console.log(this.store)
 		this.titleNode.innerHTML = this.store.getValue(this.identity, 'title');
 	}
 });

@@ -128,11 +128,18 @@ dojo.declare(
 
 					var content_range = i_io.xhr.getResponseHeader('Content-Range');
 
-					var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
+					var bottom = 0;
+					var top = this._current_offset;
+					var total = this.items_per_page;
 
-					var bottom = parseInt(split[1]);
-					var top = parseInt(split[2]);
-					var total = parseInt(split[3]);
+					if ( content_range )
+					{
+						var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
+
+						bottom = parseInt(split[1]);
+						top = parseInt(split[2]);
+						total = parseInt(split[3]);
+					}					
 
 					this._total_item_count = total;
 					this._loaded_items_count += top - bottom + 1;
@@ -140,15 +147,12 @@ dojo.declare(
 
 					i_data.forEach( function ( i_item, i_index )
 					{
-	/*					if(i_index <= top)
-						{*/
 							var child = this.createItem( i_item, this.store );
-//console.debug("child", child);
+							
 							if ( child )
 								this.addChild( child );
 
 							this.onAddChild( child )
-	//					}
 					}, this);
 
 					this.loadNextPage();

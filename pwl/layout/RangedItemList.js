@@ -71,10 +71,9 @@ dojo.declare(
 /******************************************************************************/
 /** Events ********************************************************************/
 
-	onAddChild: function()
-	{
+	onLoad: function () {},
 
-	},
+	onAddChild: function() {},
 
 /******************************************************************************/
 /** protected **/
@@ -145,7 +144,7 @@ dojo.declare(
 					this._loaded_items_count += top - bottom + 1;
 					this._current_offset = this._current_offset + this.items_per_page;
 
-					i_data.forEach( function ( i_item, i_index )
+					i_data.forEach( function ( i_item )
 					{
 							var child = this.createItem( i_item, this.store );
 							
@@ -155,11 +154,12 @@ dojo.declare(
 							this.onAddChild( child )
 					}, this);
 
+					this.onLoad();
 					this.loadNextPage();
 
 					this._fetch_locked = false;
 
-					if(i_data.length == 0)
+					if ( i_data.length == 0 )
 					{
 						this.n_not_found = dojo.create("div",{'class':'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
 					}

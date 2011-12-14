@@ -49,6 +49,8 @@ dojo.declare(
 	{
 		this._save();
 	},
+	
+	onLoad: function(){},
 
 
 /******************************************************************************/
@@ -210,6 +212,8 @@ dojo.declare(
 			
 		},this);
 		this.w_tab_container.resize();
+		
+		this.onLoad();
 	},
 	
 	_save: function()

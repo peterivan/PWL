@@ -101,7 +101,8 @@ dojo.declare(
 
 	onChange: function ( i_data )
 	{
-		this.set('is_modified', true);
+		//this.set('is_modified', true);
+		this.set('is_modified', false);
 	},
 
 	onLoad: function ( i_data )

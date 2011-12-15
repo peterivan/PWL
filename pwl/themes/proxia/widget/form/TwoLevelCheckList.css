@@ -1,0 +1,16 @@
+.pwlWidgetFormTwoLewelCheckList
+{
+	position: relative;
+}
+
+.pwlWidgetFormTwoLewelCheckList .dijitTab
+{
+	background-image: none ;
+	background-color: #cccccc;
+}
+
+.pwlWidgetFormTwoLewelCheckList .dijitTabChecked
+{
+	background-image: none !important;
+	background-color: #ffffff;
+}

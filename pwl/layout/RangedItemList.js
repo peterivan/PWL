@@ -24,8 +24,6 @@ dojo.declare(
 
 	_fetch_locked: false,
 	_started_loading: false,
-
-	search_attribute: 'id',
 	
 	n_not_found: null,
 
@@ -71,13 +69,17 @@ dojo.declare(
 		
 	},
 	
+	isItemValid: function()
+	{
+		return true;
+	},
+	
 /******************************************************************************/
 /** Events ********************************************************************/
 
-	onAddChild: function()
-	{
+	onLoad: function () {},
 
-	},
+	onAddChild: function() {},
 
 /******************************************************************************/
 /** protected **/
@@ -139,11 +141,19 @@ dojo.declare(
 
 						var content_range = i_io.xhr.getResponseHeader('Content-Range');
 
-						var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
+						var bottom = 0;
+						var top = this._current_offset;
+						var total = this.items_per_page;
 
-						var bottom = parseInt(split[1]);
-						var top = parseInt(split[2]);
-						var total = parseInt(split[3]);
+						if ( content_range )
+						{
+							var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
+
+							bottom = parseInt(split[1]);
+							top = parseInt(split[2]);
+							total = parseInt(split[3]);
+						}					
+
 
 						this._total_item_count = total;
 						this._loaded_items_count += top - bottom + 1;
@@ -151,19 +161,15 @@ dojo.declare(
 
 						i_data.forEach( function ( i_item, i_index )
 						{
-							var child = this.createItem( i_item, this.store );
-							
-							var _id = eval("i_item." + this.search_attribute)
-							
-							if ( child && _id)
+							if(this.isItemValid( i_item ))
 							{
+								var child = this.createItem( i_item, this.store );
+
 								this.addChild( child );
 
 								this.onAddChild( child )
-
-								//console.debug("pridany child",i_item.id)
-							}else						
-								console.debug("chybny pridany child",i_item)
+									
+							}
 
 						}, this);
 
@@ -177,12 +183,10 @@ dojo.declare(
 						{
 							this.n_not_found = dojo.create("div",{'class':'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
 						}
-					}
-				});				
-			}
-
+				}		
+			})
+		 }
 		}
-		
 	},
 
 	_clearResult: function()

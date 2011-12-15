@@ -72,7 +72,8 @@ dojo.declare(
 	
 	_setIs_modifiedAttr: function ( i_is_modified )
 	{
-		this.is_modified = i_is_modified;
+		//this.is_modified = i_is_modified;
+		this.is_modified = false;
 		
 		console.debug('IM change: ', i_is_modified);
 	}

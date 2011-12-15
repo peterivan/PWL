@@ -75,7 +75,7 @@ dojo.declare(
 		}, this);
 		
 		if ( this.w_summary )
-			this.w_container.addChild(this.w_summary);
+			this.addSummary(this.w_summary);
 		
 		this.inherited(arguments);
 		
@@ -296,7 +296,7 @@ dojo.declare(
 				r_value.push( child.get("value") ) ;
 			}
 			
-		},this);		
+		});		
 		
 		return r_value;
 	},	

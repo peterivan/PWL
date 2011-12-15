@@ -175,6 +175,7 @@ dojo.declare(
 
 						this._started_loading = false;
 						
+						this.onLoad();
 						this.loadNextPage();
 
 						this._fetch_locked = false;

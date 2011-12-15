@@ -23,7 +23,10 @@ dojo.declare(
 	_current_offset: 0,
 
 	_fetch_locked: false,
+	_started_loading: false,
 
+	search_attribute: 'id',
+	
 	n_not_found: null,
 
 /******************************************************************************/
@@ -113,64 +116,83 @@ dojo.declare(
 			if( this.n_not_found )
 				dojo.destroy( this.n_not_found );
 
-			var n_loading = dojo.create("div",{'class':'loading',innerHTML:'načítavam...'},this.domNode);
-
-			this.store.fetch(
+			//this.store.clearCache();
+			//this.store.close();
+			
+			if( this._started_loading == false )
 			{
-				scope: this,
-				query: this.query,
-				start: this._current_offset,
-				count: this.items_per_page,
+				
+				var n_loading = dojo.create("div",{'class':'loading',innerHTML:'načítavam...'},this.domNode);
+				
+				this._started_loading = true;
 
-				onComplete: function ( i_data, i_args, i_io )
+				this.store.fetch(
 				{
-					dojo.destroy( n_loading );
+					scope: this,
+					query: this.query,
+					start: this._current_offset,
+					count: this.items_per_page,
 
-					var content_range = i_io.xhr.getResponseHeader('Content-Range');
-
-					var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
-
-					var bottom = parseInt(split[1]);
-					var top = parseInt(split[2]);
-					var total = parseInt(split[3]);
-
-					this._total_item_count = total;
-					this._loaded_items_count += top - bottom + 1;
-					this._current_offset = this._current_offset + this.items_per_page;
-
-					i_data.forEach( function ( i_item, i_index )
+					onComplete: function ( i_data, i_args, i_io )
 					{
-	/*					if(i_index <= top)
-						{*/
+						dojo.destroy( n_loading );
+
+						var content_range = i_io.xhr.getResponseHeader('Content-Range');
+
+						var split = content_range.split(/items=([0-9]+)-([0-9]+)\/([0-9]+)/);
+
+						var bottom = parseInt(split[1]);
+						var top = parseInt(split[2]);
+						var total = parseInt(split[3]);
+
+						this._total_item_count = total;
+						this._loaded_items_count += top - bottom + 1;
+						this._current_offset = this._current_offset + this.items_per_page;
+
+						i_data.forEach( function ( i_item, i_index )
+						{
 							var child = this.createItem( i_item, this.store );
-//console.debug("child", child);
-							if ( child )
+							
+							var _id = eval("i_item." + this.search_attribute)
+							
+							if ( child && _id)
+							{
 								this.addChild( child );
 
-							this.onAddChild( child )
-	//					}
-					}, this);
+								this.onAddChild( child )
 
-					this.loadNextPage();
+								//console.debug("pridany child",i_item.id)
+							}else						
+								console.debug("chybny pridany child",i_item)
 
-					this._fetch_locked = false;
+						}, this);
 
-					if(i_data.length == 0)
-					{
-						this.n_not_found = dojo.create("div",{'class':'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
+						this._started_loading = false;
+						
+						this.loadNextPage();
+
+						this._fetch_locked = false;
+
+						if(i_data.length == 0)
+						{
+							this.n_not_found = dojo.create("div",{'class':'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
+						}
 					}
-				}
-			});
+				});				
+			}
+
 		}
 		
 	},
 
 	_clearResult: function()
 	{
-		dojo.forEach( this.getChildren(),function( i_child )
+		dojo.forEach( this.getChildren(),function( i_child , index)
 		{
+			//console.debug("mazem index",index)
 			this.removeChild(i_child);
 			dojo.destroy(i_child);
+			delete i_child;
 		},this );
 
 		dojo.empty(this.containerNode);

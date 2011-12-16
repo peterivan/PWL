@@ -82,12 +82,12 @@ dojo.declare(
 		dojo.connect(window, "onkeypress", this, function( kp )
 		{
 			console.debug("key press", kp)
-			if( kp.keyCode == dojo.keys.DOWN_ARROW ||  kp.keyCode == dojo.keys.RIGHT_ARROW)
+			if( kp.keyCode == dojo.keys.DOWN_ARROW ) //||  kp.keyCode == dojo.keys.RIGHT_ARROW
 			{
 				this.next();
 			}
 			
-			if( kp.keyCode == dojo.keys.LEFT_ARROW ||  kp.keyCode == dojo.keys.UP_ARROW)
+			if( kp.keyCode ==  kp.keyCode == dojo.keys.UP_ARROW)//dojo.keys.LEFT_ARROW ||
 			{
 				this.prev();
 			}			
@@ -141,17 +141,22 @@ dojo.declare(
 
 	prev: function ()
 	{
-		this.w_container.back();
+		var first = this.isFirstStep( this.w_container.selectedChildWidget.w_step );
+		
+		console.debug("first",first)		
+		if( !first)
+			this.w_container.back();
+		//console.debug("current",this.w_container.w_step)
 
 	},
 	
 	next: function ()
 	{
-		//var old_step =  this.w_container.selectedChildWidget.getChildren()[0]; 
-		//var o_step = this.w_legend._findStep( old_step );
+		var last = this.isLastStep( this.w_container.selectedChildWidget.w_step );
 		
-		this.w_container.forward();
-
+		console.debug("last",last)
+		if( !last)
+			this.w_container.forward();
 		
 	},
 	
@@ -265,6 +270,39 @@ dojo.declare(
 		return null;
 	},
 
+	isFirstStep: function ( i_step )
+	{
+		var is_first = false;	
+		this.w_container.getChildren().forEach( function ( i_sc, index )
+		{
+			if( index== 0 && i_sc.w_step.id == i_step.id)
+				is_first = true;
+			console.debug("------------")
+			console.debug(i_sc.w_step.id)
+			console.debug(i_step.id)
+//			if ( i_sc.w_step.name == i_step.name )
+
+		});
+			
+		return is_first;
+	},
+
+
+	isLastStep: function ( i_step )
+	{
+		var is_last = false;	
+		var current_step_position = 0;
+		var max_steps = this.w_container.getChildren().length;
+		
+		this.w_container.getChildren().forEach( function ( i_sc, index )
+		{
+			if( i_sc.w_step.id == i_step.id)
+				current_step_position = index + 1
+		});
+
+		return current_step_position == max_steps;
+	},
+	
 	reset: function()
 	{
 		/* destroy container */

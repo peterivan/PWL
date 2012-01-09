@@ -21,6 +21,7 @@ dojo.declare(
 	
 	widgetsInTemplate: true,
 	value:{},
+	data:{},
 	
 	w_check_box: null,
 	w_text_box: null,
@@ -44,6 +45,8 @@ dojo.declare(
 		{
 			this.w_check_box.set('checked',this.value.is_selected);
 			this.w_text_box.set('value',this.value.text);
+//			if(this.value.data)
+//				this.set('data',this.value.data);
 		}
 
 	},
@@ -70,6 +73,18 @@ dojo.declare(
 		var value = {};
 		value.is_selected = this.w_check_box.get('checked');
 		value.text = this.w_text_box.get('value');
+		if(this.value.data)
+		{
+			value.data = {};
+			value.data.is_selected = this.w_check_box.get('checked');
+			value.data.text = this.w_text_box.get('value');
+			
+			if(this.value.data.item)
+				value.data.item = this.value.data.item;
+			
+			if(this.value.data.action)
+				value.data.action = this.value.data.action;
+		}
 		return value;
 	}
 

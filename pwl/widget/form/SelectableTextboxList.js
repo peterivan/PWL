@@ -19,6 +19,7 @@ dojo.declare(
 	min_empty_textboxes:1,
 	title_check: '',
 	title_text: '',
+	_removed_childrens:null,
 
 /******************************************************************************/
 /** public **/
@@ -30,6 +31,7 @@ dojo.declare(
 	postCreate: function ()
 	{
 		this.inherited(arguments);
+		this._removed_childrens = [];
 		this.addTextBox();
 	},
 
@@ -66,6 +68,17 @@ dojo.declare(
 
 			if(child_value.length == 0 && count_children > this.min_empty_textboxes && index != count_children)
 			{
+				if (child.get('value').data)
+				{
+					var child_data = child.get('value').data;
+					if(child_data.action == 'PUT')
+					{
+						child_data.action = 'DELETE';
+						this._removed_childrens.push(child_data);
+					}
+				}
+				
+				
 				this.removeChild(child);
 			}
 
@@ -97,6 +110,7 @@ dojo.declare(
 	_setDataAttr: function(data)
 	{
 		var children = this.getChildren();
+		this._removed_childrens = [];
 
 		/* remove all textboxes: reset widget */
 		dojo.forEach(children,function(child,index)
@@ -124,9 +138,32 @@ dojo.declare(
 
 		dojo.forEach(children,function(child)
 		{
-//			if(child.get('value').text)
+			if(child.get('value').text)
 				data.push(child.get('value'))
 				
+		},this);
+		
+//		this._removed_childrens.forEach(function(del)
+//		{
+//			var a = {};
+//			a.data = del;
+//			data.push(a);
+//		},this);
+
+		return data;
+
+	},
+	
+	_getRemove_dataAttr: function()
+	{
+
+		var data = [];
+		
+		this._removed_childrens.forEach(function(del)
+		{
+			var a = {};
+			a.data = del;
+			data.push(a);
 		},this);
 
 		return data;
@@ -141,39 +178,62 @@ dojo.declare(
 	{
 //		value = value ? value : '';
 
-		var box = new pwl.widget.form.SelectableTextBox({value:i_value});
-
-		this.addChild(box);
-		
-		box.resize();
-
-		dojo.connect(box,"onChange",this,"addTextBox");
-
-
-		dojo.connect(box,"onChange",this,"onChange");
-		dojo.connect(box,"onErase",this,"onChange");
-
-		dojo.connect(box,"onKeyPress",this,function(i_evt)
+		if(i_value)
 		{
-			if(i_evt.keyCode == 13) //ENTER = 13
+			if(!i_value.data)
 			{
-				this.addTextBox();
-
+				i_value.data = {};
+				i_value.data.item = i_value.item;
+				i_value.data.action = 'PUT';
 			}
-			else if(i_evt.keyCode == 8) //Backspace = 8
-			{
-				var box_value = box.get("value");
+			
+		}
+		else
+		{
+			i_value = {};
+			i_value.data = {};
+			i_value.data.item = null;
+			i_value.data.action = 'POST';
+		}
+		
+		if(!(i_value && i_value.data && i_value.data.action == 'DELETE'))
+		{
+			var box = new pwl.widget.form.SelectableTextBox({value:i_value});
 
-				if(box_value.length == 0 )
+			this.addChild(box);
+
+			box.resize();
+
+			dojo.connect(box,"onChange",this,"addTextBox");
+
+
+			dojo.connect(box,"onChange",this,"onChange");
+			dojo.connect(box,"onErase",this,"onChange");
+
+			dojo.connect(box,"onKeyPress",this,function(i_evt)
+			{
+				if(i_evt.keyCode == 13) //ENTER = 13
 				{
 					this.addTextBox();
+
+				}
+				else if(i_evt.keyCode == 8) //Backspace = 8
+				{
+					var box_value = box.get("value");
+
+					if(box_value.length == 0 )
+					{
+						this.addTextBox();
+					}
+
 				}
 
-			}
+			});
 
-		});
+			box.focus();
+		}
 
-		box.focus();
+	
 	}
 
 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.layout.Wizard Design</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="../../../themes/proxia/proxia.css">
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.layout.VerticalCalendar');
+		dojo.require('dijit.layout.ContentPane');
+		
+		var _data = 
+		[
+			{
+				id: 45,
+				type: {type: 'skuska', title: 'Skuska'},
+				subject: { code:'SJL', title:'Slovencina'},
+				start_on: '10.1.2012 14:00',
+				end_on: '10.1.2012 16:00',
+				start_on_ts: 1326314557,
+				end_on_ts: 1326314557
+			},
+			{
+				id: 46,
+				type: {type: 'skuska', title: 'Skuska'},
+				subject: { code:'MAT', title:'matematika'},
+				start_on: '11.1.2012 15:00',
+				end_on: '11.1.2012 17:00',
+				start_on_ts: 1326314557,
+				end_on_ts: 1326314557
+			}			
+		]
+		dojo.addOnLoad( function ()
+		{
+			//dijit.byId("W1").createWizard();
+		})
+	</script>
+
+</head>
+<body class="proxia claro">
+
+	<h1 class="testTitle">PWL.widget.layout.VerticalCalendar Design</h1>
+	
+	<div style="width: 800px;height:300px;margin:0 auto;" >
+		<div id="W1" dojoType="pwl.widget.layout.VerticalCalendar"></div>
+	</div>
+</body>
+</html>

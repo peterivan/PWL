@@ -192,7 +192,7 @@ dojo.declare(
 		}
 
 		
-		dojo.marginBox(this.domNode, {h: b_this.h});
+		dojo.marginBox(this.domNode, {h: b_parent.h});
 		dojo.marginBox(this.containerNode, {h:this.container_height,w: this.container_width});
 		dojo.marginBox(this.n_messageNode, {w: this.container_width});
 		

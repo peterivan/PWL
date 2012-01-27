@@ -332,7 +332,7 @@ dojo.declare(
 
 		i_data.forEach( this._renderItem, this );
 
-		this._dummy_items.forEach( this._renderDummyItem, this );
+		//this._dummy_items.forEach( this._renderDummyItem, this );
 	},
 
 	_renderItem: function ( i_item )

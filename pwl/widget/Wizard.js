@@ -82,16 +82,18 @@ dojo.declare(
 		dojo.connect(window, "onkeypress", this, function( kp )
 		{
 			console.debug("key press", kp)
-			if( kp.keyCode == dojo.keys.DOWN_ARROW ) //||  kp.keyCode == dojo.keys.RIGHT_ARROW
+			if( kp.keyCode == 40 ) //||  kp.keyCode == dojo.keys.RIGHT_ARROW
 			{
 				this.next();
 			}
 			
-			if( kp.keyCode ==  kp.keyCode == dojo.keys.UP_ARROW)//dojo.keys.LEFT_ARROW ||
+			if( kp.keyCode ==  38 )//dojo.keys.LEFT_ARROW || kp.keyCode == dojo.keys.UP_ARROW
 			{
 				this.prev();
 			}			
 		});
+		
+		this._setFirstStep();
 	},
 
 	destroy: function ()
@@ -146,19 +148,41 @@ dojo.declare(
 		console.debug("first",first)		
 		if( !first)
 			this.w_container.back();
-		//console.debug("current",this.w_container.w_step)
+		
+		var new_first = this.isFirstStep( this.w_container.selectedChildWidget.w_step );
+		
+		if( new_first )
+			this.hidePrevButton()
+		
+		this.showNextButton()
 
 	},
 	
 	next: function ()
 	{
 		var last = this.isLastStep( this.w_container.selectedChildWidget.w_step );
-		
 		console.debug("last",last)
 		if( !last)
 			this.w_container.forward();
 		
+		var new_step_is_last = this.isLastStep( this.w_container.selectedChildWidget.w_step );
+
+		if( new_step_is_last)
+			this.hideNextButton()
+		
+		this.showPrevButton()
 	},
+	
+	
+	showPrevButton: function ()
+	{
+		
+	},
+	
+	hidePrevButton: function ()
+	{
+		
+	},	
 	
 	showNextButton: function ()
 	{
@@ -205,8 +229,8 @@ dojo.declare(
 		}
 		
 		this.w_summary = i_summary;
-		this.w_summary.w_wizard = this;
-		
+		//this.w_summary.w_wizard = this;
+//		
 		this.w_container.addChild(i_summary, 'last');
 		this.w_legend.addSummary(i_summary);
 		
@@ -272,14 +296,23 @@ dojo.declare(
 
 	isFirstStep: function ( i_step )
 	{
+		if( !i_step )
+			return false;
+		
 		var is_first = false;	
 		this.w_container.getChildren().forEach( function ( i_sc, index )
 		{
+<<<<<<< HEAD
 			if ( i_sc.w_step && i_step )
 			{
 				if( index== 0 && i_sc.w_step.id == i_step.id)
 					is_first = true;
 			}
+=======
+			if( index== 0 && i_sc.w_step.id == i_step.id)
+				is_first = true;
+
+>>>>>>> 99cba311c97a4ff943fae6132b5ff4801af880b4
 		});
 			
 		return is_first;
@@ -288,17 +321,25 @@ dojo.declare(
 
 	isLastStep: function ( i_step )
 	{
+		if( !i_step )
+			return true;
+		
 		var is_last = false;	
 		var current_step_position = 0;
 		var max_steps = this.w_container.getChildren().length;
 		
 		this.w_container.getChildren().forEach( function ( i_sc, index )
 		{
+<<<<<<< HEAD
 			if ( i_sc.w_step && i_step )
 			{
 				if( i_sc.w_step.id == i_step.id)
 					current_step_position = index + 1
 			}
+=======
+			if( i_sc.w_step && i_sc.w_step.id == i_step.id)
+				current_step_position = index + 1
+>>>>>>> 99cba311c97a4ff943fae6132b5ff4801af880b4
 		});
 
 		return current_step_position == max_steps;
@@ -360,12 +401,19 @@ dojo.declare(
 		
 		this._subscriptions.push(dojo.subscribe(topic_select_child, dojo.hitch(this, function ( i_step_container ) 
 		{
-			var step = i_step_container.w_step;
-			
+			var step = i_step_container.w_step;			
 			this.w_legend.selectStep(step);
-		})));
+		})));						
+		
 	},
 
+	_setFirstStep: function()
+	{
+		
+		if( !this.w_intro && this.w_container.getChildren().length > 0 )
+			this.w_legend.selectStep( this.w_container.getChildren()[0].w_step );
+	},
+	
 	_setupStep: function ( i_step )
 	{
 		if ( i_step.isInstanceOf(pwl.widget.wizard.Step) )
@@ -379,7 +427,10 @@ dojo.declare(
 			this.w_container.addChild(i_step, 0);
 		}
 		else if ( i_step.isInstanceOf(pwl.widget.wizard.Summary) )
+		{	
+			this.addSummary( i_step );
 			this.w_summary = i_step;
+		}	
 	},
 
 	_isChildValid: function ( i_child )

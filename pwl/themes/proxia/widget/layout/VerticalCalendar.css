@@ -1,0 +1,75 @@
+
+.pwlWidgetLayoutVerticalCalendar
+{
+	position:relative;	
+	overflow:hidden;	
+}
+
+.pwlWidgetLayoutVerticalCalendar .container
+{
+	top:0;
+	margin: 0 auto;
+	border:1px solid #d5d5bd;
+	border-radius:4px;
+}	
+
+.pwlWidgetLayoutVerticalCalendar .container > section
+{
+	top:0;
+	margin: 0 auto;
+	border-right:1px solid #e0e0e0;
+	bottom:0;
+	position: absolute;
+}
+
+.pwlWidgetLayoutVerticalCalendar .container > section:last-child
+{
+	border-right:none;
+}
+
+.pwlWidgetLayoutVerticalCalendar .container > section > header
+{
+	text-align: center;
+}
+
+.pwlWidgetLayoutVerticalCalendar .navigation_left
+{
+	position:absolute;
+	bottom:0;
+	top:0;
+	left:0;
+	width:40px;
+	bbackground:rgb(123, 139, 153) url(../../images/icons/TabletWizard/bg_navi.png) right repeat-y;
+	z-index:100;
+	
+}	
+
+.pwlWidgetLayoutVerticalCalendar .navigation_left span
+{
+	display:block;
+	width:40px;
+	height:55px;
+	background:url(../../images/icons/TabletWizard/ico-nav-left.png) right no-repeat;
+	cursor:pointer;
+}
+
+.pwlWidgetLayoutVerticalCalendar .navigation_right
+{
+	position:absolute;
+	bottom:0;
+	top:0;
+	right:0;
+	width:40px;
+	bbackground:rgb(123, 139, 153) url(../../images/icons/TabletWizard/bg_navi.png) left repeat-y;
+	z-index:100;
+	
+}	
+
+.pwlWidgetLayoutVerticalCalendar .navigation_right span
+{
+	display:block;
+	width:40px;
+	height:55px;
+	background:url(../../images/icons/TabletWizard/ico-nav-right.png) left no-repeat;
+	cursor:pointer;
+}

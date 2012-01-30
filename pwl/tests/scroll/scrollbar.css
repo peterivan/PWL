@@ -1,0 +1,41 @@
+div.scrollholder
+{
+    position: relative;
+    width: 300px; height: 250px;
+    overflow: auto;
+    z-index: 1;
+    background-color: #f3f3f3;
+}
+
+div.scroll
+{
+    position: absolute;
+    left: 0; top: 0;
+    width: 95%;
+    z-index: 2;
+}
+
+/* <Scroll> */
+div.track
+{
+    position: relative;
+    float:right;
+    top: 1px; 
+    width: 16px; height: 99%;
+    font-size: 0;
+    background: url("../../themes/proxia/images/scrollbar/pozadie-slide.gif") 7px 0 repeat-y;
+    z-index: 3;
+	
+}
+
+div.drag_bar
+{
+    position: absolute;
+    width: 100%; height: 14px;
+    cursor: pointer;
+	left:1px;
+    background: url("../../themes/proxia/images/scrollbar/slide.gif") no-repeat;
+    z-index: 4;
+}  
+
+div.track:hover div.drag_bar { background-position: 100% 0; } 

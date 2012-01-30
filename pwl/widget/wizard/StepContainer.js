@@ -102,6 +102,26 @@ dojo.declare(
 				}
 			});
 		}
-			
+		
+		dojo.connect(this.w_wizard, 'hideNextButton', this, function()
+		{
+			dojo.style(this.w_next_button.domNode,"visibility","hidden");
+		});
+
+		dojo.connect(this.w_wizard, 'showNextButton', this, function()
+		{
+			dojo.style(this.w_next_button.domNode,"visibility","visible");
+		});
+
+		dojo.connect(this.w_wizard, 'hidePrevButton', this, function()
+		{
+			dojo.style(this.w_prev_button.domNode,"visibility","hidden");
+		});
+
+		dojo.connect(this.w_wizard, 'showPrevButton', this, function()
+		{
+			dojo.style(this.w_prev_button.domNode,"visibility","visible");
+		});
+		
 	}
 });

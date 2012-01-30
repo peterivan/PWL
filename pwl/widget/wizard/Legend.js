@@ -107,9 +107,10 @@ dojo.declare(
 	selectStep: function ( i_active_step )
 	{
 		//this.addStep(i_step);
-		//console.log('selectStep', i_active_step);
+
 		var step = this._findStep( i_active_step );
 		this.w_current_step = step;
+	
 		
 		/* zrusi sa disabled a nastavy active */
 		if( this.w_previous_step ) 
@@ -127,6 +128,7 @@ dojo.declare(
 		}
 		
 		this.w_previous_step = this.w_current_step;
+
 	},
 
 	enableStep: function ( i_step )
@@ -149,12 +151,14 @@ dojo.declare(
 	setStepCompletion: function ( i_step, i_is_completed )
 	{
 		console.log('is complete ', i_is_completed);
+		
 		dojo.removeClass(i_step.domNode,"disabled");
 		//dojo.removeClass(i_step.domNode,"active");			
 		//dojo.removeClass(i_step.domNode,"completed");			
 		
 		if( i_is_completed )
 		{
+			//this.w_previous_step = i_step;
 			dojo.addClass(i_step.domNode,"active");
 			dojo.addClass(i_step.domNode,"completed");
 						

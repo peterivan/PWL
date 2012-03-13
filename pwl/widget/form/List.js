@@ -50,6 +50,9 @@ dojo.declare(
 
 	_store_connects: [],
 
+        show_overlay: false,
+        _overlay: null,        
+        
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -191,6 +194,7 @@ dojo.declare(
 		{
 			id: i_identifier,
 			label: i_label,
+                        title: i_label,
 			position: i_position || 'last',
 			is_dummy: true
 		};
@@ -313,15 +317,47 @@ dojo.declare(
 		}
 	},
 
+
+        _showOverlay: function()
+        {
+            if( this.show_overlay)
+            {
+                console.debug("showing overlay")
+                if( !this._overlay )
+                {
+                    console.debug("creating overlay")
+                    
+                    var coords = dojo.marginBox(this.domNode);
+                    this._overlay = dojo.create("div",{},this.domNode);
+                    dojo.style(this._overlay,"position", "absolute")
+                    dojo.style(this._overlay,"height", (coords.h - 5) + "px")                    
+                    dojo.style(this._overlay,"width", (coords.w - 5) + "px")
+                    dojo.addClass(this._overlay,"overlay");
+                } 
+                dojo.style(this._overlay,"display", "block")
+            }    
+        },
+
+        _hideOverlay: function()
+        {
+            if( this.show_overlay && this._overlay)
+            {
+                dojo.style(this._overlay,"display", "none")
+            }    
+        },
 /******************************************************************************/
 /** Rendering *****************************************************************/
 
 	_render: function ()
 	{
+                this._showOverlay();
+                
 		this._loadData().then( dojo.hitch(this, function( i_data )
 		{
 			this._renderItems(i_data);
-
+                        
+                        this._hideOverlay();
+                        
 			this.onLoad();
 		}));
 	},
@@ -329,7 +365,8 @@ dojo.declare(
 	_renderItems: function ( i_data )
 	{
 		dojo.empty(this.n_list);
-
+                
+                //this.debug_list = [];
 		i_data.forEach( this._renderItem, this );
 
 		//this._dummy_items.forEach( this._renderDummyItem, this );
@@ -339,7 +376,17 @@ dojo.declare(
 	{
 		var id = this.store.getValue(i_item, this.id_attribute || this.default_id_attribute);
 		var label = this.formatter(i_item, this.store);
-
+                
+//                if( this.debug_list[id] )
+//                {
+//                    console.debug("nasiel rovnake id...",id)
+//                    return;
+//                }else{
+//                    console.debug("vkladam id:",id)
+//                }   
+//                
+//                this.debug_list.push(id);
+                
 		var node_params =
 		{
 			'data-identifier': id,
@@ -399,7 +446,7 @@ dojo.declare(
 					onComplete: function ( i_data )
 					{
 						this._data = i_data;
-
+//console.debug("data",i_data)
 						p.callback(i_data);
 					}
 				});

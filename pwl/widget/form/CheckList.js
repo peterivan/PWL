@@ -67,6 +67,8 @@ dojo.declare(
 
 	_checkboxes: null,
 
+        show_overlay: false,
+        _overlay: null,  
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -260,6 +262,12 @@ dojo.declare(
 		this._selectItems(this._value_data);
 	},
 
+	hard_reset: function ()
+	{
+		this.selection = [];
+		this._unselectItems();
+	},
+        
 	formatter: function ( i_item )
 	{
 		var field = this.label_store_label_attribute || this.label_store_id_attribute || this.label_store_default_id_attribute;
@@ -383,10 +391,14 @@ dojo.declare(
 
 	_render: function ()
 	{
+             this._showOverlay();
+             
 		this._loadData().then( dojo.hitch(this, function()
 		{
 			this._renderItems(this._label_data, this._value_data);
 
+                        this._hideOverlay();
+                        
 			this.onLoad();
 		}));
 	},
@@ -474,7 +486,9 @@ dojo.declare(
 	{
 		this._label_data = null;
 		this._value_data = null;
-
+		
+		this.selection = [];
+		
 		if ( this.label_store )
 			this._label_data_loaded = false;
 		if ( this.value_store )
@@ -521,12 +535,19 @@ dojo.declare(
 		
 		if ( this.value_store )
 		{
+                        var query = null;
+
+			if ( this.label_store_query )
+				query = '?' + dojo.objectToQuery(this.label_store_query);
+                            
 			this.value_store.fetch(
 			{
 				scope: this,
-
+                                query: query,
+                                
 				onComplete: function ( i_data )
 				{
+
 					this._value_data = i_data;
 					this._value_data_loaded = true;
 
@@ -540,6 +561,33 @@ dojo.declare(
 		return p;
 	},
 
+        _showOverlay: function()
+        {
+            if( this.show_overlay)
+            {
+                console.debug("showing overlay")
+                if( !this._overlay )
+                {
+                    console.debug("creating overlay")
+                    
+                    var coords = dojo.marginBox(this.domNode);
+                    this._overlay = dojo.create("div",{},this.domNode);
+                    dojo.style(this._overlay,"position", "absolute")
+                    dojo.style(this._overlay,"height", (coords.h - 5) + "px")                    
+                    dojo.style(this._overlay,"width", (coords.w - 5) + "px")
+                    dojo.addClass(this._overlay,"overlay");
+                } 
+                dojo.style(this._overlay,"display", "block")
+            }    
+        },
+
+        _hideOverlay: function()
+        {
+            if( this.show_overlay && this._overlay)
+            {
+                dojo.style(this._overlay,"display", "none")
+            }    
+        },
 /******************************************************************************/
 /** Item selection manipulation ***********************************************/
 
@@ -559,6 +607,8 @@ dojo.declare(
 
 		if ( !item_was_deleted )
 			this.selection.push(i_item);
+		
+
 	},
 
 	_addItemToSelection: function ( i_item )
@@ -572,6 +622,7 @@ dojo.declare(
 		{
 			this.selection.push(i_item);
 		}
+
 	},
 
 	_removeItemFromSelection: function ( i_item )
@@ -581,6 +632,8 @@ dojo.declare(
 			if ( i_selection_item == i_item )
 				delete this.selection[i_index];
 		}, this );
+		
+
 	},
 
 /******************************************************************************/
@@ -653,6 +706,7 @@ dojo.declare(
 		this._checkboxes.forEach( function ( i_checkbox )
 		{
 			i_checkbox.destroy();
+			delete i_checkbox; 
 		});
 
 		this._checkboxes = [];

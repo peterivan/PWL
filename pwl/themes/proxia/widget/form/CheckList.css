@@ -61,3 +61,10 @@
 	 padding-left: 10px;
 	 padding-top: 5px;
  }
+ 
+ .pwlWidgetFormCheckList .overlay
+ {
+     opacity: 0.75;
+     top:0;
+     background: silver url("../../images/loading/loading1.gif") no-repeat center center;
+ }

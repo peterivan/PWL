@@ -52,6 +52,7 @@ dojo.declare(
 
         show_overlay: false,
         _overlay: null,        
+        auto_size: true,
         
 /******************************************************************************/
 /** public **/
@@ -101,9 +102,11 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
-		var b_parent = dojo.contentBox(this.domNode.parentNode);
-
-		dojo.marginBox(this.domNode, b_parent);
+                if( this.auto_size )
+		{
+                    var b_parent = dojo.contentBox(this.domNode.parentNode);
+                    dojo.marginBox(this.domNode, b_parent);                        
+                }
 
 		var b_this = dojo.contentBox(this.domNode);
 

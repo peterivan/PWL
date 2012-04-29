@@ -302,17 +302,12 @@ dojo.declare(
 		var is_first = false;	
 		this.w_container.getChildren().forEach( function ( i_sc, index )
 		{
-<<<<<<< HEAD
+
 			if ( i_sc.w_step && i_step )
 			{
 				if( index== 0 && i_sc.w_step.id == i_step.id)
 					is_first = true;
 			}
-=======
-			if( index== 0 && i_sc.w_step.id == i_step.id)
-				is_first = true;
-
->>>>>>> 99cba311c97a4ff943fae6132b5ff4801af880b4
 		});
 			
 		return is_first;
@@ -330,16 +325,11 @@ dojo.declare(
 		
 		this.w_container.getChildren().forEach( function ( i_sc, index )
 		{
-<<<<<<< HEAD
 			if ( i_sc.w_step && i_step )
 			{
 				if( i_sc.w_step.id == i_step.id)
 					current_step_position = index + 1
 			}
-=======
-			if( i_sc.w_step && i_sc.w_step.id == i_step.id)
-				current_step_position = index + 1
->>>>>>> 99cba311c97a4ff943fae6132b5ff4801af880b4
 		});
 
 		return current_step_position == max_steps;

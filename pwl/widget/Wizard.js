@@ -229,7 +229,7 @@ dojo.declare(
 		}
 		
 		this.w_summary = i_summary;
-		//this.w_summary.w_wizard = this;
+		this.w_summary.w_wizard = this;// toto bolo vyblokovane.., 
 //		
 		this.w_container.addChild(i_summary, 'last');
 		this.w_legend.addSummary(i_summary);

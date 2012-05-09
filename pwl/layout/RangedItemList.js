@@ -24,7 +24,7 @@ dojo.declare(
 
 	_fetch_locked: false,
 	_started_loading: false,
-	
+	message_no_data: 'nenašiel žiadne záznamy',
 	n_not_found: null,
 
 /******************************************************************************/
@@ -182,7 +182,7 @@ dojo.declare(
 
 						if(i_data.length == 0)
 						{
-							this.n_not_found = dojo.create("div",{'class':'not_found',innerHTML:'nenašiel žiadne záznamy'},this.domNode);
+							this.n_not_found = dojo.create("div",{'class':'not_found',innerHTML:this.message_no_data},this.domNode);
 						}
 				}		
 			})

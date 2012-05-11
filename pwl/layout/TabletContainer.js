@@ -210,10 +210,10 @@ dojo.declare(
                         if( this.is_next_pane )
                         {
                             var next_child = this.getNextChild();
-                            console.debug("pwl tablet resize : next_child",next_child )
+                           // console.debug("pwl tablet resize : next_child",next_child )
                             if( next_child )
                             {
-                                dojo.style(next_child.domNode,"left",this.container_width + "px")
+                                dojo.style(next_child.domNode,"left",(this.container_width + 100) + "px")
                             }    
                         }
 		}

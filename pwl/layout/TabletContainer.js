@@ -206,7 +206,18 @@ dojo.declare(
 		{
 			this.current_pane.resize({h:this.container_height,w: this.container_width});
 			dojo.style(this.current_pane.domNode,"left",this.left_to + "px")
+                        
+                        if( this.is_next_pane )
+                        {
+                            var next_child = this.getNextChild();
+                           // console.debug("pwl tablet resize : next_child",next_child )
+                            if( next_child )
+                            {
+                                dojo.style(next_child.domNode,"left",(this.container_width + 100) + "px")
+                            }    
+                        }
 		}
+                
 		
 	},
 		
@@ -313,18 +324,18 @@ dojo.declare(
 		dojo.style(page.domNode,{"zIndex":"90"});
 		
 		/* slide to left */
-		var params = {duration:this.slide_duration,left:-b_this.w };
+		var params = {duration:this.slide_duration,left:-b_this.w};
 		
 		/* slide to right */
 		if(position == "right")
-			params = {duration:this.slide_duration,left:b_this.w };
+			params = {duration:this.slide_duration,left:b_this.w};
 		
-        var slideArgs = {
-            node: page.domNode,
-			duration: params.duration,
-            left: params.left,
-            unit: "px"
-        };
+                var slideArgs = {
+                    node: page.domNode,
+                                duration: params.duration,
+                    left: params.left,
+                    unit: "px"
+                };
 		
 		var anim = dojo.fx.slideTo(slideArgs);
 		dojo.connect(anim, "onEnd", this,function()
@@ -355,12 +366,12 @@ dojo.declare(
 			dojo.style(page.domNode,{"left":-b_this.w + "px"});
 		}	
 		
-        var slideArgs = {
-            node: page.domNode,
-			duration: params.duration,
-            left: params.left,
-            unit: "px"
-        };
+                var slideArgs = {
+                    node: page.domNode,
+                                duration: params.duration,
+                    left: params.left,
+                    unit: "px"
+                };
 		
 		var anim = dojo.fx.slideTo(slideArgs);
 		dojo.connect(anim, "onEnd", this,function()
@@ -425,6 +436,22 @@ dojo.declare(
 		
 	},
 
+
+        getNextChild: function ()
+        {
+            var next_child = null;
+            
+            this.getChildren().forEach( function ( i_child, i_index )
+            {
+                if( i_index == (this.current_pane_index + 1) )
+                {
+                    next_child = i_child;
+                }   
+                
+            }, this);            
+            
+            return next_child;
+        },
 /******************************************************************************/
 /** Pages *********************************************************************/
 

@@ -278,6 +278,9 @@ dojo.declare(
 
 	search: function ( i_search_term, i_query_options )
 	{
+            
+                this._showOverlay();
+            
 		var search_term = null;
 
 		if ( i_search_term && i_search_term.length > 0 )
@@ -307,6 +310,8 @@ dojo.declare(
 			onComplete: function ( i_data )
 			{
 				this._renderItems(i_data, this.selection);
+                                
+                                this._hideOverlay();
 			}
 		});
 
@@ -404,7 +409,8 @@ dojo.declare(
 	},
 
 	_renderItems: function ( i_label_data, i_value_data )
-	{
+	{                            
+            
 		dojo.empty(this.n_list);
 
 		this._destroyCheckboxes();
@@ -568,15 +574,14 @@ dojo.declare(
                 console.debug("showing overlay")
                 if( !this._overlay )
                 {
-                    console.debug("creating overlay")
-                    
-                    var coords = dojo.marginBox(this.domNode);
                     this._overlay = dojo.create("div",{},this.domNode);
-                    dojo.style(this._overlay,"position", "absolute")
-                    dojo.style(this._overlay,"height", (coords.h - 5) + "px")                    
-                    dojo.style(this._overlay,"width", (coords.w - 5) + "px")
-                    dojo.addClass(this._overlay,"overlay");
                 } 
+                var coords = dojo.marginBox(this.domNode);                
+
+                dojo.style(this._overlay,"position", "absolute")
+                dojo.style(this._overlay,"height", (coords.h - 5) + "px")                    
+                dojo.style(this._overlay,"width", (coords.w - 5) + "px")
+                dojo.addClass(this._overlay,"overlay");                
                 dojo.style(this._overlay,"display", "block")
             }    
         },
@@ -585,6 +590,7 @@ dojo.declare(
         {
             if( this.show_overlay && this._overlay)
             {
+                console.debug("hiding overlay")
                 dojo.style(this._overlay,"display", "none")
             }    
         },

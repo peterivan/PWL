@@ -269,6 +269,7 @@ dojo.declare(
 
 	_setStoreAttr: function ( i_store )
 	{
+		
 		this.store = i_store;
 
 		this._store_connects.forEach(dojo.disconnect);
@@ -301,7 +302,13 @@ dojo.declare(
 
 				dojo.toggleClass(target, 'selected');
 
-				this._onChange(this.get('value'));
+				if ( this.item == this.get('value') )// klikne na neho druhy krat za sebou tak chcem deseletnut
+				{
+					dojo.toggleClass(target, 'selected');
+					this.item = null;
+					this.onChange( null );
+				}else					
+					this._onChange(this.get('value'));
 			}
 		});
 	},
@@ -369,7 +376,7 @@ dojo.declare(
 	{
 		dojo.empty(this.n_list);
                 
-                //this.debug_list = [];
+       // this.debug_list = [];
 		i_data.forEach( this._renderItem, this );
 
 		//this._dummy_items.forEach( this._renderDummyItem, this );
@@ -380,15 +387,15 @@ dojo.declare(
 		var id = this.store.getValue(i_item, this.id_attribute || this.default_id_attribute);
 		var label = this.formatter(i_item, this.store);
                 
-//                if( this.debug_list[id] )
-//                {
-//                    console.debug("nasiel rovnake id...",id)
-//                    return;
-//                }else{
-//                    console.debug("vkladam id:",id)
-//                }   
-//                
-//                this.debug_list.push(id);
+//		if( this.debug_list[id] )
+//		{
+//			console.debug("nasiel rovnake id...",id)
+//			return;
+//		}else{
+//			console.debug("vkladam id:",id)
+//		}   
+//
+//		this.debug_list.push(id);
                 
 		var node_params =
 		{
@@ -449,7 +456,7 @@ dojo.declare(
 					onComplete: function ( i_data )
 					{
 						this._data = i_data;
-//console.debug("data",i_data)
+//console.debug("pwl list data",i_data)
 						p.callback(i_data);
 					}
 				});
@@ -508,6 +515,6 @@ dojo.declare(
 			this.item = i_item;
 
 			this.onChange(i_item);
-		}
+		} 
 	}
 });

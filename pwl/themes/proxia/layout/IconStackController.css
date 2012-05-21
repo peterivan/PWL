@@ -40,7 +40,7 @@
 {
 	background-color: #c82c30;
 	color:White;
-	margin:2px;
+	margin:0;
 	color: white;
 }
 
@@ -67,3 +67,65 @@
 	font-size: 0.9em;
 	margin-top: 5px;
 }
+
+/******************************************************************************/
+/** DialogButton THEME likegoogle **************************************************************/
+/******************************************************************************/
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton
+{
+	margin: 0;
+	width:100%;
+	text-align: center;
+	cursor: pointer;
+	font-size:0.95em;
+	display:block;
+	border: none;
+	background: none;
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButtonFocused
+{
+	border: 0;
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton > span
+{
+	display:block;
+	border: 0;
+	background: none;
+	font: normal 13px;
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton .dijitButtonNode
+{
+	padding: 0;
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton span[aria-selected=true]
+{
+	color: red;
+	border-radius: 0;
+	outline-color: transparent;
+	border-width: 1px 0 ;
+	border-color: #e0e0e0;
+	border-style: dotted ;
+	background: url('../images/tabs/tab-selected.png') right center no-repeat ;
+
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton span[aria-selected=false]
+{
+	color: gray;
+	background: none;
+	margin: 0;
+	border-width: 1px 0 ;
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton span[aria-selected=false]:hover
+{
+	color: black;
+	background: none;
+}
+
+

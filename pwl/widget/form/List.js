@@ -50,10 +50,12 @@ dojo.declare(
 
 	_store_connects: [],
 
-        show_overlay: false,
-        _overlay: null,        
-        auto_size: true,
-        
+	show_overlay: false,
+	_overlay: null,        
+	auto_size: true,
+    
+	can_deselect: false,
+	
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -102,11 +104,11 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 
-                if( this.auto_size )
+        if( this.auto_size )
 		{
-                    var b_parent = dojo.contentBox(this.domNode.parentNode);
-                    dojo.marginBox(this.domNode, b_parent);                        
-                }
+				var b_parent = dojo.contentBox(this.domNode.parentNode);
+				dojo.marginBox(this.domNode, b_parent);                        
+        }
 
 		var b_this = dojo.contentBox(this.domNode);
 
@@ -302,12 +304,16 @@ dojo.declare(
 
 				dojo.toggleClass(target, 'selected');
 
-				if ( this.item == this.get('value') )// klikne na neho druhy krat za sebou tak chcem deseletnut
+				if( this.can_deselect )// moze deselektnut item
 				{
-					dojo.toggleClass(target, 'selected');
-					this.item = null;
-					this.onChange( null );
-				}else					
+					if ( this.item == this.get('value') )// klikne na neho druhy krat za sebou tak chcem deseletnut
+					{
+						dojo.toggleClass(target, 'selected');
+						this.item = null;
+						this.onChange( null );
+					}else					
+						this._onChange(this.get('value'));					
+				}else
 					this._onChange(this.get('value'));
 			}
 		});

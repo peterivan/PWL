@@ -23,11 +23,55 @@
 	overflow:hidden;
 	top: 0;
 	bottom: 0;
-	left: 120px;
+	left: 105px;
 	right: 0;
 }
 
 .pwlLayoutIconStackContainer .dijitVisible
 {
 	position: absolute;
+	background-color: white;
+}
+
+
+/******************************************************************************/
+/** THEME likegoogle **************************************************************/
+/******************************************************************************/
+.pwlLayoutIconStackContainer[class~='likegoogle']
+{	
+	margin: 0;
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] > .pwlLayoutIconStackController
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100px;
+	
+	background: rgb(241,241,241); /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSI5OCUiIHN0b3AtY29sb3I9IiNmMWYxZjEiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZTBlMGUwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+	background: -moz-linear-gradient(left,  rgba(241,241,241,1) 98%, rgba(224,224,224,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(98%,rgba(241,241,241,1)), color-stop(100%,rgba(224,224,224,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  rgba(241,241,241,1) 98%,rgba(224,224,224,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  rgba(241,241,241,1) 98%,rgba(224,224,224,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  rgba(241,241,241,1) 98%,rgba(224,224,224,1) 100%); /* IE10+ */
+	background: linear-gradient(left,  rgba(241,241,241,1) 98%,rgba(224,224,224,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f1f1', endColorstr='#e0e0e0',GradientType=1 ); /* IE6-8 */
+
+	
+}
+
+.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitButton .dijitButtonNode,
+.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitButtonHover .dijitButtonNode,
+.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitButtonActive .dijitButtonNode,
+.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButton .dijitButtonNode,
+.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButtonHover .dijitButtonNode,
+.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButtonActive .dijitButtonNode,
+.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButtonChecked .dijitButtonNode
+{
+	border: none;
+	background: none;
 }

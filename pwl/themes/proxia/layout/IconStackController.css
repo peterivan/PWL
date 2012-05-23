@@ -104,7 +104,7 @@
 
 .pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton span[aria-selected=true]
 {
-	color: red;
+	color: black;
 	border-radius: 0;
 	outline-color: transparent;
 	border-width: 1px 0 ;

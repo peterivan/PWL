@@ -65,19 +65,60 @@
 		});
 	</script>
 
+	<style>
+
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton .first
+		{
+			background: url('../../themes/proxia/images/icons/22x22/dialog-information-desarutate.png') no-repeat center center;		
+		}
+
+		
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitChecked .first,
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButtonHover .first
+		{
+			background: url('../../themes/proxia/images/icons/22x22/dialog-information.png') no-repeat center center;		
+		}
+
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton .second
+		{
+			background: url('../../themes/proxia/images/icons/22x22/dialog-information-desarutate.png') no-repeat center center;		
+		}
+
+		
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitChecked .second,
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButtonHover .second
+		{
+			background: url('../../themes/proxia/images/icons/22x22/dialog-information.png') no-repeat center center;		
+		}
+		
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButton .third
+		{
+			background: url('../../themes/proxia/images/icons/22x22/dialog-information-desarutate.png') no-repeat center center;		
+		}
+
+		
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitChecked .third,
+		.pwlLayoutIconStackContainer[class~='likegoogle'] .pwlLayoutIconStackControllerButtonHover .third
+		{
+			background: url('../../themes/proxia/images/icons/22x22/dialog-information.png') no-repeat center center;		
+		}		
+		
+		
+
+	</style>
 </head>
 <body class="proxia tundra">
 
 	<h1 class="testTitle">PWL.layout.IconStackContainer</h1>
 
-	<div id="W1" dojoType="pwl.layout.IconStackContainer" style="width: 800px; height: 700px;">
-		<div dojoType="dijit.layout.ContentPane" title="Pane 1" style="background-color:red">Pane 1 content<div><span id="B1" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 3" style="background-color:blue">Pane 2 content<div><span id="B2" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 3" style="background-color:lime">Pane 3 content<div><span id="B3" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 4" style="background-color:magenta">Pane 4 content<div><span id="B4" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 5" style="background-color:yellow">Pane 5 content<div><span id="B5" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 6" style="background-color:brown">Pane 6 content<div><span id="B6" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
-		<div dojoType="dijit.layout.ContentPane" title="Pane 7" style="background-color:green">Pane 7 content<div><span id="B7" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+	<div id="W1" class="likegoogle" dojoType="pwl.layout.IconStackContainer" style="width: 800px; height: 700px;">
+		<div dojoType="dijit.layout.ContentPane" iconClass="first" title="Pane 1" >Pane 1 content<div><span id="B1" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" iconClass="second" title="Pane 2" >Pane 2 content<div><span id="B2" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" iconClass="third" title="Pane 3" >Pane 3 content<div><span id="B3" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 4" >Pane 4 content<div><span id="B4" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 5" >Pane 5 content<div><span id="B5" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 6" >Pane 6 content<div><span id="B6" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
+		<div dojoType="dijit.layout.ContentPane" title="Pane 7" >Pane 7 content<div><span id="B7" dojoType="dijit.form.Button">Toggle can leave page</span></div></div>
 	</div>
 </body>
 </html>

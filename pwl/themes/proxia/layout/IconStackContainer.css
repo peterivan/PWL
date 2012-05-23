@@ -63,15 +63,3 @@
 
 	
 }
-
-.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitButton .dijitButtonNode,
-.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitButtonHover .dijitButtonNode,
-.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitButtonActive .dijitButtonNode,
-.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButton .dijitButtonNode,
-.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButtonHover .dijitButtonNode,
-.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButtonActive .dijitButtonNode,
-.pwlLayoutIconStackContainer[class~='likegoogle'] .dijitToggleButtonChecked .dijitButtonNode
-{
-	border: none;
-	background: none;
-}

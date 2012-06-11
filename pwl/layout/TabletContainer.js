@@ -90,7 +90,7 @@ dojo.declare(
 
 		dojo.style(this.n_navigation_left,"display","none");
 
-		if( !this.show_next_navi_panel )	
+		if( !this.show_next_navi_panel || index < 2)	
 			dojo.style(this.n_navigation_right,"display","none");
 		
 		this.message_height = dojo.style(this.n_messageNode,"height");

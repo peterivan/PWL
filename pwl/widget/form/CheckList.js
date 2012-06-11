@@ -279,7 +279,7 @@ dojo.declare(
 	search: function ( i_search_term, i_query_options )
 	{
             
-                this._showOverlay();
+		this._showOverlay();
             
 		var search_term = null;
 
@@ -311,13 +311,14 @@ dojo.declare(
 			{
 				this._renderItems(i_data, this.selection);
                                 
-                                this._hideOverlay();
+				this._hideOverlay();
 			}
 		});
 
 		this._search_timer = null;
 	},
 
+	
 	createNewValueItem: function ( i_label_item, i_this )
 	{
 		var new_item = {};
@@ -380,13 +381,21 @@ dojo.declare(
 	{
 		var label_field = this.label_store.getValue(i_label_item, this.label_store_id_attribute || this.label_store_default_id_attribute);
 		var value_field = null;
-
+					
 		// value items may come from label or value stores
 		// items from label store are usualy in selection
+
 		if ( this.label_store.isItem(i_value_item) )
-			value_field = this.label_store.getValue(i_value_item, this.value_store_id_attribute || this.value_store_default_id_attribute);
+		{
+			//value_field = this.label_store.getValue(i_value_item, this.value_store_id_attribute || this.value_store_default_id_attribute);
+			// zablokovane nakolko pri roznom id_attribute pre obe store sa nevybral spravne value item
+			value_field = this.label_store.getValue(i_value_item, this.label_store_id_attribute || this.label_store_default_id_attribute);
+		}	
 		else
 			value_field = this.value_store.getValue(i_value_item, this.value_store_id_attribute || this.value_store_default_id_attribute);
+		
+//console.debug(label_field)
+//console.debug(value_field)
 
 		if ( label_field == value_field )
 			return true;
@@ -396,13 +405,13 @@ dojo.declare(
 
 	_render: function ()
 	{
-             this._showOverlay();
+        this._showOverlay();
              
 		this._loadData().then( dojo.hitch(this, function()
 		{
 			this._renderItems(this._label_data, this._value_data);
 
-                        this._hideOverlay();
+            this._hideOverlay();
                         
 			this.onLoad();
 		}));
@@ -442,7 +451,22 @@ dojo.declare(
 				cb.placeAt(node);
 				dojo.place(n_label, node);
 
+				/***** hack ak value store ma iny i_attribute ako label store tak search nefunguje korektne. *****/
+				var l_id = this.label_store_id_attribute || this.label_store_default_id_attribute;
+				var v_id = this.value_store_id_attribute || this.value_store_default_id_attribute;
+
+				if( l_id != v_id )
+				{
+					var label_i = "i_label_item." + l_id;					
+
+					i_label_item[v_id] = eval(label_i)
+
+				}
+				/* end hack*/
+
 				node['data-item'] = i_label_item;
+				
+				
 			}, this);
 		}
 
@@ -476,6 +500,7 @@ dojo.declare(
 
 					if ( this._compareStoreItems(label_item, i_value_item) )
 					{
+
 						this._selectNode(i_node);
 
 						this._addItemToSelection(label_item);
@@ -541,7 +566,7 @@ dojo.declare(
 		
 		if ( this.value_store )
 		{
-                        var query = null;
+			var query = null;
 
 			if ( this.label_store_query )
 				query = '?' + dojo.objectToQuery(this.label_store_query);
@@ -549,11 +574,11 @@ dojo.declare(
 			this.value_store.fetch(
 			{
 				scope: this,
-                                query: query,
+				query: query,
                                 
 				onComplete: function ( i_data )
 				{
-
+ 
 					this._value_data = i_data;
 					this._value_data_loaded = true;
 
@@ -567,38 +592,39 @@ dojo.declare(
 		return p;
 	},
 
-        _showOverlay: function()
-        {
-            if( this.show_overlay)
-            {
-                console.debug("showing overlay")
-                if( !this._overlay )
-                {
-                    this._overlay = dojo.create("div",{},this.domNode);
-                } 
-                var coords = dojo.marginBox(this.domNode);                
+	_showOverlay: function()
+	{
+		if( this.show_overlay)
+		{
+			console.debug("showing overlay")
+			if( !this._overlay )
+			{
+				this._overlay = dojo.create("div",{},this.domNode);
+			} 
+			var coords = dojo.marginBox(this.domNode);                
 
-                dojo.style(this._overlay,"position", "absolute")
-                dojo.style(this._overlay,"height", (coords.h - 5) + "px")                    
-                dojo.style(this._overlay,"width", (coords.w - 5) + "px")
-                dojo.addClass(this._overlay,"overlay");                
-                dojo.style(this._overlay,"display", "block")
-            }    
-        },
+			dojo.style(this._overlay,"position", "absolute")
+			dojo.style(this._overlay,"height", (coords.h - 5) + "px")                    
+			dojo.style(this._overlay,"width", (coords.w - 5) + "px")
+			dojo.addClass(this._overlay,"overlay");                
+			dojo.style(this._overlay,"display", "block")
+		}    
+	},
 
-        _hideOverlay: function()
-        {
-            if( this.show_overlay && this._overlay)
-            {
-                console.debug("hiding overlay")
-                dojo.style(this._overlay,"display", "none")
-            }    
-        },
+	_hideOverlay: function()
+	{
+		if( this.show_overlay && this._overlay)
+		{
+			console.debug("hiding overlay")
+			dojo.style(this._overlay,"display", "none")
+		}    
+	},
 /******************************************************************************/
 /** Item selection manipulation ***********************************************/
 
 	_toggleSelectedItem: function ( i_item )
 	{
+	
 		var item_was_deleted = false;
 
 		this.selection.forEach( function ( i_selection_item, i_index )
@@ -619,6 +645,7 @@ dojo.declare(
 
 	_addItemToSelection: function ( i_item )
 	{
+	
 		var already_in_selection = dojo.some( this.selection, function ( i_selection_item )
 		{
 			return (i_selection_item == i_item);
@@ -633,6 +660,7 @@ dojo.declare(
 
 	_removeItemFromSelection: function ( i_item )
 	{
+	
 		this.selection.forEach( function ( i_selection_item, i_index )
 		{
 			if ( i_selection_item == i_item )

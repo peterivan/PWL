@@ -20,7 +20,7 @@ dojo.declare(
 	w_controller: null,
 
 	type: "up-down",
-        transition: "fade",
+	transition: "fade",
 /******************************************************************************/
 /** public **/
 /******************************************************************************/
@@ -34,8 +34,8 @@ dojo.declare(
             
             this.overlay = dojo.create("div",null,this.domNode)    
             var base_url = dojo.moduleUrl('academy').uri;
-	  console.debug(base_url)
-	    var image  = base_url + "/themes/proxia/images/loading/loading2.gif";
+
+		    var image  = base_url + "/themes/proxia/images/loading/loading2.gif";
 
             dojo.style(this.overlay,"background","white")
             dojo.style(this.overlay,"opacity","0.85")      
@@ -56,11 +56,8 @@ dojo.declare(
 
 		var b_this = dojo.contentBox(this.domNode);
 
-                dojo.style(this.overlay,"height",b_this.h + "px")
-                dojo.style(this.overlay,"width",b_this.w + "px")
-                
-//		if ( this.selectedChildWidget )
-//			this.selectedChildWidget.resize(b_this);
+		dojo.style(this.overlay,"height",b_this.h + "px")
+		dojo.style(this.overlay,"width",b_this.w + "px")                
 		
 		this.getChildren().forEach( function ( i_child, i_index )
 		{
@@ -90,25 +87,25 @@ dojo.declare(
 		else
 			var direction = old_index > new_index ? 'right' : 'left';
 
-                if( this.transition == "fade")
-                {
-                    this._showChild(i_new_widget);
+			if( this.transition == "fade")
+			{
+				this._showChild(i_new_widget);
 
-                    var anim1 = null;
-                    if ( i_old_widget )
-                    {
-                        anim1 = this.slideOut(direction,i_old_widget);
-                    }
+				var anim1 = null;
+				if ( i_old_widget )
+				{
+					anim1 = this.slideOut(direction,i_old_widget);
+				}
 
-                    var anim2 = this.slideIn(direction,i_new_widget);
+				var anim2 = this.slideIn(direction,i_new_widget);
 
-                    if( anim1 )
-                        dojo.fx.chain([anim1, anim2]).play();
-                    else
-                        anim2.play();                    
-                } else {
-                    this.changePage(i_old_widget, i_new_widget)	                    
-                }    
+				if( anim1 )
+					dojo.fx.chain([anim1, anim2]).play();
+				else
+					anim2.play();                    
+			} else {
+				this.changePage(i_old_widget, i_new_widget)	                    
+			}    
                
 	},
 
@@ -117,33 +114,36 @@ dojo.declare(
             //this.is_animated = false;             
             var slideArgs = 
             {
-                    node: this.overlay,
-                    duration: this.slide_duration,
-                    unit: "px",
-                    
-                    beforeBegin: dojo.hitch(this,function()
-                    {
-                        this.is_animated = true; 
-                        dojo.style(this.overlay,"display","block")                            
-                    }),
-                    
-                    onEnd: dojo.hitch(this,function()
-                    {
-                        this.is_animated = false; 
-                        
-                        if( i_old_widget )
-                            this._hideChild(i_old_widget);
-                        
-                        this._showChild(i_new_widget);
-                        this.selectChild(i_new_widget);
+				node: this.overlay,
+				duration: this.slide_duration,
+				unit: "px",
 
-                        dojo.style(this.overlay,"display","none")                          
-                    }), 
-                    
-                    onAnimate: function()
-                    {
+				beforeBegin: dojo.hitch(this,function()
+				{
+					this.is_animated = true; 
+					dojo.style(this.overlay,"display","block")                            
+				}),
 
-                    }
+				onEnd: dojo.hitch(this,function()
+				{
+					this.is_animated = false; 
+
+					if( i_old_widget )
+						this._hideChild(i_old_widget);
+
+					this._showChild(i_new_widget);
+					this.selectChild(i_new_widget);
+
+					dojo.style(this.overlay,"display","none")  
+					
+					dojo.publish("/pwl/layout/SlideStackContainer/pageChanged", [{pane:i_new_widget}]);
+					
+				}), 
+
+				onAnimate: function()
+				{
+
+				}
             }   
             
             if( !this.is_animated )

@@ -451,19 +451,6 @@ dojo.declare(
 				cb.placeAt(node);
 				dojo.place(n_label, node);
 
-				/***** hack ak value store ma iny i_attribute ako label store tak search nefunguje korektne. *****/
-				var l_id = this.label_store_id_attribute || this.label_store_default_id_attribute;
-				var v_id = this.value_store_id_attribute || this.value_store_default_id_attribute;
-
-				if( l_id != v_id )
-				{
-					var label_i = "i_label_item." + l_id;					
-
-					i_label_item[v_id] = eval(label_i)
-
-				}
-				/* end hack*/
-
 				node['data-item'] = i_label_item;
 				
 				

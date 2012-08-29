@@ -111,7 +111,7 @@ dojo.declare(
 		this.inherited(arguments);
 		
 		var b_parent = dojo.contentBox(this.domNode.parentNode);
-		//console.debug("b_parent", b_parent)
+		
 		dojo.marginBox(this.domNode,b_parent);
 		
 		var b_this = dojo.contentBox(this.domNode);
@@ -127,8 +127,8 @@ dojo.declare(
 				w: b_this.w - b_legend.w - gutter,
 				h: b_container.h
 			};
-		}			
-		
+		}
+
 		this.w_container.resize(b_container);
 	},
 
@@ -160,17 +160,26 @@ dojo.declare(
 	
 	next: function ()
 	{
-		var last = this.isLastStep( this.w_container.selectedChildWidget.w_step );
-		console.debug("last",last)
-		if( !last)
+		var current = this.w_container.selectedChildWidget;
+		
+		if ( current.isInstanceOf(pwl.widget.wizard.Intro)  )
+		{
 			this.w_container.forward();
-		
-		var new_step_is_last = this.isLastStep( this.w_container.selectedChildWidget.w_step );
+		}
+		else
+		{
+			var last = this.isLastStep( current );
+			
+			if( !last)
+				this.w_container.forward();
 
-		if( new_step_is_last)
-			this.hideNextButton()
-		
-		this.showPrevButton()
+			var new_step_is_last = this.isLastStep( this.w_container.selectedChildWidget.w_step );
+
+			if( new_step_is_last)
+				this.hideNextButton()
+
+			this.showPrevButton()
+		}
 	},
 	
 	

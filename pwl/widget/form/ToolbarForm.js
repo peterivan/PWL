@@ -27,7 +27,7 @@ dojo.declare(
 	accept_label: '',
 	cancel_label: '',
         
-        autolayout: false,
+	autolayout: false,
         
 /******************************************************************************/
 /** public **/
@@ -64,12 +64,12 @@ dojo.declare(
 	{
 		this.inherited(arguments);
                 
-                if( !this.autolayout )
-                {
-                    var b_parent = dojo.contentBox(this.domNode.parentNode);
+		if( !this.autolayout )
+		{
+			var b_parent = dojo.contentBox(this.domNode.parentNode);
 
-                    dojo.contentBox(this.domNode, b_parent);                    
-                }    
+			dojo.contentBox(this.domNode, b_parent);                    
+		}    
 
 		var b_this = dojo.contentBox(this.domNode);
 

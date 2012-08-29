@@ -210,7 +210,7 @@ dojo.declare(
 			if( this.is_next_pane )
 			{
 				var next_child = this.getNextChild();
-				// console.debug("pwl tablet resize : next_child",next_child )
+//				 console.debug("pwl tablet resize : next_child",next_child )
 				if( next_child )
 				{
 					dojo.style(next_child.domNode,"left",(this.container_width + 100) + "px")
@@ -325,10 +325,10 @@ dojo.declare(
 		
 		/* slide to left */
 		var params = {duration:this.slide_duration,left:-b_this.w};
-		
+//console.debug("left bude 2x..",2*b_this.w)		
 		/* slide to right */
 		if(position == "right")
-			params = {duration:this.slide_duration,left:b_this.w};
+			params = {duration:this.slide_duration,left:2*b_this.w};
 		
                 var slideArgs = {
                     node: page.domNode,

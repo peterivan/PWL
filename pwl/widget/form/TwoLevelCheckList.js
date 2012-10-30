@@ -140,7 +140,7 @@ dojo.declare(
 			
 			var store_label_data = [];
 			var store_value_data = [];
-			
+
 			data_tab.data.forEach(function(i_value,i_index)
 			{
 				if(i_index[0] != '_')
@@ -157,8 +157,6 @@ dojo.declare(
 				
 			},this);
 			
-			
-			
 			data_tab.selection.forEach(function(i_value,i_index)
 			{
 
@@ -173,7 +171,6 @@ dojo.declare(
 					
 			},this);
 			
-
 			var store_label = new dojo.data.ItemFileWriteStore(
 			{
 				data:

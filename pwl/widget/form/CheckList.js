@@ -394,9 +394,6 @@ dojo.declare(
 		else
 			value_field = this.value_store.getValue(i_value_item, this.value_store_id_attribute || this.value_store_default_id_attribute);
 		
-//console.debug(label_field)
-//console.debug(value_field)
-
 		if ( label_field == value_field )
 			return true;
 
@@ -409,6 +406,7 @@ dojo.declare(
              
 		this._loadData().then( dojo.hitch(this, function()
 		{
+
 			this._renderItems(this._label_data, this._value_data);
 
             this._hideOverlay();
@@ -555,8 +553,8 @@ dojo.declare(
 		{
 			var query = null;
 
-			if ( this.label_store_query )
-				query = '?' + dojo.objectToQuery(this.label_store_query);
+			if ( this.value_store_query )
+				query = '?' + dojo.objectToQuery(this.value_store_query);
                             
 			this.value_store.fetch(
 			{
@@ -565,7 +563,7 @@ dojo.declare(
                                 
 				onComplete: function ( i_data )
 				{
- 
+					
 					this._value_data = i_data;
 					this._value_data_loaded = true;
 

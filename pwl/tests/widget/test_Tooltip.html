@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta httpEquiv="Content-Type" value="text/html;charset=utf-8">
+
+	<title>PWL.widget.ToolbarTitlePane</title>
+
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link rel="stylesheet" href="../../themes/proxia/proxia.css">
+	<link rel="stylesheet" href="../../../academy/themes/proxia/proxia.css">	
+
+	<script type="text/javascript">
+
+	var djConfig =
+	{
+		parseOnLoad: true,
+		isDebug: true,
+		debugAtAllCosts: true,
+		modulePaths:
+		{
+			'pwl' : '../pwl'
+		}
+	};
+
+	</script>
+
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="../../../dojo/dojo.js"></script>
+
+	<script language="JavaScript" type="text/javascript">
+
+		dojo.require('pwl.widget.Tooltip');
+    //dojo.require("dijit.Tooltip");
+    dojo.require("dijit.form.Button");		
+	
+		dojo.addOnLoad( function ()
+		{
+			var x = dojo.query('#button1', dojo.body());
+			var z = dojo.query('#button2', dojo.body());
+			var y = dojo.query('#button3', dojo.body());
+			var u  = x.concat(z).concat(y)
+			
+			dijit.byId("t1").set('connectId',u, dojo.body());
+			
+			dojo.connect(dijit.byId("t1"),"_onTargetMouseEnter",this,function( evt )
+			{
+				console.debug(evt.target)
+				
+				var xx = dojo.attr(evt.target,"id");
+				if(xx == "button3")
+				{
+					console.debug("button3")
+					dojo.query('.dark b', dojo.body()).forEach( function ( node )
+					{
+						node.innerHTML = '... ';	
+					})						
+				}else{
+					dojo.query('.dark b', dojo.body()).forEach( function ( node )
+					{
+						node.innerHTML = 'skuska zi to ide... ' + evt.clientX;	
+					})					
+				}	
+			});						
+			
+			
+		});
+
+	</script>
+<style type="text/css">
+    .box { color: white; background-color: #ba2929; width: 200px; height:
+    50px; padding: 10px; }
+</style>
+</head>
+<body class="proxia tundra">
+	
+	<div id="button1" style="margin:50px;height:25px;width:100px;background-color: lime">
+		Longanimity
+	</div>
+	
+	<div id="button2" style="margin:50px;height:25px;width:100px;background-color: lime">
+		Tooltip below
+	</div>
+
+	<div id="button3" style="margin:50px;height:25px;width:100px;background-color: red">
+		Tooltip red
+	</div>
+	
+	<div dojoType="pwl.widget.Tooltip" id="t1" position="above" class="dark">
+		a
+		<i>
+			disposition
+		</i>
+		to bear injuries patiently : 879879
+		<b >
+			forbearance
+		</b>
+	</div>
+</body>
+</html>

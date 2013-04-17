@@ -3,7 +3,7 @@
     border:none;
 }
 
-.proxia .dijitTooltip[class~=gray] .dijitTooltipContainer {
+.proxia .dijitTooltip .dijitTooltipContainer[class~=gray] {
 	/*
 		The part with the text.
 	*/

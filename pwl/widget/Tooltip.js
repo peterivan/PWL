@@ -23,20 +23,22 @@ dojo.declare(
 /******************************************************************************/
 /** Events ********************************************************************/
 
-	onShow: function ()
-	{
-		this.inherited(arguments);
-		
-		dojo.attr(this.domNode, 'class').split(' ').forEach( function ( i_class )
-		{
-			if ( i_class.indexOf('dijit') < 0 )
-				dojo.addClass(dijit._masterTT.domNode, i_class);
-		});
-	}
+//	onShow: function ()
+//	{
+//		this.inherited(arguments);
+//		
+//		dojo.attr(this.domNode, 'class').split(' ').forEach( function ( i_class )		
+//		{
+//			
+//			if ( i_class.indexOf('dijit') < 0 )
+//				dojo.addClass(dijit._masterTT.domNode, i_class);
+//		});
+//	}
 
 /******************************************************************************/
 /** protected **/
 /******************************************************************************/
 
 
+		
 });

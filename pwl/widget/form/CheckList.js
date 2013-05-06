@@ -227,9 +227,6 @@ dojo.declare(
 				this._loadValueData();
 
 				this.onSave(this.get('value'));
-
-				//if ( dojo.isFunction(save_mixin.onComplete) )
-				//	dojo.hitch(this.save_mixin.onComplete)();
 			},
 
 			onError: function ( i_error )
@@ -252,6 +249,20 @@ dojo.declare(
 			this.w_search_box.set('value', '');
 
 		this._render();
+	},
+	
+	reloadValues: function()
+	{
+		this._showOverlay();
+             
+		this._loadValueData().then( dojo.hitch(this, function()
+		{
+			this._renderItems(this._label_data, this._value_data);
+
+            this._hideOverlay();
+                        
+			this.onLoad();
+		}));
 	},
 
 	reset: function ()

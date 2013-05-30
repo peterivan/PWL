@@ -53,6 +53,12 @@ dojo.declare(
 		var w = b_this.w - b_tc.w - b_tc_left - 10; // 10 - buffer
 
 		dojo.marginBox(this.w_title.domNode, {w: w});
+
+        console.debug("resize2")
+
+        this.w_title.resize();
+
+
 	},
 
 /******************************************************************************/

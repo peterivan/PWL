@@ -7,7 +7,6 @@ dojo.require('dijit._Widget');
 dojo.require('dijit._Templated');
 
 dojo.require('dijit.InlineEditBox');
-dojo.require('pwl.widget.Tooltip');
 
 /******************************************************************************/
 
@@ -25,8 +24,7 @@ dojo.declare(
 	delay: 250,
 	
 	use_tooltip: false,
-	
-	w_tootlip: null,
+
 	w_edit_box: null,
 	
 	n_container: null,
@@ -52,16 +50,12 @@ dojo.declare(
 	{
 		this.inherited(arguments);
 		
-		if ( this.use_tooltip )
-			this._setupTooltip();
 	},
 
 	destroy: function ()
 	{
 		this.inherited(arguments);
 		
-		if ( this.w_tooltip )
-			this.w_tooltip.destroy();
 	},
 
 /******************************************************************************/
@@ -70,9 +64,9 @@ dojo.declare(
 	resize: function ()
 	{
 		this.inherited(arguments);
-		
-		if ( this.use_tooltip )
-			this._setupTooltip();
+		var c_box = dojo.marginBox(this.n_container);
+        if( c_box.w > 0)
+            dojo.style(this.n_title,"width",c_box.w + "px");
 	},
 
 /******************************************************************************/
@@ -84,38 +78,12 @@ dojo.declare(
 /** protected **/
 /******************************************************************************/
 
-	_setupTooltip: function ()
-	{
-		var b_this = dojo.contentBox(this.domNode);
-		var b_title = dojo.marginBox(this.n_title);
-		
-		var show_tooltip = false;
-		
-		// 30px gradient, when text runs into gradient display tooltip
-		if ( b_title.w > b_this.w - 30 )
-			show_tooltip = true;
-		
-		if ( show_tooltip && !this.w_tooltip )
-		{
-			this.w_tootlip = new pwl.widget.Tooltip(
-			{
-				connectId: [this.n_title],
-				label: this.original_title,
-				position: ['above', 'below'],
-				showDelay: this.delay
-			});
-		}
-		else if ( !show_tooltip && this.w_tooltip )
-		{
-			this.w_tooltip.destroy();
-			this.w_tootlip = null;
-		}
-	},
-	
+
 	_setupEditBox: function ()
 	{
 		this.w_edit_box = new dijit.InlineEditBox({}, this.n_title);
-		
+        this.w_edit_box.set("editorParams",{ maxLength : 150 });
+
 		dojo.connect(this.w_edit_box, 'onChange', this, 'onChange');
 	},
 
@@ -135,7 +103,7 @@ dojo.declare(
 		else
 			this.n_title.innerHTML = this.title;
 
-		if ( this._started && this.use_tooltip )
-			this._setupTooltip();
+        dojo.attr(this.n_title,"title",this.title);
+
 	}
 });

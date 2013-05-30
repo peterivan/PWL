@@ -57,6 +57,8 @@ dojo.declare(
 		
 		if ( this.w_title_widget && dojo.isFunction(this.w_title_widget.resize) )
 			this.w_title_widget.resize();
+
+        console.debug("resize1")
 	},
 
 /******************************************************************************/

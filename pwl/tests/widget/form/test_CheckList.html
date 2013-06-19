@@ -6,7 +6,7 @@
 	<title>pwl.widget.form.TextboxList</title>
 
 	<style type="text/css">
-		@import url('../../../../dijit/themes/tundra/tundra.css');
+		@import url('../../../../../../DojoToolkit/DojoToolkit/dijit/themes/tundra/tundra.css');
 		@import url('../../resources/test.css');
 		@import url('../../../themes/proxia/proxia.css');
 	</style>
@@ -20,14 +20,14 @@
 		debugAtAllCosts: true,
 		modulePaths:
 		{
-			'pwl' : '../pwl'
+			'pwl' : '../../../PeterIvan/PWL/pwl'
 		}
 	};
 
 	</script>
 
 	<!-- required: dojo.js -->
-	<script type="text/javascript" src="../../../../dojo/dojo.js"></script>
+	<script type="text/javascript" src="../../../../../../DojoToolkit/DojoToolkit/dojo/dojo.js"></script>
 
 	<script language="JavaScript" type="text/javascript">
 
@@ -81,7 +81,7 @@
 				}
 			});
 
-			var w = new pwl.widget.form.CheckList(
+			var w = gw = new pwl.widget.form.CheckList(
 			{
 				label_store: s1_label,
 				value_store: s1_value,
@@ -93,7 +93,9 @@
 
 					return given_name + ' ' + family_name;
 				}
-			}, 'W1').startup();
+			}, 'W1');
+			
+			w.startup();
 
 
 			var w = new pwl.widget.form.CheckList(
@@ -110,7 +112,9 @@
 
 					return given_name + ' ' + family_name;
 				}
-			}, 'W2').startup();
+			}, 'W2');
+			
+			w.startup();
 		});
 	</script>
 

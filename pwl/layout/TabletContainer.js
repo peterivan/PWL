@@ -254,9 +254,14 @@ dojo.declare(
 /** Events ********************************************************************/
 
 	onAnimationEnd: function()
-	{
-		
-	},
+	{},
+	
+	onSlideOut: function ()
+	{},
+	
+	
+	onSlideIn: function ()
+	{},
 
 /******************************************************************************/
 /** Action ********************************************************************/
@@ -351,6 +356,8 @@ dojo.declare(
 			
 			dojo.publish("/pwl/layout/TabletContainer/slideOut", [{pane:page}]);
 			
+			this.onSlideOut(page, this.__old_pane);
+			this.onAnimationEnd( page );
 		});		
 		anim.play();
 
@@ -387,6 +394,7 @@ dojo.declare(
 			
 			dojo.publish("/pwl/layout/TabletContainer/slideIn", [{current_pane:page,old_pane:this.__old_pane}]);
 			
+			this.onSlideIn(page, this.__old_pane);
 			this.onAnimationEnd( page );
 			
 		});		
